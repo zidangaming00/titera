@@ -1,0 +1,31 @@
+name: Update Berita Otomatis
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 * * * *' # Menjalankan robot setiap jam (waktu server)
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Mengambil kode dari repo
+        uses: actions/checkout@v3
+
+      - name: Menyiapkan Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Memasak HTML Berita
+        run: node build.js
+
+      - name: Mempublikasikan ke GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./
+          publish_branch: gh-pages
