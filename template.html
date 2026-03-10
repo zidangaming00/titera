@@ -1019,6 +1019,7 @@ async function getNews(category = 'terkini', isInitialLoad = false) {
     }
 }
 
+        
         let prayerTimesToday = [];
         async function fetchPrayerTimes() {
             try {
@@ -1050,16 +1051,19 @@ async function getNews(category = 'terkini', isInitialLoad = false) {
             document.getElementById('prayer-container').innerHTML = `<span class="prayer-badge">${nextPrayer.name} ${nextPrayer.time.replace(':', '.')}</span>`;
         }
 
-        document.getElementById('load-more-btn').addEventListener('click', () => renderNews(10));
-        setInterval(updateClock, 1000);
-        updateClock();
-        getWeatherData();
-        
-        // Panggil fungsi market data
-        updateMarketData(); 
-        
-        // getNews(); // Dimatikan karena berita pertama sudah dirender oleh robot
-        fetchPrayerTimes();
+// Listener untuk tombol
+document.getElementById('load-more-btn').addEventListener('click', () => renderNews(10));
+
+// Interval jam & cuaca
+setInterval(updateClock, 1000);
+updateClock();
+getWeatherData();
+updateMarketData(); 
+fetchPrayerTimes();
+
+// SINKRONISASI: Isi data di balik layar tanpa menghapus berita dari bot
+getNews('terkini', true); 
+
     </script>
 </body>
 </html>
