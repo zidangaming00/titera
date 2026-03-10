@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Titera News</title>
+    
+    <link rel="icon" type="image/png" href="https://zidangaming00.github.io/Portofolio/tnews.png" />
+    <link rel="apple-touch-icon" href="https://zidangaming00.github.io/Portofolio/tnews.png" />
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-green: #0b9444;
+            --card-white: #ffffff;
+            --text-dark: #202124;
+            --text-gray: #5f6368;
+            --border-light: #dadce0;
+            --google-blue: #1a73e8;
+            --ripple-color: rgba(26, 115, 232, 0.18); 
+        }
+
+        body {
+            margin: 0;
+            padding: 16px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* --- SIDEBAR & OVERLAY STYLES --- */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -240px; 
+            width: 200px; 
+            height: 100%;
+            background: var(--card-white);
+            z-index: 1000;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            padding: 24px;
+            box-sizing: border-box;
+        }
+        .sidebar.active { left: 0; }
+
+        .overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(2px);
+            z-index: 999;
+            display: none;
+        }
+        .overlay.active { display: block; }
+
+        /* Header Bar */
+        .header-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            margin-bottom: 8px;
+        }
+
+        .menu-trigger, .search-trigger {
+            background: transparent; 
+            border: none;
+            padding: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+            color: var(--text-dark);
+            -webkit-tap-highlight-color: transparent;
+        }
+        .menu-trigger:active, .search-trigger:active { transform: scale(0.9); opacity: 0.6; }
+
+        .sidebar h2 span { color: var(--google-blue); }
+        .sidebar h2 { user-select: none; font-size: 1.25rem; margin-top: 0; margin-bottom: 24px; }
+        .sidebar-nav { display: flex; flex-direction: column; gap: 8px; }
+        .sidebar-item {
+            padding: 12px 16px;
+            border-radius: 10px;
+            background: none;
+            border: none;
+            text-align: left;
+            font-family: inherit;
+            font-weight: 600;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: 0.2s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .sidebar-item:hover { background: rgba(26, 115, 232, 0.08); color: var(--google-blue); }
+        
+        .sidebar-item.active {
+            background: rgba(26, 115, 232, 0.1);
+            color: var(--google-blue);
+            pointer-events: none;
+        }
+
+        /* --- SEARCH MODAL STYLES --- */
+        .search-modal {
+            position: fixed;
+            top: -100%;
+            left: 0;
+            width: 100%;
+            background: var(--card-white);
+            z-index: 1100;
+            padding: 20px;
+            box-sizing: border-box;
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-bottom: 1px solid var(--border-light);
+        }
+        .search-modal.active { top: 0; }
+        .search-input-wrapper {
+            max-width: 480px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #f1f3f4;
+            padding: 8px 16px;
+            border-radius: 100px;
+        }
+        .search-input-wrapper input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            font-size: 1rem;
+            outline: none;
+            color: var(--text-dark);
+        }
+        input[type="search"]::-webkit-search-cancel-button {
+            -webkit-appearance: none;
+            appearance: none;
+            display: none;
+        }
+
+        /* --- APP CONTAINER STYLES --- */
+        .app-container {
+            width: 100%;
+            max-width: 480px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .branding h1 {
+           user-select: none;
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            color: var(--text-dark);
+        }
+        .branding span { color: var(--google-blue); font-weight: 800; }
+
+        .card {
+            background: var(--card-white);
+            border-radius: 20px;
+            padding: 20px;
+            border: 1px solid var(--border-light);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .header-grid {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 12px;
+        }
+
+        #clock { 
+            font-size: 1.6rem; margin: 0; font-weight: 700; color: var(--text-dark);
+        }
+        
+        #full-date { color: var(--text-gray); font-size: 0.75rem; margin-top: 4px; }
+
+        .weather-content { display: flex; justify-content: space-between; align-items: center; }
+        #weather-temp { font-size: 1.6rem; font-weight: 700; margin: 0; }
+        .weather-info p { margin: 0; color: var(--text-gray); font-size: 0.75rem; }
+        .weather-icon-wrapper img { width: 36px; height: 36px; }
+
+        #aqi-container { margin-top: 4px; }
+        .aqi-badge {
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        .aqi-good { background: #e6f4ea; color: #137333; }
+        .aqi-moderate { background: #fef7e0; color: #b06000; }
+        .aqi-poor { background: #fce8e6; color: #c5221f; }
+
+        /* --- STOCK CARD STYLES --- */
+        .stock-card {
+            display: flex;
+            flex-direction: column;
+            padding: 14px 16px;
+            margin-bottom: 4px;
+            gap: 14px;
+        }
+        
+        .stock-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .stock-icon {
+            background: rgba(26, 115, 232, 0.1);
+            padding: 10px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--google-blue);
+        }
+        .stock-info h3 { margin: 0; font-size: 0.95rem; color: var(--text-dark); }
+        .stock-info p { margin: 0; font-size: 0.7rem; color: var(--text-gray); margin-top: 2px; }
+        .stock-value { text-align: right; }
+        .stock-value h3 { margin: 0; font-size: 1.05rem; color: var(--text-dark); }
+        .stock-change {
+            margin: 4px 0 0 0;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 2px 6px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        /* Style untuk Box Kecil USD & EMAS */
+        .stock-mini-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            width: 100%;
+        }
+        
+        .mini-box {
+            background: #f8f9fa;
+            border: 1px solid var(--border-light);
+            border-radius: 12px;
+            padding: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .mini-box:hover {
+            background: rgba(26, 115, 232, 0.05);
+            border-color: rgba(26, 115, 232, 0.3);
+        }
+        
+        .mini-title {
+            margin: 0 0 4px 0;
+            font-size: 0.7rem;
+            color: var(--text-gray);
+            font-weight: 600;
+        }
+        
+        .mini-box h4 {
+            margin: 0;
+            font-size: 0.95rem;
+            color: var(--text-dark);
+        }
+        
+        .mini-change {
+            font-size: 0.65rem;
+            font-weight: 700;
+            display: inline-block;
+            margin-top: 2px;
+        }
+
+        /* --- MARKET SLIDER STYLES BARU --- */
+        .market-slider-wrapper {
+            display: flex;
+            overflow-x: auto;
+            gap: 12px;
+            width: 100%;
+            padding: 4px 4px 12px 4px;
+            margin: 0 -4px; 
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .market-slider-wrapper::-webkit-scrollbar { 
+            display: none; 
+        }
+
+        .slider-box {
+            min-width: 110px; 
+            background: #ffffff; 
+            border: 1px solid #eef0f2; 
+            border-radius: 12px; 
+            padding: 12px; 
+            cursor: pointer;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            flex-shrink: 0; 
+            -webkit-tap-highlight-color: transparent;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03); 
+        }
+
+        .slider-box:hover {
+            border-color: rgba(26, 115, 232, 0.4);
+            box-shadow: 0 6px 12px rgba(26, 115, 232, 0.08);
+            transform: translateY(-3px); 
+        }
+
+        .slider-box .mini-title {
+            margin: 0 0 6px 0;
+            font-size: 0.65rem;
+            color: var(--text-gray);
+            font-weight: 700;
+            text-transform: uppercase; 
+            letter-spacing: 0.5px;
+        }
+
+        .slider-box h4 {
+            margin: 0 0 4px 0;
+            font-size: 0.95rem; 
+            color: var(--text-dark);
+            font-weight: 700;
+        }
+
+        .slider-box .mini-change {
+            font-size: 0.7rem; 
+            font-weight: 700;
+            display: inline-block;
+        }
+
+        /* --- CATEGORY SLIDER STYLES --- */
+        .category-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 4px 0;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            scroll-behavior: smooth;
+        }
+        .category-wrapper::-webkit-scrollbar { display: none; }
+        .category-btn {
+            display: inline-block;
+            padding: 8px 18px;
+            margin-right: 6px;
+            background: var(--card-white);
+            border: 1px solid var(--border-light);
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-gray);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
+            font-family: inherit;
+        }
+        .category-btn.active {
+            background: rgba(26, 115, 232, 0.1);
+            color: var(--google-blue);
+            border-color: rgba(26, 115, 232, 0.3);
+            pointer-events: none; 
+        }
+
+        .skeleton {
+            background: #eee;
+            background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+            border-radius: 8px;
+            background-size: 200% 100%;
+            animation: 1.5s shine linear infinite;
+        }
+        @keyframes shine { to { background-position-x: -200%; } }
+
+        .news-card { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
+        
+        .news-item { 
+            display: grid; 
+            grid-template-columns: 1fr 100px; 
+            gap: 16px; 
+            padding: 16px 20px;
+            border-bottom: 1px solid #f1f3f4;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none !important;
+            color: var(--text-dark) !important;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            z-index: 1;
+            transition: background-color 0.3s ease;
+        }
+
+        .news-item:hover { background-color: rgba(26, 115, 232, 0.03); }
+
+        .ripple {
+            position: absolute;
+            background: var(--ripple-color);
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple-effect 0.8s cubic-bezier(0.2, 0, 0.4, 1);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes ripple-effect {
+            from { opacity: 1; transform: scale(0); }
+            to { opacity: 0; transform: scale(3.5); }
+        }
+
+        .news-headline { 
+            font-size: 0.95rem; font-weight: 600; line-height: 1.4; margin: 0 0 8px 0; 
+            display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+        }
+        .news-item:hover .news-headline { color: var(--google-blue); }
+        .source-wrapper { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+        .news-favicon { width: 14px; height: 14px; border-radius: 2px; object-fit: contain; }
+        .source-tag { font-weight: 700; color: #3c4043; font-size: 0.75rem; }
+        .news-time { font-size: 0.7rem; color: var(--text-gray); }
+
+        .news-img-wrapper { 
+            width: 100px; height: 72px; border-radius: 12px; overflow: hidden; 
+            background: #f1f3f4; position: relative; z-index: 2;
+        }
+        .news-img-wrapper::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(90deg, #f1f3f4 25%, #e8eaed 50%, #f1f3f4 75%);
+            background-size: 200% 100%;
+            animation: 1.5s shine linear infinite;
+        }
+        .news-img-wrapper.loaded::after { display: none; }
+        .news-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; opacity: 0; }
+        .news-img-wrapper.loaded .news-img { opacity: 1; }
+        .news-item:hover .news-img { transform: scale(1.08); }
+
+        .load-more-container { padding: 20px; display: flex; flex-direction: column; align-items: center; background: #fff; gap: 12px; }
+
+        #load-more-btn {
+            background: none;
+            border: 1px solid var(--border-light);
+            padding: 10px 24px;
+            border-radius: 100px;
+            color: var(--google-blue);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: none;
+        }
+        #load-more-btn:hover { background-color: rgba(26, 115, 232, 0.04); border-color: var(--google-blue); }
+
+        .spinner {
+            width: 28px; height: 28px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid var(--google-blue);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            display: none;
+        }
+        #prayer-container { margin-top: 10px; }
+        .prayer-badge {
+            font-size: 0.7rem; font-weight: 700; padding: 4px 8px; border-radius: 6px;
+            display: inline-block; background: rgba(26, 115, 232, 0.08); color: var(--google-blue);
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+
+/* --- OPTIMASI DESKTOP FINAL --- */
+        @media (min-width: 900px) {
+            .app-container {
+                max-width: 1000px;
+                display: block; /* Mematikan flexbox bawaan mobile */
+            }
+
+            .header-bar {
+                margin-bottom: 24px;
+            }
+
+            /* --- KOLOM KANAN: WIDGET (Di-float ke kanan) --- */
+            .header-grid {
+                float: right;
+                clear: right;
+                width: 320px;
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+                margin-bottom: 12px;
+            }
+
+            .header-grid .card {
+                width: 100%;
+                box-sizing: border-box; /* Kunci rahasia 1: Mencegah padding merusak ukuran */
+            }
+
+            .stock-card {
+                float: right;
+                clear: right;
+                width: 320px;
+                margin-bottom: 12px;
+                box-sizing: border-box; /* Kunci rahasia 1: Memastikan lebar sejajar persis */
+            }
+
+            /* --- KOLOM KIRI: BERITA (Tanpa float, biarkan mengalir normal) --- */
+            .category-wrapper {
+                width: auto; /* Menimpa setting width: 100% dari versi mobile */
+                margin-right: 344px; /* Kunci rahasia 2: Sisakan ruang (320px + 24px gap) untuk widget di kanan */
+                margin-bottom: 12px;
+                padding-bottom: 0;
+            }
+
+            .news-card {
+                width: auto;
+                margin-right: 344px;
+                box-sizing: border-box;
+            }
+
+            /* Clearfix: Mencegah background container error karena efek float */
+            .app-container::after {
+                content: "";
+                display: table;
+                clear: both;
+            }
+
+            /* Estetika: Membuat berita jadi 2 kolom di layar lebar */
+            #news-container {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+                padding: 16px;
+            }
+
+            /* Menambahkan border agar tidak menyatu saat jadi 2 kolom */
+            .news-item {
+                border: 1px solid var(--border-light);
+                border-radius: 12px;
+                padding: 16px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="overlay" id="overlay" onclick="closeAllMenus()"></div>
+
+    <div class="sidebar" id="sidebar">
+        <h2>Titera<span>.news</span></h2>
+        <div class="sidebar-nav">
+            <button class="sidebar-item" onclick="location.reload()">Beranda</button>
+            <hr style="border: 0; border-top: 1px solid #eee; margin: 10px 0;">
+            
+            <button class="sidebar-item sidebar-cat active" onclick="handleCategoryChange('terkini'); closeAllMenus();">Terkini</button>
+            <button class="sidebar-item sidebar-cat" onclick="handleCategoryChange('teknologi'); closeAllMenus();">Teknologi</button>
+            <button class="sidebar-item sidebar-cat" onclick="handleCategoryChange('ekonomi'); closeAllMenus();">Ekonomi</button>
+            <button class="sidebar-item sidebar-cat" onclick="handleCategoryChange('olahraga'); closeAllMenus();">Olahraga</button>
+
+            <hr style="border: 0; border-top: 1px solid #eee; margin: 10px 0;">
+            <button style="color:var(--google-blue)" class="sidebar-item">Kebijakan</button>
+            <button class="sidebar-item" onclick="toggleSidebar()" style="color: #ea4335;">Tutup Menu</button>
+        </div>
+    </div>
+
+    <div class="search-modal" id="search-modal">
+        <div class="search-input-wrapper">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5f6368" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="search" id="google-search-input" placeholder="Ketik untuk mencari..." onkeypress="handleSearchKeyPress(event)">
+            <button onclick="toggleSearch()" style="background:none; border:none; color:var(--text-gray); cursor:pointer; font-weight:bold;">✕</button>
+        </div>
+    </div>
+
+    <div class="app-container">
+        <div class="header-bar">
+            <button class="menu-trigger" onclick="toggleSidebar()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+            <div class="branding">
+                <h1>Titera<span>.news</span></h1>
+            </div>
+            <button class="search-trigger" onclick="toggleSearch()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </button>
+        </div>
+
+        <div class="header-grid">
+            <div class="card" style="padding: 16px;">
+                <h1 id="clock">00.00.00</h1>
+                <p id="full-date">Memuat tanggal...</p>
+                <div id="prayer-container"></div>
+            </div>
+            <div class="card" style="padding: 16px;">
+                <div class="weather-content">
+                    <div>
+                        <h2 id="weather-temp">--°C</h2>
+                        <p style="font-size: 0.75rem; color: var(--text-gray); margin:0;">Tangsel</p>
+                        <div id="aqi-container"></div>
+                    </div>
+                    <div class="weather-icon-wrapper">
+                        <img id="weather-icon-img" src="https://ssl.gstatic.com/onebox/weather/64/partly_cloudy.png">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card stock-card">
+            <div class="stock-header" onclick="window.open('https://finance.yahoo.com/quote/%5EJKSE/', '_blank')" style="cursor: pointer;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div class="stock-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                        </svg>
+                    </div>
+                    <div class="stock-info">
+                        <h3>IHSG</h3>
+                        <p>Bursa Efek Indonesia</p>
+                    </div>
+                </div>
+                <div class="stock-value">
+                    <h3 id="stock-price">Memuat...</h3>
+                    <span id="stock-change" class="stock-change" style="background: #f1f3f4; color: var(--text-gray);">--</span>
+                </div>
+            </div>
+
+            <hr style="border: 0; border-top: 1px dashed var(--border-light); margin: 0; width: 100%;">
+
+            <div class="stock-mini-wrapper">
+                <div class="mini-box" onclick="window.open('https://finance.yahoo.com/quote/IDR=X/', '_blank')">
+                    <p class="mini-title">USD / IDR</p>
+                    <h4 id="mini-usd-price">...</h4>
+                    <span id="mini-usd-change" class="mini-change">--</span>
+                </div>
+                <div class="mini-box" onclick="window.open('https://finance.yahoo.com/quote/GC=F/', '_blank')">
+                    <p class="mini-title">Emas (Gold)</p>
+                    <h4 id="mini-gold-price">...</h4>
+                    <span id="mini-gold-change" class="mini-change">--</span>
+                </div>
+            </div>
+
+            <hr style="border: 0; border-top: 1px dashed var(--border-light); margin: 4px 0 0 0; width: 100%;">
+
+            <div class="market-slider-wrapper">
+                <div class="slider-box" onclick="window.open('https://finance.yahoo.com/quote/BBCA.JK/', '_blank')">
+                    <p class="mini-title">BBCA</p>
+                    <h4 id="slider-bbca-price">...</h4>
+                    <span id="slider-bbca-change" class="mini-change">--</span>
+                </div>
+                <div class="slider-box" onclick="window.open('https://finance.yahoo.com/quote/BBRI.JK/', '_blank')">
+                    <p class="mini-title">BBRI</p>
+                    <h4 id="slider-bbri-price">...</h4>
+                    <span id="slider-bbri-change" class="mini-change">--</span>
+                </div>
+                <div class="slider-box" onclick="window.open('https://finance.yahoo.com/quote/TLKM.JK/', '_blank')">
+                    <p class="mini-title">TLKM</p>
+                    <h4 id="slider-tlkm-price">...</h4>
+                    <span id="slider-tlkm-change" class="mini-change">--</span>
+                </div>
+                <div class="slider-box" onclick="window.open('https://finance.yahoo.com/quote/BMRI.JK/', '_blank')">
+                    <p class="mini-title">BMRI</p>
+                    <h4 id="slider-bmri-price">...</h4>
+                    <span id="slider-bmri-change" class="mini-change">--</span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="category-wrapper" id="category-wrapper">
+            <button class="category-btn active" onclick="handleCategoryChange('terkini')">Terkini</button>
+            <button class="category-btn" onclick="handleCategoryChange('teknologi')">Teknologi</button>
+            <button class="category-btn" onclick="handleCategoryChange('ekonomi')">Ekonomi</button>
+            <button class="category-btn" onclick="handleCategoryChange('olahraga')">Olahraga</button>
+        </div>
+
+        <div class="card news-card">
+            <div style="padding: 16px 20px; border-bottom: 1px solid #f1f3f4;">
+                <h2 style="margin: 0; font-size: 1.15rem; color: var(--google-blue); font-weight: 600;" id="section-title">Terkini &rsaquo;</h2>
+            </div>
+            <div id="news-container">
+            </div>
+            
+            <div class="load-more-container" id="load-more-container">
+                <div id="loading-spinner" class="spinner"></div>
+                <button id="load-more-btn">Muat lebih banyak</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let allNewsData = [];
+        let currentIndex = 0;
+
+        const newsCategories = {
+            'terkini': [
+                { name: 'Detik', url: 'https://news.detik.com/berita/rss', domain: 'detik.com' },
+                { name: 'Kompas', url: 'https://rss.kompas.com/api/feed/social?apikey=bc58c81819dff4b8d5c53540a2fc7ffd83e6314a', domain: 'kompas.com' },
+                { name: 'CNBC Indo', url: 'https://www.cnbcindonesia.com/news/rss', domain: 'cnbcindonesia.com' },
+                { name: 'Liputan6', url: 'https://feed.liputan6.com/rss/news', domain: 'liputan6.com' },
+                { name: 'Antara', url: 'https://www.antaranews.com/rss/terkini.xml', domain: 'antaranews.com' }
+            ],
+            'teknologi': [
+                { name: 'Detik Inet', url: 'https://inet.detik.com/rss', domain: 'detik.com' },
+                { name: 'Kompas Tekno', url: 'https://tekno.kompas.com/rss', domain: 'kompas.com' },
+                { name: 'CNBC Tech', url: 'https://www.cnbcindonesia.com/tech/rss', domain: 'cnbcindonesia.com' },
+                { name: 'Antara', url: 'https://www.antaranews.com/rss/tekno.xml', domain: 'antaranews.com' }
+            ],
+            'ekonomi': [
+                { name: 'Detik Finance', url: 'https://finance.detik.com/rss', domain: 'detik.com' },
+                { name: 'Kompas Money', url: 'https://money.kompas.com/rss', domain: 'kompas.com' },
+                { name: 'CNBC Market', url: 'https://www.cnbcindonesia.com/market/rss', domain: 'cnbcindonesia.com' },
+                { name: 'CNN Indonesia', url: 'https://www.cnnindonesia.com/ekonomi/rss', domain: 'cnnindonesia.com' }
+            ],
+            'olahraga': [
+                { name: 'Antara', url: 'https://www.antaranews.com/rss/sepakbola.xml', domain: 'antaranews.com' },
+                { name: 'Detik Sport', url: 'https://sport.detik.com/rss', domain: 'detik.com' },
+                { name: 'Kompas Bola', url: 'https://bola.kompas.com/rss', domain: 'kompas.com' }
+            ],
+            'hiburan': [
+                { name: 'Detik Hot', url: 'https://hot.detik.com/rss', domain: 'detik.com' },
+                { name: 'Kompas Hype', url: 'https://hype.kompas.com/rss', domain: 'kompas.com' },
+                { name: 'CNBC Lifestyle', url: 'https://www.cnbcindonesia.com/lifestyle/rss', domain: 'cnbcindonesia.com' }
+            ],
+        };
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+            document.getElementById('overlay').classList.toggle('active');
+            document.getElementById('search-modal').classList.remove('active');
+        }
+
+        function toggleSearch() {
+            const modal = document.getElementById('search-modal');
+            const overlay = document.getElementById('overlay');
+            modal.classList.toggle('active');
+            overlay.classList.toggle('active');
+            if(modal.classList.contains('active')) {
+                setTimeout(() => document.getElementById('google-search-input').focus(), 300);
+            }
+        }
+
+        function closeAllMenus() {
+            document.getElementById('sidebar').classList.remove('active');
+            document.getElementById('search-modal').classList.remove('active');
+            document.getElementById('overlay').classList.remove('active');
+            setTimeout(()=> { document.getElementById('google-search-input').value = ''; },500);
+        }
+
+        function handleSearchKeyPress(e) {
+            if (e.key === 'Enter') {
+                const query = document.getElementById('google-search-input').value;
+                if (query.trim() !== "") {
+                    window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank');
+                    closeAllMenus();
+                }
+            }
+        }
+
+        function updateClock() {
+            const now = new Date();
+            const timeStr = now.getHours().toString().padStart(2, '0') + "." + 
+                            now.getMinutes().toString().padStart(2, '0') + "." + 
+                            now.getSeconds().toString().padStart(2, '0');
+            document.getElementById('clock').innerText = timeStr;
+            document.getElementById('full-date').innerText = now.toLocaleDateString('id-ID', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
+        }
+
+        function applyRipple(e) {
+            const item = e.currentTarget;
+            const oldRipples = item.querySelectorAll(".ripple");
+            oldRipples.forEach(r => r.remove());
+            const ripple = document.createElement("span");
+            const rect = item.getBoundingClientRect();
+            const diameter = Math.max(rect.width, rect.height) * 1.5;
+            const radius = diameter / 2;
+            ripple.style.width = ripple.style.height = `${diameter}px`;
+            const x = e.clientX ? (e.clientX - rect.left) : (rect.width / 2);
+            const y = e.clientY ? (e.clientY - rect.top) : (rect.height / 2);
+            ripple.style.left = `${x - radius}px`; ripple.style.top = `${y - radius}px`;
+            ripple.classList.add("ripple");
+            item.appendChild(ripple);
+            setTimeout(() => { ripple.remove(); }, 800);
+        }
+
+        async function getWeatherData() {
+            try {
+                const res = await fetch(`https://air-quality-api.open-meteo.com/v1/air-quality?latitude=-6.28&longitude=106.71&current=us_aqi,european_aqi`);
+                const weatherRes = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=-6.28&longitude=106.71&current_weather=true`);
+                const aqiData = await res.json();
+                const weatherData = await weatherRes.json();
+                document.getElementById('weather-temp').innerText = `${Math.round(weatherData.current_weather.temperature)}°C`;
+                const aqiValue = aqiData.current.european_aqi;
+                let aqiClass = 'aqi-good'; let aqiStatus = 'Baik';
+                if (aqiValue > 50) { aqiClass = 'aqi-moderate'; aqiStatus = 'Sedang'; }
+                if (aqiValue > 100) { aqiClass = 'aqi-poor'; aqiStatus = 'Buruk'; }
+                document.getElementById('aqi-container').innerHTML = `<span class="aqi-badge ${aqiClass}">AQI ${aqiValue} • ${aqiStatus}</span>`;
+            } catch (e) {}
+        }
+
+        // --- FUNGSI UPDATE MARKET DATA ---
+        async function updateMarketData() {
+            try {
+                // Pastikan URL di bawah ini sama persis dengan URL Worker milikmu
+                const response = await fetch("https://titera.searchdata.workers.dev/market-all");
+                const allData = await response.json();
+
+                // 1. Update IHSG
+                if (allData.ihsg) updateUI('stock-price', 'stock-change', allData.ihsg, false, '');
+                
+                // 2. Update USD
+                if (allData.usd) updateUI('mini-usd-price', 'mini-usd-change', allData.usd, true, 'Rp ');
+                
+                // 3. Update Emas
+                if (allData.emas) updateUI('mini-gold-price', 'mini-gold-change', allData.emas, false, '$ ');
+                
+                // 4. Update Emiten Top Indonesia (Diambil dari Cloudflare Worker-mu)
+                if (allData.bbca) updateUI('slider-bbca-price', 'slider-bbca-change', allData.bbca, true, 'Rp ');
+                if (allData.bbri) updateUI('slider-bbri-price', 'slider-bbri-change', allData.bbri, true, 'Rp ');
+                if (allData.tlkm) updateUI('slider-tlkm-price', 'slider-tlkm-change', allData.tlkm, true, 'Rp ');
+                if (allData.bmri) updateUI('slider-bmri-price', 'slider-bmri-change', allData.bmri, true, 'Rp ');
+
+            } catch (error) {
+                console.error("Gagal update data market:", error);
+                document.getElementById('stock-price').innerText = "Gagal memuat";
+                document.getElementById('mini-usd-price').innerText = "Gagal";
+                document.getElementById('mini-gold-price').innerText = "Gagal";
+            }
+        }
+
+        function updateUI(priceId, changeId, data, isRupiah, prefix = '') {
+            if (!data || !data.meta) return;
+            const meta = data.meta;
+            const current = meta.regularMarketPrice;
+            const prev = meta.chartPreviousClose;
+            const change = current - prev;
+            const percent = (change / prev) * 100;
+
+            const priceEl = document.getElementById(priceId);
+            const changeEl = document.getElementById(changeId);
+            
+            // Pengaman agar tidak error jika ID elemen belum/tidak ada
+            if(!priceEl || !changeEl) return;
+
+            // Format angka
+            priceEl.innerText = prefix + current.toLocaleString('id-ID', { 
+                minimumFractionDigits: isRupiah ? 0 : 2, 
+                maximumFractionDigits: 2 
+            });
+
+            // --- LOGIKA UNICODE & FORMAT ---
+            const isPositive = change >= 0;
+            const arrow = isPositive ? '▲' : '▼';
+            
+            // Menggunakan Math.abs untuk menghilangkan tanda minus bawaan
+            const absChange = Math.abs(change).toFixed(2);
+            const signPercent = isPositive ? '+' : ''; 
+            
+            changeEl.innerText = `${arrow} ${absChange} (${signPercent}${percent.toFixed(2)}%)`;
+            
+            // Atur warna
+            if (isPositive) {
+                changeEl.style.color = '#137333'; // Hijau Google
+                if(priceId === 'stock-price') changeEl.style.backgroundColor = '#e6f4ea';
+            } else {
+                changeEl.style.color = '#c5221f'; // Merah Google
+                if(priceId === 'stock-price') changeEl.style.backgroundColor = '#fce8e6';
+            }
+        }
+        // ------------------------------------------------
+
+        function getSkeletonHTML() {
+            return `
+                <div class="news-item" style="pointer-events: none; border-bottom: none;">
+                    <div class="news-info">
+                        <div class="skeleton" style="width: 40%; height: 14px; margin-bottom: 12px; border-radius: 4px;"></div>
+                        <div class="skeleton" style="width: 100%; height: 16px; margin-bottom: 6px; border-radius: 4px;"></div>
+                        <div class="skeleton" style="width: 80%; height: 16px; margin-bottom: 12px; border-radius: 4px;"></div>
+                        <div class="skeleton" style="width: 30%; height: 12px; border-radius: 4px;"></div>
+                    </div>
+                    <div class="skeleton" style="width: 100px; height: 72px; border-radius: 12px;"></div>
+                </div>
+            `;
+        }
+
+        function renderNews(count) {
+            const container = document.getElementById('news-container');
+            const btn = document.getElementById('load-more-btn');
+            const spinner = document.getElementById('loading-spinner');
+            const loadMoreContainer = document.getElementById('load-more-container');
+            
+            btn.style.display = 'none';
+            if (currentIndex > 0) spinner.style.display = 'block';
+
+            setTimeout(() => {
+                const nextBatch = allNewsData.slice(currentIndex, currentIndex + count);
+                nextBatch.forEach(item => {
+                    let thumb = item.enclosure?.link || item.thumbnail || (item.description?.match(/<img[^>]+src="([^">]+)"/)?.[1]);
+                    const iconUrl = `https://www.google.com/s2/favicons?sz=64&domain=${item.domain}`;
+                    const newsLink = document.createElement('a');
+                    newsLink.className = 'news-item';
+                    newsLink.href = item.link; newsLink.target = '_blank';
+                    newsLink.addEventListener('mousedown', applyRipple);
+                    
+                    const newsDate = new Date(item.pubDate.replace(' ', 'T') + 'Z');
+                    const now = new Date();
+                    let displayDate = newsDate.toLocaleTimeString('id-ID', {hour:'2-digit', minute:'2-digit'});
+                    if (newsDate.toDateString() === now.toDateString()) displayDate = `Hari ini, ${displayDate}`;
+                    else displayDate = `${newsDate.toLocaleDateString('id-ID', {day:'numeric', month:'short'})}, ${displayDate}`;
+
+                    newsLink.innerHTML = `
+                        <div class="news-info">
+                            <div class="source-wrapper">
+                                <img src="${iconUrl}" class="news-favicon" alt="icon">
+                                <span class="source-tag">${item.sourceName}</span>
+                            </div>
+                            <h3 class="news-headline">${item.title}</h3>
+                            <div class="news-time">${displayDate}</div>
+                        </div>
+                        <div class="news-img-wrapper">
+                            <img src="${thumb || 'https://via.placeholder.com/100?text=News'}" class="news-img" onload="this.parentElement.classList.add('loaded')" onerror="this.parentElement.classList.add('loaded');">
+                        </div>
+                    `;
+                    container.appendChild(newsLink);
+                });
+                
+                currentIndex += count;
+                spinner.style.display = 'none';
+                
+                if (currentIndex < allNewsData.length) {
+                  loadMoreContainer.style.display = "flex";
+                  btn.style.display = 'block';
+                } else {
+                  loadMoreContainer.style.display = "none";
+                }
+            }, currentIndex === 0 ? 0 : 800);
+        }
+
+        function handleCategoryChange(category) {
+            const targetSliderBtn = Array.from(document.querySelectorAll('.category-btn')).find(btn => btn.innerText.toLowerCase() === category);
+            if (targetSliderBtn && targetSliderBtn.classList.contains('active')) return;
+
+            document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+            if (targetSliderBtn) {
+                targetSliderBtn.classList.add('active');
+                targetSliderBtn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
+
+            document.querySelectorAll('.sidebar-cat').forEach(btn => btn.classList.remove('active'));
+            const targetSidebarBtn = Array.from(document.querySelectorAll('.sidebar-cat')).find(btn => btn.innerText.toLowerCase() === category);
+            if (targetSidebarBtn) targetSidebarBtn.classList.add('active');
+            
+            let categoryName = targetSliderBtn ? targetSliderBtn.innerText : category;
+            document.getElementById('section-title').innerHTML = `${categoryName} &rsaquo;`;
+            
+            getNews(category);
+        }
+
+        async function getNews(category = 'terkini') {
+            const container = document.getElementById('news-container');
+            const loadMoreContainer = document.getElementById('load-more-container');
+            
+            allNewsData = [];
+            currentIndex = 0;
+            container.innerHTML = getSkeletonHTML() + getSkeletonHTML() + getSkeletonHTML();
+            loadMoreContainer.style.display = 'none';
+
+            const sources = newsCategories[category];
+            
+            try {
+                const requests = sources.map(source => 
+                    fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(source.url)}`)
+                        .then(res => res.json())
+                        .then(data => data.status === 'ok' ? data.items.map(i => ({...i, sourceName: source.name, domain: source.domain})) : [])
+                        .catch(() => [])
+                );
+                const results = await Promise.all(requests);
+                allNewsData = results.flat().sort(() => Math.random() - 0.5);
+                
+                if (allNewsData.length > 0) {
+                    container.innerHTML = ''; 
+                    renderNews(10);
+                } else {
+                    setTimeout(()=> { container.innerHTML = "<p style='padding:10px;text-align:center;'>Tidak dapat memuat berita saat ini.</p>"; },2000);
+                }
+            } catch (e) { 
+                container.innerHTML = "<p style='padding:10px;text-align:center;'>Gagal memuat berita.</p>"; 
+            }
+        }
+
+        let prayerTimesToday = [];
+        async function fetchPrayerTimes() {
+            try {
+                const now = new Date();
+                const url = `https://api.myquran.com/v2/sholat/jadwal/1219/${now.getFullYear()}/${now.getMonth()+1}/${now.getDate()}`;
+                const res = await fetch(url);
+                const response = await res.json();
+                const jadwal = response.data.jadwal;
+                prayerTimesToday = [
+                    { name: 'Subuh', time: jadwal.subuh }, { name: 'Dzuhur', time: jadwal.dzuhur },
+                    { name: 'Ashar', time: jadwal.ashar }, { name: 'Maghrib', time: jadwal.maghrib },
+                    { name: 'Isya', time: jadwal.isya }
+                ];
+                updateNextPrayer();
+            } catch (e) {}
+        }
+
+        function updateNextPrayer() {
+            if (prayerTimesToday.length === 0) return;
+            const now = new Date();
+            const currentTimeStr = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+            let nextPrayer = prayerTimesToday[0];
+            for (let i = 0; i < prayerTimesToday.length; i++) {
+                if (prayerTimesToday[i].time > currentTimeStr) {
+                    nextPrayer = prayerTimesToday[i];
+                    break;
+                }
+            }
+            document.getElementById('prayer-container').innerHTML = `<span class="prayer-badge">${nextPrayer.name} ${nextPrayer.time.replace(':', '.')}</span>`;
+        }
+
+        document.getElementById('load-more-btn').addEventListener('click', () => renderNews(10));
+        setInterval(updateClock, 1000);
+        updateClock();
+        getWeatherData();
+        
+        // Panggil fungsi market data
+        updateMarketData(); 
+        
+        // getNews(); // Dimatikan karena berita pertama sudah dirender oleh robot
+        fetchPrayerTimes();
+    </script>
+</body>
+</html>
