@@ -971,37 +971,53 @@
             getNews(category);
         }
 
-        async function getNews(category = 'terkini') {
-            const container = document.getElementById('news-container');
-            const loadMoreContainer = document.getElementById('load-more-container');
-            
-            allNewsData = [];
-            currentIndex = 0;
-            container.innerHTML = getSkeletonHTML() + getSkeletonHTML() + getSkeletonHTML() + getSkeletonHTML();
-            loadMoreContainer.style.display = 'none';
+async function getNews(category = 'terkini', isInitialLoad = false) {
+    const container = document.getElementById('news-container');
+    const loadMoreContainer = document.getElementById('load-more-container');
+    const btn = document.getElementById('load-more-btn');
+    
+    // Reset data jika user klik kategori lain (bukan loading awal)
+    if (!isInitialLoad) {
+        allNewsData = [];
+        currentIndex = 0;
+        container.innerHTML = getSkeletonHTML() + getSkeletonHTML();
+        loadMoreContainer.style.display = 'none';
+    }
 
-            const sources = newsCategories[category];
-            
-            try {
-                const requests = sources.map(source => 
-                    fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(source.url)}`)
-                        .then(res => res.json())
-                        .then(data => data.status === 'ok' ? data.items.map(i => ({...i, sourceName: source.name, domain: source.domain})) : [])
-                        .catch(() => [])
-                );
-                const results = await Promise.all(requests);
-                allNewsData = results.flat().sort(() => Math.random() - 0.5);
+    const sources = newsCategories[category];
+    
+    try {
+        const requests = sources.map(source => 
+            fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(source.url)}`)
+                .then(res => res.json())
+                .then(data => data.status === 'ok' ? data.items.map(i => ({...i, sourceName: source.name, domain: source.domain})) : [])
+                .catch(() => [])
+        );
+        const results = await Promise.all(requests);
+        
+        // Gabungkan dan acak berita
+        allNewsData = results.flat().sort(() => Math.random() - 0.5);
+        
+        if (allNewsData.length > 0) {
+            if (!isInitialLoad) {
+                // Jika ganti kategori, hapus skeleton dan render dari nol
+                container.innerHTML = ''; 
+                renderNews(10);
+            } else {
+                // JIKA AWAL (BOT): Hitung jumlah berita yang sudah dipasang bot
+                currentIndex = container.querySelectorAll('.news-item').length;
                 
-                if (allNewsData.length > 0) {
-                    container.innerHTML = ''; 
-                    renderNews(10);
-                } else {
-                    setTimeout(()=> { container.innerHTML = "<p style='padding:10px;text-align:center;'>Tidak dapat memuat berita saat ini.</p>"; },2000);
+                // Jika data API ternyata lebih banyak dari berita bot, munculkan tombol
+                if (allNewsData.length > currentIndex) {
+                    loadMoreContainer.style.display = "flex";
+                    btn.style.display = 'block';
                 }
-            } catch (e) { 
-                container.innerHTML = "<p style='padding:10px;text-align:center;'>Gagal memuat berita.</p>"; 
             }
         }
+    } catch (e) { 
+        if (!isInitialLoad) container.innerHTML = "<p style='text-align:center;'>Gagal memuat berita.</p>"; 
+    }
+}
 
         let prayerTimesToday = [];
         async function fetchPrayerTimes() {
