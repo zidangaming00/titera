@@ -980,7 +980,7 @@ async function getNews(category = 'terkini', isInitialLoad = false) {
     if (!isInitialLoad) {
         allNewsData = [];
         currentIndex = 0;
-        container.innerHTML = getSkeletonHTML() + getSkeletonHTML();
+        container.innerHTML = getSkeletonHTML() + getSkeletonHTML() + getSkeletonHTML() + getSkeletonHTML();
         loadMoreContainer.style.display = 'none';
     }
 
