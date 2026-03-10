@@ -56,7 +56,7 @@ async function masakHTML() {
 
     // 4. Buka template.html, ganti penanda dengan HTML berita matang
     let template = fs.readFileSync('template.html', 'utf-8');
-    template = template.replace('', htmlBerita);
+    template = template.replace('<!-- BERITA_TERKINI_DISINI -->', htmlBerita);
 
     // 5. Simpan hasilnya menjadi index.html
     fs.writeFileSync('index.html', template);
