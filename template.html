@@ -943,7 +943,7 @@
                     const now = new Date();
                     let displayDate = newsDate.toLocaleTimeString('id-ID', {hour:'2-digit', minute:'2-digit'});
                     if (newsDate.toDateString() === now.toDateString()) displayDate = `Hari ini, ${displayDate}`;
-                    else displayDate = `${newsDate.toLocaleDateString('id-ID', {day:'numeric', month:'short'})}, ${displayDate}`;
+                    else displayDate = `${newsDate.toLocaleDateString('id-ID', {day:'numeric', month:'short', year: 'numeric'})}, ${displayDate}`;
 
                     newsLink.innerHTML = `
                         <div class="news-info">
