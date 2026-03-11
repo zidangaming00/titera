@@ -444,7 +444,18 @@
         .news-img-wrapper.loaded .news-img { opacity: 1; }
         .news-item:hover .news-img { transform: scale(1.08); }
 
-        .load-more-container { padding: 20px; display: flex; flex-direction: column; align-items: center; background: #fff; gap: 12px; }
+        /* PERBAIKAN 2: Menambahkan min-height, box-sizing, dan justify-content */
+        .load-more-container { 
+            padding: 20px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center;
+            background: #fff; 
+            gap: 12px; 
+            min-height: 80px; 
+            box-sizing: border-box;
+        }
 
         #load-more-btn {
             background: none;
@@ -690,7 +701,7 @@
 
         <div class="card news-card">
             <div style="padding: 16px 20px; border-bottom: 1px solid #f1f3f4; display: flex; align-items: center; gap: 12px;">
-                <div class="stock-icon" style="padding: 8px;">
+                <div class="stock-icon">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
                         <polyline points="14 2 14 8 20 8"></polyline>
@@ -702,147 +713,6 @@
                 <h2 style="margin: 0; font-size: 1.15rem; color: var(--google-blue); font-weight: 600;" id="section-title">Terkini &rsaquo;</h2>
             </div>
             <div id="news-container">
-                
-        <a class="news-item" href="https://www.cnbcindonesia.com/news/20260311070056-4-717865/keras-prabowo-sebut-banyak-pemimpin-super-power-tak-jaga-perdamaian" target="_blank">
-            <div class="news-info">
-                <div class="source-wrapper">
-                    <img src="https://www.google.com/s2/favicons?sz=64&domain=cnbcindonesia.com" class="news-favicon" alt="icon">
-                    <span class="source-tag">CNBC Indo</span>
-                </div>
-                <h3 class="news-headline">Keras! Prabowo Sebut Banyak Pemimpin 'Super Power' Tak Jaga Perdamaian</h3>
-                <div class="news-time">00.10</div>
-            </div>
-            <div class="news-img-wrapper loaded">
-                <img src="https://awsimages.detik.net.id/visual/2026/03/03/prabowo-undang-mantan-presiden-dan-wakil-presiden-ri-muchlis-jr-biro-pers-sekretariat-presiden-1772549513817_169.jpeg?w=1200&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
-            </div>
-        </a>
-        
-        <a class="news-item" href="https://www.antaranews.com/berita/5466923/iran-akan-hadang-ekspor-minyak-timteng-ke-as-israel" target="_blank">
-            <div class="news-info">
-                <div class="source-wrapper">
-                    <img src="https://www.google.com/s2/favicons?sz=64&domain=antaranews.com" class="news-favicon" alt="icon">
-                    <span class="source-tag">Antara</span>
-                </div>
-                <h3 class="news-headline">Iran akan hadang ekspor minyak TimTeng ke AS, Israel</h3>
-                <div class="news-time">01.59</div>
-            </div>
-            <div class="news-img-wrapper loaded">
-                <img src="https://img.antaranews.com/cache/800x533/2026/03/04/Hormuz.jpg" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
-            </div>
-        </a>
-        
-        <a class="news-item" href="https://www.cnbcindonesia.com/news/20260311053204-4-717854/jenderal-iran-ancam-trump-hati-hati-bisa-dieliminasi" target="_blank">
-            <div class="news-info">
-                <div class="source-wrapper">
-                    <img src="https://www.google.com/s2/favicons?sz=64&domain=cnbcindonesia.com" class="news-favicon" alt="icon">
-                    <span class="source-tag">CNBC Indo</span>
-                </div>
-                <h3 class="news-headline">Jenderal Iran Ancam Trump: Hati-Hati Bisa 'Dieliminasi'</h3>
-                <div class="news-time">23.10</div>
-            </div>
-            <div class="news-img-wrapper loaded">
-                <img src="https://awsimages.detik.net.id/visual/2026/01/22/presiden-as-donald-trump-mengambil-bagian-dalam-pengumuman-piagam-untuk-inisiatif-dewan-perdamaiannya-yang-bertujuan-untuk-men-1769083541589_169.jpeg?w=1200&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
-            </div>
-        </a>
-        
-        <a class="news-item" href="https://www.cnbcindonesia.com/news/20260311053824-4-717853/20-update-baru-perang-iran-140-tentara-as-luka-trump-omong-doang" target="_blank">
-            <div class="news-info">
-                <div class="source-wrapper">
-                    <img src="https://www.google.com/s2/favicons?sz=64&domain=cnbcindonesia.com" class="news-favicon" alt="icon">
-                    <span class="source-tag">CNBC Indo</span>
-                </div>
-                <h3 class="news-headline">20 Update Baru Perang Iran, 140 Tentara AS Luka-Trump Omong Doang</h3>
-                <div class="news-time">22.55</div>
-            </div>
-            <div class="news-img-wrapper loaded">
-                <img src="https://awsimages.detik.net.id/visual/2026/03/08/asap-tebal-memenuhi-langit-di-atas-ibu-kota-iran-saat-kilang-minyak-shahran-di-teheran-dilaporkan-terkena-serangan-sabtu-73202-1772949216747_169.png?w=1200&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
-            </div>
-        </a>
-        
-        <a class="news-item" href="https://www.antaranews.com/berita/5466939/rupiah-pada-rabu-pagi-menguat-jadi-rp16851-per-dolar-as" target="_blank">
-            <div class="news-info">
-                <div class="source-wrapper">
-                    <img src="https://www.google.com/s2/favicons?sz=64&domain=antaranews.com" class="news-favicon" alt="icon">
-                    <span class="source-tag">Antara</span>
-                </div>
-                <h3 class="news-headline">Rupiah pada Rabu pagi menguat jadi Rp16.851 per dolar AS</h3>
-                <div class="news-time">02.09</div>
-            </div>
-            <div class="news-img-wrapper loaded">
-                <img src="https://img.antaranews.com/cache/800x533/2026/03/10/7E2DC1E6-43DA-4C75-BF11-2C12EADEDDD2.jpeg" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
-            </div>
-        </a>
-        
-        <a class="news-item" href="https://www.cnbcindonesia.com/news/20260310204824-4-717841/dana-bos-madrasah-bop-ra-rp45-t-cair-bisa-buat-honor-guru-non-asn" target="_blank">
-            <div class="news-info">
-                <div class="source-wrapper">
-                    <img src="https://www.google.com/s2/favicons?sz=64&domain=cnbcindonesia.com" class="news-favicon" alt="icon">
-                    <span class="source-tag">CNBC Indo</span>
-                </div>
-                <h3 class="news-headline">Dana BOS Madrasah dan BOP RA Rp4,5 T Cair, Bisa Buat Honor Guru Non ASN</h3>
-                <div class="news-time">23.55</div>
-            </div>
-            <div class="news-img-wrapper loaded">
-                <img src="https://awsimages.detik.net.id/visual/2026/03/10/direktur-jenderal-pendidikan-islam-kementerian-agama-amien-suyitno-1773150854783_169.jpeg?w=1200&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
-            </div>
-        </a>
-        
-        <a class="news-item" href="https://www.cnbcindonesia.com/news/20260311062319-4-717855/resesi-resesi-resesi-perang-iran-bawa-amerika-ke-jurang-resesi" target="_blank">
-            <div class="news-info">
-                <div class="source-wrapper">
-                    <img src="https://www.google.com/s2/favicons?sz=64&domain=cnbcindonesia.com" class="news-favicon" alt="icon">
-                    <span class="source-tag">CNBC Indo</span>
-                </div>
-                <h3 class="news-headline">Resesi, Resesi, Resesi! Perang Iran Bawa Amerika ke Jurang Resesi</h3>
-                <div class="news-time">23.27</div>
-            </div>
-            <div class="news-img-wrapper loaded">
-                <img src="https://awsimages.detik.net.id/visual/2019/08/15/b4ec13f2-42ff-4723-9ffa-66214d3f216a_169.jpeg?w=1200&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
-            </div>
-        </a>
-        
-        <a class="news-item" href="https://www.antaranews.com/berita/5466927/kemenekraf-kemenbud-sepakat-perkuat-sinergi-pemajuan-kebudayaan" target="_blank">
-            <div class="news-info">
-                <div class="source-wrapper">
-                    <img src="https://www.google.com/s2/favicons?sz=64&domain=antaranews.com" class="news-favicon" alt="icon">
-                    <span class="source-tag">Antara</span>
-                </div>
-                <h3 class="news-headline">Kemenekraf-Kemenbud sepakat perkuat sinergi pemajuan kebudayaan</h3>
-                <div class="news-time">02.00</div>
-            </div>
-            <div class="news-img-wrapper loaded">
-                <img src="https://img.antaranews.com/cache/800x533/2026/03/11/1000351991.jpg" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
-            </div>
-        </a>
-        
-        <a class="news-item" href="https://www.cnbcindonesia.com/news/20260311044512-4-717850/perang-di-arab-makan-korban-tetangga-ri-thailand-vietnam-filipina" target="_blank">
-            <div class="news-info">
-                <div class="source-wrapper">
-                    <img src="https://www.google.com/s2/favicons?sz=64&domain=cnbcindonesia.com" class="news-favicon" alt="icon">
-                    <span class="source-tag">CNBC Indo</span>
-                </div>
-                <h3 class="news-headline">Perang di Arab 'Makan Korban' Tetangga RI: Thailand-Vietnam-Filipina</h3>
-                <div class="news-time">22.30</div>
-            </div>
-            <div class="news-img-wrapper loaded">
-                <img src="https://awsimages.detik.net.id/visual/2026/02/28/kepulan-asap-menjulang-ke-udara-setelah-rentetan-ledakan-terdengar-di-area-manama-bahrain-pada-sabtu-282-waktu-setempat-1772283132500_169.jpeg?w=1200&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
-            </div>
-        </a>
-        
-        <a class="news-item" href="https://www.cnbcindonesia.com/news/20260311064850-4-717858/tok-iran-menang-perang-lawan-as-israel-di-timur-tengah-ini-buktinya" target="_blank">
-            <div class="news-info">
-                <div class="source-wrapper">
-                    <img src="https://www.google.com/s2/favicons?sz=64&domain=cnbcindonesia.com" class="news-favicon" alt="icon">
-                    <span class="source-tag">CNBC Indo</span>
-                </div>
-                <h3 class="news-headline">Tok! Iran Menang Perang Lawan AS-Israel di Timur Tengah, Ini Buktinya</h3>
-                <div class="news-time">23.58</div>
-            </div>
-            <div class="news-img-wrapper loaded">
-                <img src="https://awsimages.detik.net.id/visual/2026/03/05/kapal-perusak-berpeluru-kendali-kelas-arleigh-burke-angkatan-laut-as-uss-delbert-d-black-menembakkan-rudal-serangan-darat-toma-1772691499828_169.jpeg?w=1200&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
-            </div>
-        </a>
-        
                 </div>
             
             <div class="load-more-container" id="load-more-container">
