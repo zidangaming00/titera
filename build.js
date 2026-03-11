@@ -35,7 +35,10 @@ async function masakHTML() {
         const iconUrl = `https://www.google.com/s2/favicons?sz=64&domain=${item.domain}`;
         
         const newsDate = new Date(item.pubDate.replace(' ', 'T') + 'Z');
-        let displayDate = newsDate.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+        const now = new Date();
+        let displayDate = newsDate.toLocaleTimeString('id-ID', {hour:'2-digit', minute:'2-digit'});
+        if (newsDate.toDateString() === now.toDateString()) displayDate = `Hari ini, ${displayDate}`;
+        else displayDate = `${newsDate.toLocaleDateString('id-ID', {day:'numeric', month:'short'})}, ${displayDate}`;
 
         htmlBerita += `
         <a class="news-item" href="${item.link}" target="_blank">
