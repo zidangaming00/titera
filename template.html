@@ -152,7 +152,7 @@
         }
 
         .branding h1 {
-            user-select: none;
+           user-select: none;
             margin: 0;
             font-size: 1.25rem;
             font-weight: 700;
@@ -167,103 +167,21 @@
             padding: 20px;
             border: 1px solid var(--border-light);
             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-            box-sizing: border-box;
         }
 
-        /* --- PRAYER & WEATHER FLEXBOX LAYOUT & ANIMATION (BARENGAN) --- */
         .header-grid {
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
             gap: 12px;
-            align-items: stretch; 
-        }
-
-        #prayer-card {
-            width: calc(55% - 6px);
-            cursor: pointer;
-            overflow: hidden;
-            -webkit-tap-highlight-color: transparent;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            /* Timing disamakan ke 0.4s agar sinkron dengan FLIP js */
-            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s, border-color 0.4s;
-        }
-
-        #weather-card {
-            width: calc(45% - 6px);
-            display: flex;
-            flex-direction: column;
-            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .header-grid.expanded #prayer-card,
-        .header-grid.expanded #weather-card {
-            width: 100%;
-            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s, border-color 0.4s;
-        }
-
-        #prayer-card.expanded {
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            border-color: rgba(26, 115, 232, 0.3);
         }
 
         #clock { 
             font-size: 1.6rem; margin: 0; font-weight: 700; color: var(--text-dark);
         }
+        
         #full-date { color: var(--text-gray); font-size: 0.75rem; margin-top: 4px; }
 
-        #prayer-container {
-            margin-top: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            gap: 8px;
-        }
-        
-        #full-prayer-schedule {
-            max-height: 0;
-            opacity: 0;
-            margin-top: 0;
-            padding-top: 0;
-            border-top: 1px dashed transparent;
-            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, margin 0.4s ease, padding 0.4s ease, border-color 0.4s ease;
-        }
-        
-        #prayer-card.expanded #full-prayer-schedule {
-            max-height: 250px;
-            opacity: 1;
-            margin-top: 12px;
-            padding-top: 12px;
-            border-top: 1px dashed var(--border-light);
-            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease, margin 0.4s ease, padding 0.4s ease, border-color 0.4s ease;
-        }
-
-        .prayer-list-item {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.85rem;
-            padding: 8px 0;
-            color: var(--text-dark);
-            border-bottom: 1px solid #f1f3f4;
-        }
-        .prayer-list-item:last-child { border-bottom: none; padding-bottom: 0; }
-        .prayer-list-item.highlight {
-            color: var(--google-blue);
-            font-weight: 700;
-            background: rgba(26, 115, 232, 0.05);
-            border-radius: 6px;
-            padding: 8px 6px;
-        }
-
-        .prayer-badge {
-            font-size: 0.7rem; font-weight: 700; padding: 4px 8px; border-radius: 6px;
-            display: inline-block; background: rgba(26, 115, 232, 0.08); color: var(--google-blue);
-        }
-
-        .weather-content { 
-            display: flex; justify-content: space-between; align-items: center; 
-        }
+        .weather-content { display: flex; justify-content: space-between; align-items: center; }
         #weather-temp { font-size: 1.6rem; font-weight: 700; margin: 0; }
         .weather-info p { margin: 0; color: var(--text-gray); font-size: 0.75rem; }
         .weather-icon-wrapper img { width: 36px; height: 36px; }
@@ -550,20 +468,27 @@
             animation: spin 0.8s linear infinite;
             display: none;
         }
+        #prayer-container { margin-top: 10px; }
+        .prayer-badge {
+            font-size: 0.7rem; font-weight: 700; padding: 4px 8px; border-radius: 6px;
+            display: inline-block; background: rgba(26, 115, 232, 0.08); color: var(--google-blue);
+        }
 
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* --- OPTIMASI DESKTOP FINAL --- */
+
+/* --- OPTIMASI DESKTOP FINAL --- */
         @media (min-width: 900px) {
             .app-container {
                 max-width: 1000px;
-                display: block; 
+                display: block; /* Mematikan flexbox bawaan mobile */
             }
 
             .header-bar {
                 margin-bottom: 24px;
             }
 
+            /* --- KOLOM KANAN: WIDGET (Di-float ke kanan) --- */
             .header-grid {
                 float: right;
                 clear: right;
@@ -573,9 +498,10 @@
                 gap: 12px;
                 margin-bottom: 12px;
             }
-            
-            #prayer-card, #weather-card {
-                width: 100% !important; /* Paksa lebar penuh saat di desktop sidebar */
+
+            .header-grid .card {
+                width: 100%;
+                box-sizing: border-box; /* Kunci rahasia 1: Mencegah padding merusak ukuran */
             }
 
             .stock-card {
@@ -583,12 +509,13 @@
                 clear: right;
                 width: 320px;
                 margin-bottom: 12px;
-                box-sizing: border-box; 
+                box-sizing: border-box; /* Kunci rahasia 1: Memastikan lebar sejajar persis */
             }
 
+            /* --- KOLOM KIRI: BERITA (Tanpa float, biarkan mengalir normal) --- */
             .category-wrapper {
-                width: auto; 
-                margin-right: 344px; 
+                width: auto; /* Menimpa setting width: 100% dari versi mobile */
+                margin-right: 344px; /* Kunci rahasia 2: Sisakan ruang (320px + 24px gap) untuk widget di kanan */
                 margin-bottom: 12px;
                 padding-bottom: 0;
             }
@@ -599,12 +526,14 @@
                 box-sizing: border-box;
             }
 
+            /* Clearfix: Mencegah background container error karena efek float */
             .app-container::after {
                 content: "";
                 display: table;
                 clear: both;
             }
 
+            /* Estetika: Membuat berita jadi 2 kolom di layar lebar */
             #news-container {
                 display: grid;
                 grid-template-columns: repeat(2, 1fr);
@@ -612,6 +541,7 @@
                 padding: 16px;
             }
 
+            /* Menambahkan border agar tidak menyatu saat jadi 2 kolom */
             .news-item {
                 border: 1px solid var(--border-light);
                 border-radius: 12px;
@@ -670,26 +600,20 @@
             </button>
         </div>
 
-        <div class="header-grid" id="header-grid">
-            <div class="card" id="prayer-card" style="padding: 16px;" onclick="togglePrayerCard()">
-                <div style="flex-grow: 1;">
-                    <h1 id="clock">00.00.00</h1>
-                    <p id="full-date">Memuat tanggal...</p>
-                </div>
-                <div>
-                    <div id="prayer-container"></div>
-                    <div id="full-prayer-schedule"></div>
-                </div>
+        <div class="header-grid">
+            <div class="card" style="padding: 16px;">
+                <h1 id="clock">00.00.00</h1>
+                <p id="full-date">Memuat tanggal...</p>
+                <div id="prayer-container"></div>
             </div>
-            
-            <div class="card" id="weather-card" style="padding: 16px;">
-                <div class="weather-content" style="height: 100%;">
-                    <div style="display: flex; flex-direction: column; justify-content: center;">
+            <div class="card" style="padding: 16px;">
+                <div class="weather-content">
+                    <div>
                         <h2 id="weather-temp">--°C</h2>
                         <p style="font-size: 0.75rem; color: var(--text-gray); margin:0;">Tangsel</p>
                         <div id="aqi-container"></div>
                     </div>
-                    <div class="weather-icon-wrapper" style="display: flex; align-items: center;">
+                    <div class="weather-icon-wrapper">
                         <img id="weather-icon-img" src="https://ssl.gstatic.com/onebox/weather/64/partly_cloudy.png">
                     </div>
                 </div>
@@ -778,6 +702,7 @@
                 <h2 style="margin: 0; font-size: 1.15rem; color: var(--google-blue); font-weight: 600;" id="section-title">Terkini &rsaquo;</h2>
             </div>
             <div id="news-container">
+                <!-- BERITA_TERKINI_DISINI -->
                 </div>
             
             <div class="load-more-container" id="load-more-container" style="min-height: 80px; box-sizing: border-box; justify-content: center;">
@@ -913,7 +838,7 @@
                 // 3. Update Emas
                 if (allData.emas) updateUI('mini-gold-price', 'mini-gold-change', allData.emas, false, '$ ');
                 
-                // 4. Update Emiten Top Indonesia
+                // 4. Update Emiten Top Indonesia (Diambil dari Cloudflare Worker-mu)
                 if (allData.bbca) updateUI('slider-bbca-price', 'slider-bbca-change', allData.bbca, true, 'Rp ');
                 if (allData.bbri) updateUI('slider-bbri-price', 'slider-bbri-change', allData.bbri, true, 'Rp ');
                 if (allData.tlkm) updateUI('slider-tlkm-price', 'slider-tlkm-change', allData.tlkm, true, 'Rp ');
@@ -1055,54 +980,55 @@
             getNews(category);
         }
 
-        async function getNews(category = 'terkini', isInitialLoad = false) {
-            const container = document.getElementById('news-container');
-            const loadMoreContainer = document.getElementById('load-more-container');
-            const btn = document.getElementById('load-more-btn');
-            
-            // Reset data jika user klik kategori lain (bukan loading awal)
-            if (!isInitialLoad) {
-                allNewsData = [];
-                currentIndex = 0;
-                container.innerHTML = getSkeletonHTML() + getSkeletonHTML() + getSkeletonHTML() + getSkeletonHTML();
-                loadMoreContainer.style.display = 'none';
-            }
+async function getNews(category = 'terkini', isInitialLoad = false) {
+    const container = document.getElementById('news-container');
+    const loadMoreContainer = document.getElementById('load-more-container');
+    const btn = document.getElementById('load-more-btn');
+    
+    // Reset data jika user klik kategori lain (bukan loading awal)
+    if (!isInitialLoad) {
+        allNewsData = [];
+        currentIndex = 0;
+        container.innerHTML = getSkeletonHTML() + getSkeletonHTML() + getSkeletonHTML() + getSkeletonHTML();
+        loadMoreContainer.style.display = 'none';
+    }
 
-            const sources = newsCategories[category];
-            
-            try {
-                const requests = sources.map(source => 
-                    fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(source.url)}`)
-                        .then(res => res.json())
-                        .then(data => data.status === 'ok' ? data.items.map(i => ({...i, sourceName: source.name, domain: source.domain})) : [])
-                        .catch(() => [])
-                );
-                const results = await Promise.all(requests);
+    const sources = newsCategories[category];
+    
+    try {
+        const requests = sources.map(source => 
+            fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(source.url)}`)
+                .then(res => res.json())
+                .then(data => data.status === 'ok' ? data.items.map(i => ({...i, sourceName: source.name, domain: source.domain})) : [])
+                .catch(() => [])
+        );
+        const results = await Promise.all(requests);
+        
+        // Gabungkan dan acak berita
+        allNewsData = results.flat().sort(() => Math.random() - 0.5);
+        
+        if (allNewsData.length > 0) {
+            if (!isInitialLoad) {
+                // Jika ganti kategori, hapus skeleton dan render dari nol
+                container.innerHTML = ''; 
+                renderNews(10);
+            } else {
+                // JIKA AWAL (BOT): Hitung jumlah berita yang sudah dipasang bot
+                currentIndex = container.querySelectorAll('.news-item').length;
                 
-                // Gabungkan dan acak berita
-                allNewsData = results.flat().sort(() => Math.random() - 0.5);
-                
-                if (allNewsData.length > 0) {
-                    if (!isInitialLoad) {
-                        // Jika ganti kategori, hapus skeleton dan render dari nol
-                        container.innerHTML = ''; 
-                        renderNews(10);
-                    } else {
-                        // JIKA AWAL (BOT): Hitung jumlah berita yang sudah dipasang bot
-                        currentIndex = container.querySelectorAll('.news-item').length;
-                        
-                        // Jika data API ternyata lebih banyak dari berita bot, munculkan tombol
-                        if (allNewsData.length > currentIndex) {
-                            loadMoreContainer.style.display = "flex";
-                            btn.style.display = 'block';
-                        }
-                    }
+                // Jika data API ternyata lebih banyak dari berita bot, munculkan tombol
+                if (allNewsData.length > currentIndex) {
+                    loadMoreContainer.style.display = "flex";
+                    btn.style.display = 'block';
                 }
-            } catch (e) { 
-                if (!isInitialLoad) container.innerHTML = "<p style='text-align:center;'>Gagal memuat berita.</p>"; 
             }
         }
+    } catch (e) { 
+        if (!isInitialLoad) container.innerHTML = "<p style='text-align:center;'>Gagal memuat berita.</p>"; 
+    }
+}
 
+        
         let prayerTimesToday = [];
         async function fetchPrayerTimes() {
             try {
@@ -1124,110 +1050,28 @@
             if (prayerTimesToday.length === 0) return;
             const now = new Date();
             const currentTimeStr = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
-            
             let nextPrayer = prayerTimesToday[0];
-            let nextPrayerIndex = 0;
-            
             for (let i = 0; i < prayerTimesToday.length; i++) {
                 if (prayerTimesToday[i].time > currentTimeStr) {
                     nextPrayer = prayerTimesToday[i];
-                    nextPrayerIndex = i;
                     break;
                 }
             }
-            
-            // Ikon Minimalis pengganti "Jadwal ▼"
-            document.getElementById('prayer-container').innerHTML = `
-                <span class="prayer-badge">${nextPrayer.name} ${nextPrayer.time.replace(':', '.')}</span>
-                <span id="prayer-toggle-icon" style="display: flex; align-items: center; justify-content: center; width: 26px; height: 26px; background: rgba(26, 115, 232, 0.1); color: var(--google-blue); border-radius: 6px; transition: 0.3s;">
-                    <svg id="chevron-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="transition: transform 0.3s;">
-                        <polyline points="6 9 12 15 18 9"></polyline>
-                    </svg>
-                </span>
-            `;
-
-            const fullScheduleContainer = document.getElementById('full-prayer-schedule');
-            let scheduleHTML = '';
-            prayerTimesToday.forEach((prayer, index) => {
-                const isNext = index === nextPrayerIndex ? 'highlight' : '';
-                scheduleHTML += `
-                    <div class="prayer-list-item ${isNext}">
-                        <span>${prayer.name}</span>
-                        <span>${prayer.time}</span>
-                    </div>
-                `;
-            });
-            fullScheduleContainer.innerHTML = scheduleHTML;
+            document.getElementById('prayer-container').innerHTML = `<span class="prayer-badge">${nextPrayer.name} ${nextPrayer.time.replace(':', '.')}</span>`;
         }
 
-        // --- UPDATE PADA FUNGSI TOGGLE PRAYER CARD ---
-        function togglePrayerCard() {
-            const headerGrid = document.getElementById('header-grid');
-            const card = document.getElementById('prayer-card');
-            const weatherCard = document.getElementById('weather-card');
-            const icon = document.getElementById('prayer-toggle-icon');
-            const chevron = document.getElementById('chevron-svg');
-            
-            // ANIMASI FLIP: 1. Rekam posisi awal kotak weather sebelum layout berubah
-            const firstRect = weatherCard.getBoundingClientRect();
+// Listener untuk tombol
+document.getElementById('load-more-btn').addEventListener('click', () => renderNews(10));
 
-            // 2. Terapkan kelas CSS baru (mengubah DOM & layout secara instan)
-            headerGrid.classList.toggle('expanded');
-            card.classList.toggle('expanded');
-            
-            // 3. Rekam posisi kotak weather setelah layout berubah ke baris baru/lama
-            const lastRect = weatherCard.getBoundingClientRect();
-            
-            // 4. Hitung perbedaan jarak pergerakannya
-            const invertX = firstRect.left - lastRect.left;
-            const invertY = firstRect.top - lastRect.top;
+// Interval jam & cuaca
+setInterval(updateClock, 1000);
+updateClock();
+getWeatherData();
+updateMarketData(); 
+fetchPrayerTimes();
 
-            // Bersihkan timer pencegah bug bila di-klik secara brutal
-            if (weatherCard.dataset.timeoutId) {
-                clearTimeout(weatherCard.dataset.timeoutId);
-            }
-
-            // 5. Geser kotak weather kembali ke lokasi semula secara paksa dan instan
-            weatherCard.style.transition = 'none';
-            weatherCard.style.transform = `translate(${invertX}px, ${invertY}px)`;
-
-            // Paksa browser membaca ulang styling agar transform diterapkan tanpa dianimasikan (Reflow)
-            weatherCard.offsetHeight; 
-
-            // 6. Jalankan animasi perpindahan (kembali ke sumbu aslinya alias 0,0)
-            weatherCard.style.transition = 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), width 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
-            weatherCard.style.transform = 'translate(0, 0)';
-
-            // 7. Bersihkan sisa gaya bawaan JavaScript setelah animasi dipastikan usai
-            weatherCard.dataset.timeoutId = setTimeout(() => {
-                weatherCard.style.transition = '';
-                weatherCard.style.transform = '';
-            }, 400);
-
-            // Perubahan visual warna pada ikon toggle jadwal
-            if (card.classList.contains('expanded')) {
-                icon.style.background = "rgba(234, 67, 53, 0.1)";
-                icon.style.color = "#ea4335"; 
-                chevron.style.transform = "rotate(180deg)";
-            } else {
-                icon.style.background = "rgba(26, 115, 232, 0.1)";
-                icon.style.color = "var(--google-blue)";
-                chevron.style.transform = "rotate(0deg)";
-            }
-        }
-
-        // Listener untuk tombol
-        document.getElementById('load-more-btn').addEventListener('click', () => renderNews(10));
-
-        // Interval jam & cuaca
-        setInterval(updateClock, 1000);
-        updateClock();
-        getWeatherData();
-        updateMarketData(); 
-        fetchPrayerTimes();
-
-        // SINKRONISASI: Isi data di balik layar tanpa menghapus berita dari bot
-        getNews('terkini', true); 
+// SINKRONISASI: Isi data di balik layar tanpa menghapus berita dari bot
+getNews('terkini', true); 
 
     </script>
 </body>
