@@ -444,18 +444,7 @@
         .news-img-wrapper.loaded .news-img { opacity: 1; }
         .news-item:hover .news-img { transform: scale(1.08); }
 
-        /* PERBAIKAN 2: Menambahkan min-height, box-sizing, dan justify-content */
-        .load-more-container { 
-            padding: 20px; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center;
-            background: #fff; 
-            gap: 12px; 
-            min-height: 80px; 
-            box-sizing: border-box;
-        }
+        .load-more-container { padding: 20px; display: flex; flex-direction: column; align-items: center; background: #fff; gap: 12px; }
 
         #load-more-btn {
             background: none;
@@ -715,7 +704,7 @@
             <div id="news-container">
                 </div>
             
-            <div class="load-more-container" id="load-more-container">
+            <div class="load-more-container" id="load-more-container" style="min-height: 80px; box-sizing: border-box; justify-content: center;">
                 <div id="loading-spinner" class="spinner"></div>
                 <button id="load-more-btn">Muat lebih banyak</button>
             </div>
