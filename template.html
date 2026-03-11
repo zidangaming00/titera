@@ -169,12 +169,6 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
         }
 
-        .header-grid {
-            display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
-            gap: 12px;
-        }
-
         #clock { 
             font-size: 1.6rem; margin: 0; font-weight: 700; color: var(--text-dark);
         }
@@ -468,7 +462,7 @@
             animation: spin 0.8s linear infinite;
             display: none;
         }
-        #prayer-container { margin-top: 10px; }
+
         .prayer-badge {
             font-size: 0.7rem; font-weight: 700; padding: 4px 8px; border-radius: 6px;
             display: inline-block; background: rgba(26, 115, 232, 0.08); color: var(--google-blue);
@@ -476,6 +470,85 @@
 
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
+        /* --- PRAYER & WEATHER FLEXBOX LAYOUT & ANIMATION --- */
+        .header-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: stretch; 
+        }
+
+        #prayer-card {
+            width: calc(55% - 6px);
+            cursor: pointer;
+            overflow: hidden;
+            -webkit-tap-highlight-color: transparent;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s, border-color 0.4s;
+        }
+
+        #weather-card {
+            width: calc(45% - 6px);
+            display: flex;
+            flex-direction: column;
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .header-grid.expanded #prayer-card,
+        .header-grid.expanded #weather-card {
+            width: 100%;
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s, border-color 0.4s;
+        }
+
+        #prayer-card.expanded {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-color: rgba(26, 115, 232, 0.3);
+        }
+
+        #prayer-container {
+            margin-top: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 8px;
+        }
+        
+        #full-prayer-schedule {
+            max-height: 0;
+            opacity: 0;
+            margin-top: 0;
+            padding-top: 0;
+            border-top: 1px dashed transparent;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, margin 0.4s ease, padding 0.4s ease, border-color 0.4s ease;
+        }
+        
+        #prayer-card.expanded #full-prayer-schedule {
+            max-height: 250px;
+            opacity: 1;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px dashed var(--border-light);
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease, margin 0.4s ease, padding 0.4s ease, border-color 0.4s ease;
+        }
+
+        .prayer-list-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            padding: 8px 0;
+            color: var(--text-dark);
+            border-bottom: 1px solid #f1f3f4;
+        }
+        .prayer-list-item:last-child { border-bottom: none; padding-bottom: 0; }
+        .prayer-list-item.highlight {
+            color: var(--google-blue);
+            font-weight: 700;
+            background: rgba(26, 115, 232, 0.05);
+            border-radius: 6px;
+            padding: 8px 6px;
+        }
 
 /* --- OPTIMASI DESKTOP FINAL --- */
         @media (min-width: 900px) {
@@ -497,6 +570,9 @@
                 flex-direction: column;
                 gap: 12px;
                 margin-bottom: 12px;
+            }
+            #prayer-card, #weather-card {
+                width: 100% !important;
             }
 
             .header-grid .card {
@@ -600,20 +676,26 @@
             </button>
         </div>
 
-        <div class="header-grid">
-            <div class="card" style="padding: 16px;">
-                <h1 id="clock">00.00.00</h1>
-                <p id="full-date">Memuat tanggal...</p>
-                <div id="prayer-container"></div>
+        <div class="header-grid" id="header-grid">
+            <div class="card" id="prayer-card" style="padding: 16px;" onclick="togglePrayerCard()">
+                <div style="flex-grow: 1;">
+                    <h1 id="clock">00.00.00</h1>
+                    <p id="full-date">Memuat tanggal...</p>
+                </div>
+                <div>
+                    <div id="prayer-container"></div>
+                    <div id="full-prayer-schedule"></div>
+                </div>
             </div>
-            <div class="card" style="padding: 16px;">
-                <div class="weather-content">
-                    <div>
+            
+            <div class="card" id="weather-card" style="padding: 16px;">
+                <div class="weather-content" style="height: 100%;">
+                    <div style="display: flex; flex-direction: column; justify-content: center;">
                         <h2 id="weather-temp">--°C</h2>
                         <p style="font-size: 0.75rem; color: var(--text-gray); margin:0;">Tangsel</p>
                         <div id="aqi-container"></div>
                     </div>
-                    <div class="weather-icon-wrapper">
+                    <div class="weather-icon-wrapper" style="display: flex; align-items: center;">
                         <img id="weather-icon-img" src="https://ssl.gstatic.com/onebox/weather/64/partly_cloudy.png">
                     </div>
                 </div>
@@ -1046,18 +1128,90 @@ async function getNews(category = 'terkini', isInitialLoad = false) {
             } catch (e) {}
         }
 
-        function updateNextPrayer() {
+function updateNextPrayer() {
             if (prayerTimesToday.length === 0) return;
             const now = new Date();
             const currentTimeStr = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+            
             let nextPrayer = prayerTimesToday[0];
+            let nextPrayerIndex = 0;
+            
             for (let i = 0; i < prayerTimesToday.length; i++) {
                 if (prayerTimesToday[i].time > currentTimeStr) {
                     nextPrayer = prayerTimesToday[i];
+                    nextPrayerIndex = i;
                     break;
                 }
             }
-            document.getElementById('prayer-container').innerHTML = `<span class="prayer-badge">${nextPrayer.name} ${nextPrayer.time.replace(':', '.')}</span>`;
+            
+            document.getElementById('prayer-container').innerHTML = `
+                <span class="prayer-badge">${nextPrayer.name} ${nextPrayer.time.replace(':', '.')}</span>
+                <span id="prayer-toggle-icon" style="display: flex; align-items: center; justify-content: center; width: 26px; height: 26px; background: rgba(26, 115, 232, 0.1); color: var(--google-blue); border-radius: 6px; transition: 0.3s;">
+                    <svg id="chevron-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="transition: transform 0.3s;">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </span>
+            `;
+
+            const fullScheduleContainer = document.getElementById('full-prayer-schedule');
+            let scheduleHTML = '';
+            prayerTimesToday.forEach((prayer, index) => {
+                const isNext = index === nextPrayerIndex ? 'highlight' : '';
+                scheduleHTML += `
+                    <div class="prayer-list-item ${isNext}">
+                        <span>${prayer.name}</span>
+                        <span>${prayer.time}</span>
+                    </div>
+                `;
+            });
+            fullScheduleContainer.innerHTML = scheduleHTML;
+        }
+
+        function togglePrayerCard() {
+            const headerGrid = document.getElementById('header-grid');
+            const card = document.getElementById('prayer-card');
+            const weatherCard = document.getElementById('weather-card');
+            const icon = document.getElementById('prayer-toggle-icon');
+            const chevron = document.getElementById('chevron-svg');
+            
+            // Animasi FLIP untuk weather-card agar transisinya mulus tanpa patah
+            const firstRect = weatherCard.getBoundingClientRect();
+
+            headerGrid.classList.toggle('expanded');
+            card.classList.toggle('expanded');
+            
+            const lastRect = weatherCard.getBoundingClientRect();
+            
+            const invertX = firstRect.left - lastRect.left;
+            const invertY = firstRect.top - lastRect.top;
+
+            if (weatherCard.dataset.timeoutId) {
+                clearTimeout(weatherCard.dataset.timeoutId);
+            }
+
+            weatherCard.style.transition = 'none';
+            weatherCard.style.transform = `translate(${invertX}px, ${invertY}px)`;
+
+            weatherCard.offsetHeight; // Force reflow
+
+            weatherCard.style.transition = 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), width 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+            weatherCard.style.transform = 'translate(0, 0)';
+
+            weatherCard.dataset.timeoutId = setTimeout(() => {
+                weatherCard.style.transition = '';
+                weatherCard.style.transform = '';
+            }, 400);
+
+            // Perubahan warna dan rotasi ikon
+            if (card.classList.contains('expanded')) {
+                icon.style.background = "rgba(234, 67, 53, 0.1)";
+                icon.style.color = "#ea4335"; 
+                chevron.style.transform = "rotate(180deg)";
+            } else {
+                icon.style.background = "rgba(26, 115, 232, 0.1)";
+                icon.style.color = "var(--google-blue)";
+                chevron.style.transform = "rotate(0deg)";
+            }
         }
 
 // Listener untuk tombol
