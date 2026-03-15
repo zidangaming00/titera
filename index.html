@@ -30,6 +30,11 @@
             justify-content: center;
         }
 
+        /* Kelas untuk mengunci scroll body saat popup/menu terbuka */
+        body.no-scroll {
+            overflow: hidden;
+        }
+
         /* --- SIDEBAR & OVERLAY STYLES --- */
         .sidebar {
             position: fixed;
@@ -135,6 +140,7 @@
             font-size: 1rem;
             outline: none;
             color: var(--text-dark);
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
         input[type="search"]::-webkit-search-cancel-button {
             -webkit-appearance: none;
@@ -456,7 +462,7 @@
             font-size: 0.9rem;
             cursor: pointer;
             transition: all 0.2s;
-            
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
         #load-more-btn:hover { background-color: rgba(26, 115, 232, 0.04); border-color: var(--google-blue); }
 
@@ -476,8 +482,7 @@
 
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-
-/* --- OPTIMASI DESKTOP FINAL --- */
+        /* --- OPTIMASI DESKTOP FINAL --- */
         @media (min-width: 900px) {
             .app-container {
                 max-width: 1000px;
@@ -549,6 +554,95 @@
             }
         }
 
+        /* --- POLICY POPUP (BOTTOM SHEET) --- */
+        #policy-overlay {
+            z-index: 1200;
+        }
+        .policy-popup {
+            position: fixed;
+            bottom: -100%;
+            left: 0;
+            width: 100%;
+            background: var(--card-white);
+            z-index: 1201;
+            border-radius: 24px 24px 0 0;
+            padding: 12px 20px 24px 20px;
+            box-sizing: border-box;
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .policy-popup.active {
+            bottom: 0;
+        }
+        .popup-drag-handle {
+            width: 36px;
+            height: 4px;
+            background: #dadce0;
+            border-radius: 4px;
+            margin: 0 auto 20px auto;
+        }
+        .popup-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .popup-header-icon {
+            background: rgba(26, 115, 232, 0.1);
+            color: var(--google-blue);
+            padding: 8px;
+            border-radius: 8px;
+            display: flex;
+        }
+        .popup-header h3 {
+            margin: 0;
+            font-size: 0.95rem; /* Ukuran font diperkecil */
+            color: var(--text-dark);
+        }
+        .popup-text {
+            color: var(--text-dark);
+            font-size: 0.85rem; /* Ukuran font diperkecil */
+            line-height: 1.5;
+            padding: 0 4px 8px 4px;
+        }
+        .popup-btn {
+            width: 100%;
+            padding: 10px 12px; /* Disesuaikan agar proporsional */
+            margin-top: 20px;
+            background-color: var(--google-blue);
+            color: #ffffff;
+            border: none;
+            border-radius: 100px;
+            font-size: 0.85rem; /* Ukuran font diperkecil */
+            font-weight: 600;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            cursor: pointer;
+            transition: background 0.2s;
+            -webkit-tap-highlight-color: transparent;
+            letter-spacing: normal; /* Memastikan jarak huruf default */
+        }
+        .popup-btn:active {
+            background-color: #1557b0;
+        }
+
+        @media (min-width: 900px) {
+            .policy-popup {
+                width: 400px;
+                left: 50%;
+                transform: translateX(-50%);
+                border-radius: 20px;
+                bottom: -100%;
+                padding: 24px;
+            }
+            .policy-popup.active {
+                bottom: 50%;
+                transform: translate(-50%, 50%);
+            }
+            .popup-drag-handle { display: none; }
+        }
     </style>
 </head>
 <body>
@@ -695,87 +789,82 @@
         </div>
 
         <div class="card news-card">
-            <div style="padding: 16px 20px; border-bottom: 1px solid #f1f3f4; display: flex; align-items: center; gap: 12px;">
-                <div class="stock-icon">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                        <polyline points="14 2 14 8 20 8"></polyline>
-                        <line x1="16" y1="13" x2="8" y2="13"></line>
-                        <line x1="16" y1="17" x2="8" y2="17"></line>
-                        <polyline points="10 9 9 9 8 9"></polyline>
-                    </svg>
+            <div style="padding: 16px 20px; border-bottom: 1px solid #f1f3f4; display: flex; align-items: center; justify-content: space-between;">
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div class="stock-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                    </div>
+                    <h2 style="margin: 0; font-size: 1.15rem; color: var(--google-blue); font-weight: 600;" id="section-title">Terkini &rsaquo;</h2>
                 </div>
-                <h2 style="margin: 0; font-size: 1.15rem; color: var(--google-blue); font-weight: 600;" id="section-title">Terkini &rsaquo;</h2>
+                <button onclick="togglePolicyPopup()" style="background: none; border: none; padding: 4px; cursor: pointer; color: var(--text-gray); display: flex; align-items: center; justify-content: center; border-radius: 50%; -webkit-tap-highlight-color: transparent;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <circle cx="12" cy="5" r="2.2"></circle>
+                        <circle cx="12" cy="12" r="2.2"></circle>
+                        <circle cx="12" cy="19" r="2.2"></circle>
+                    </svg>
+                </button>
             </div>
             <div id="news-container">
-                
-        <a class="news-item" href="https://news.detik.com/berita/d-8401465/beredar-video-pria-depok-meninggal-saat-sujud-salat-tarawih-ini-sosoknya" target="_blank">
+                    
+        <a class="news-item" href="https://news.detik.com/berita/d-8401694/10-tahun-terbengkalai-jalan-teluk-leok-dan-tobek-godang-kini-diaspal" target="_blank">
             <div class="news-info">
                 <div class="source-wrapper">
                     <img src="https://www.google.com/s2/favicons?sz=64&domain=detik.com" class="news-favicon" alt="icon">
                     <span class="source-tag">Detik</span>
                 </div>
-                <h3 class="news-headline">Beredar Video Pria Depok Meninggal Saat Sujud Salat Tarawih, Ini Sosoknya</h3>
-                <div class="news-time">Hari ini, 11.08</div>
+                <h3 class="news-headline">10 Tahun Terbengkalai, Jalan Teluk Leok dan Tobek Godang Kini Diaspal</h3>
+                <div class="news-time">Hari ini, 14.18</div>
             </div>
             <div class="news-img-wrapper loaded">
-                <img src="https://akcdn.detik.net.id/community/media/visual/2024/09/04/ilustrasi-sholat_169.jpeg?w=360&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
+                <img src="https://akcdn.detik.net.id/community/media/visual/2026/03/15/10-tahun-terbengkalai-jalan-teluk-leok-dan-tobek-godang-kini-diaspal-1773584279627.jpeg?w=360&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
             </div>
         </a>
         
-        <a class="news-item" href="https://news.detik.com/berita/d-8401567/polisi-tegaskan-foto-penyiram-air-keras-aktivis-kontras-di-medsos-hasil-ai" target="_blank">
+        <a class="news-item" href="https://news.detik.com/berita/d-8401599/maling-motor-kabur-usai-beraksi-di-cianjur-berakhir-ditangkap-di-bogor" target="_blank">
             <div class="news-info">
                 <div class="source-wrapper">
                     <img src="https://www.google.com/s2/favicons?sz=64&domain=detik.com" class="news-favicon" alt="icon">
                     <span class="source-tag">Detik</span>
                 </div>
-                <h3 class="news-headline">Polisi Tegaskan Foto Penyiram Air Keras Aktivis KontraS di Medsos Hasil AI</h3>
-                <div class="news-time">Hari ini, 12.27</div>
+                <h3 class="news-headline">Maling Motor Kabur Usai Beraksi di Cianjur, Berakhir Ditangkap di Bogor</h3>
+                <div class="news-time">Hari ini, 12.50</div>
             </div>
             <div class="news-img-wrapper loaded">
-                <img src="https://akcdn.detik.net.id/community/media/visual/2026/03/15/kabid-humas-polda-metro-jaya-kombes-budi-hermanto-1773577427293_169.jpeg?w=360&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
+                <img src="https://akcdn.detik.net.id/community/media/visual/2015/11/27/43b9b986-299d-4864-86b9-b24bdabe6c84_169.jpg?w=360&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
             </div>
         </a>
         
-        <a class="news-item" href="https://news.detik.com/berita/d-8401486/komitmen-kakorlantas-kawal-operasi-ketupat-2026-satu-nyawa-sangat-berharga" target="_blank">
+        <a class="news-item" href="https://www.antaranews.com/berita/5477330/malaysia-alokasi-rp8-triliun-tiap-bulan-untuk-subsidi-bbm" target="_blank">
             <div class="news-info">
                 <div class="source-wrapper">
-                    <img src="https://www.google.com/s2/favicons?sz=64&domain=detik.com" class="news-favicon" alt="icon">
-                    <span class="source-tag">Detik</span>
+                    <img src="https://www.google.com/s2/favicons?sz=64&domain=antaranews.com" class="news-favicon" alt="icon">
+                    <span class="source-tag">Antara</span>
                 </div>
-                <h3 class="news-headline">Komitmen Kakorlantas Kawal Operasi Ketupat 2026: Satu Nyawa Sangat Berharga</h3>
-                <div class="news-time">Hari ini, 11.25</div>
+                <h3 class="news-headline">Malaysia alokasi Rp8 triliun tiap bulan untuk subsidi BBM</h3>
+                <div class="news-time">Hari ini, 16.35</div>
             </div>
             <div class="news-img-wrapper loaded">
-                <img src="https://akcdn.detik.net.id/community/media/visual/2026/03/15/irjen-agus-suryonugroho-1773573873708_169.jpeg?w=360&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
+                <img src="https://img.antaranews.com/cache/800x533/2026/03/15/IMG_20260315_210717_434.jpg" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
             </div>
         </a>
         
-        <a class="news-item" href="https://www.cnbcindonesia.com/news/20260315120343-4-719133/kedubes-austria-lihat-ikn-bertemu-basuki-beri-komentar-tak-terduga" target="_blank">
+        <a class="news-item" href="https://www.antaranews.com/berita/5477322/bologna-menang-tipis-atas-sassuolo-pisa-hantam-cagliari" target="_blank">
             <div class="news-info">
                 <div class="source-wrapper">
-                    <img src="https://www.google.com/s2/favicons?sz=64&domain=cnbcindonesia.com" class="news-favicon" alt="icon">
-                    <span class="source-tag">CNBC Indo</span>
+                    <img src="https://www.google.com/s2/favicons?sz=64&domain=antaranews.com" class="news-favicon" alt="icon">
+                    <span class="source-tag">Antara</span>
                 </div>
-                <h3 class="news-headline">Kedubes Austria Lihat IKN dan Bertemu Basuki, Beri Komentar Tak Terduga</h3>
-                <div class="news-time">Hari ini, 12.30</div>
+                <h3 class="news-headline">Bologna menang tipis atas Sassuolo, Pisa hantam Cagliari</h3>
+                <div class="news-time">Hari ini, 16.30</div>
             </div>
             <div class="news-img-wrapper loaded">
-                <img src="https://awsimages.detik.net.id/visual/2026/03/15/kedubes-austria-berkunjung-dan-lihat-langsung-kondisi-ikn-1773551229531_169.jpeg?w=1200&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
-            </div>
-        </a>
-        
-        <a class="news-item" href="https://www.cnbcindonesia.com/news/20260313144308-4-718828/mudik-jakarta-sukabumi-via-tol-bocimi-sudah-tembus-sampai-sini" target="_blank">
-            <div class="news-info">
-                <div class="source-wrapper">
-                    <img src="https://www.google.com/s2/favicons?sz=64&domain=cnbcindonesia.com" class="news-favicon" alt="icon">
-                    <span class="source-tag">CNBC Indo</span>
-                </div>
-                <h3 class="news-headline">Mudik Jakarta-Sukabumi via Tol Bocimi Sudah Tembus Sampai Sini</h3>
-                <div class="news-time">Hari ini, 12.00</div>
-            </div>
-            <div class="news-img-wrapper loaded">
-                <img src="https://awsimages.detik.net.id/visual/2025/12/11/jalan-tol-bogor-ciawi-sukabumi-bocimi-telah-menyiapkan-berbagai-langkah-untuk-mengantisipasi-kemacetan-yang-biasanya-terjadi-p-1765430669118_169.jpeg?w=1200&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
+                <img src="https://img.antaranews.com/cache/800x533/2026/03/15/image-5.jpg" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
             </div>
         </a>
         
@@ -793,59 +882,73 @@
             </div>
         </a>
         
-        <a class="news-item" href="https://www.antaranews.com/berita/5477302/terminal-cicaheum-bandung-prediksi-puncak-arus-mudik-pada-h-2-lebaran" target="_blank">
+        <a class="news-item" href="https://www.antaranews.com/berita/5477334/indonesia-punya-dua-misi-di-avc-mens-volleyball-champions-league-2026" target="_blank">
             <div class="news-info">
                 <div class="source-wrapper">
                     <img src="https://www.google.com/s2/favicons?sz=64&domain=antaranews.com" class="news-favicon" alt="icon">
                     <span class="source-tag">Antara</span>
                 </div>
-                <h3 class="news-headline">Terminal Cicaheum Bandung prediksi puncak arus mudik pada H-2 Lebaran</h3>
-                <div class="news-time">Hari ini, 16.22</div>
+                <h3 class="news-headline">Indonesia punya dua misi di AVC Mens Volleyball Champions League 2026</h3>
+                <div class="news-time">Hari ini, 16.35</div>
             </div>
             <div class="news-img-wrapper loaded">
-                <img src="https://img.antaranews.com/cache/800x533/2026/03/15/272214.jpg" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
+                <img src="https://img.antaranews.com/cache/800x533/2026/03/15/voli.jpeg" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
             </div>
         </a>
         
-        <a class="news-item" href="https://news.detik.com/berita/d-8401566/kehilangan-rumah-dan-usaha-keluarga-di-pidie-jaya-bangkit-dari-huntara" target="_blank">
+        <a class="news-item" href="https://www.antaranews.com/berita/5477310/satgas-gulbencal-kerahkan-100-personel-atasi-bencana-banjir-sungai-tukka" target="_blank">
+            <div class="news-info">
+                <div class="source-wrapper">
+                    <img src="https://www.google.com/s2/favicons?sz=64&domain=antaranews.com" class="news-favicon" alt="icon">
+                    <span class="source-tag">Antara</span>
+                </div>
+                <h3 class="news-headline">Satgas Gulbencal kerahkan 100 personel atasi bencana banjir Sungai Tukka</h3>
+                <div class="news-time">Hari ini, 16.24</div>
+            </div>
+            <div class="news-img-wrapper loaded">
+                <img src="https://img.antaranews.com/cache/800x533/2026/03/15/WhatsApp-Image-2026-03-15-at-22.52.53.jpeg" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
+            </div>
+        </a>
+        
+        <a class="news-item" href="https://news.detik.com/berita/d-8401567/polisi-tegaskan-foto-penyiram-air-keras-aktivis-kontras-di-medsos-hasil-ai" target="_blank">
             <div class="news-info">
                 <div class="source-wrapper">
                     <img src="https://www.google.com/s2/favicons?sz=64&domain=detik.com" class="news-favicon" alt="icon">
                     <span class="source-tag">Detik</span>
                 </div>
-                <h3 class="news-headline">Kehilangan Rumah dan Usaha, Keluarga di Pidie Jaya Bangkit dari Huntara</h3>
-                <div class="news-time">Hari ini, 12.22</div>
+                <h3 class="news-headline">Polisi Tegaskan Foto Penyiram Air Keras Aktivis KontraS di Medsos Hasil AI</h3>
+                <div class="news-time">Hari ini, 12.27</div>
             </div>
             <div class="news-img-wrapper loaded">
-                <img src="https://akcdn.detik.net.id/community/media/visual/2026/03/15/kehilangan-rumah-dan-usaha-keluarga-di-pidie-jaya-bangkit-dari-huntara-1773577357672.jpeg?w=360&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
+                <img src="https://akcdn.detik.net.id/community/media/visual/2026/03/15/kabid-humas-polda-metro-jaya-kombes-budi-hermanto-1773577427293_169.jpeg?w=360&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
             </div>
         </a>
         
-        <a class="news-item" href="https://news.detik.com/berita/d-8401564/pemkot-cilegon-berangkatkan-50-bus-antar-2-000-pemudik-pulang-kampung" target="_blank">
+        <a class="news-item" href="https://www.cnbcindonesia.com/news/20260315164516-4-719178/panas-perang-timteng-as-china-mendadak-mau-bertemu-di-paris-ada-apa" target="_blank">
             <div class="news-info">
                 <div class="source-wrapper">
-                    <img src="https://www.google.com/s2/favicons?sz=64&domain=detik.com" class="news-favicon" alt="icon">
-                    <span class="source-tag">Detik</span>
+                    <img src="https://www.google.com/s2/favicons?sz=64&domain=cnbcindonesia.com" class="news-favicon" alt="icon">
+                    <span class="source-tag">CNBC Indo</span>
                 </div>
-                <h3 class="news-headline">Pemkot Cilegon Berangkatkan 50 Bus Antar 2.000 Pemudik Pulang Kampung</h3>
-                <div class="news-time">Hari ini, 12.20</div>
+                <h3 class="news-headline">Panas Perang Timteng! AS-China Mendadak Mau Bertemu di Paris, Ada Apa?</h3>
+                <div class="news-time">Hari ini, 14.00</div>
             </div>
             <div class="news-img-wrapper loaded">
-                <img src="https://akcdn.detik.net.id/community/media/visual/2026/03/15/pemkot-cilegon-berangkatkan-50-bus-antar-2000-pemudik-pulang-kampung-1773577187933.jpeg?w=360&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
+                <img src="https://awsimages.detik.net.id/visual/2026/01/11/bendera-as-china-1768108640745_169.png?w=1200&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
             </div>
         </a>
         
-        <a class="news-item" href="https://news.detik.com/berita/d-8401694/10-tahun-terbengkalai-jalan-teluk-leok-dan-tobek-godang-kini-diaspal" target="_blank">
+        <a class="news-item" href="https://www.cnbcindonesia.com/news/20260315173103-4-719179/iran-tembak-rudal-ke-banyak-negara-hamas-muncul-dan-kasih-pesan-ini" target="_blank">
             <div class="news-info">
                 <div class="source-wrapper">
-                    <img src="https://www.google.com/s2/favicons?sz=64&domain=detik.com" class="news-favicon" alt="icon">
-                    <span class="source-tag">Detik</span>
+                    <img src="https://www.google.com/s2/favicons?sz=64&domain=cnbcindonesia.com" class="news-favicon" alt="icon">
+                    <span class="source-tag">CNBC Indo</span>
                 </div>
-                <h3 class="news-headline">10 Tahun Terbengkalai, Jalan Teluk Leok dan Tobek Godang Kini Diaspal</h3>
-                <div class="news-time">Hari ini, 14.18</div>
+                <h3 class="news-headline">Iran Tembak Rudal ke Banyak Negara, Hamas Muncul dan Kasih Pesan Ini</h3>
+                <div class="news-time">Hari ini, 14.30</div>
             </div>
             <div class="news-img-wrapper loaded">
-                <img src="https://akcdn.detik.net.id/community/media/visual/2026/03/15/10-tahun-terbengkalai-jalan-teluk-leok-dan-tobek-godang-kini-diaspal-1773584279627.jpeg?w=360&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
+                <img src="https://awsimages.detik.net.id/visual/2025/01/20/orang-orang-yang-membawa-bendera-berdiri-di-atas-bus-saat-mereka-bereaksi-terhadap-kedatangan-bus-yang-membawa-warga-palestina_169.jpeg?w=1200&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
             </div>
         </a>
         
@@ -856,6 +959,27 @@
                 <button id="load-more-btn">Muat lebih banyak</button>
             </div>
         </div>
+    </div>
+
+    <div class="overlay" id="policy-overlay" onclick="togglePolicyPopup()"></div>
+    <div class="policy-popup" id="policy-popup">
+        <div class="popup-drag-handle"></div>
+        <div class="popup-header">
+            <div class="popup-header-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+            </div>
+            <h3>Kebijakan Sumber Berita</h3>
+        </div>
+        
+        <div class="popup-text">
+            Berita-berita yang ditampilkan pada platform ini diagregasi secara otomatis menggunakan RSS Feed publik dari masing-masing penerbit media aslinya.
+            <br><br>
+            Hak cipta penuh atas seluruh konten teks, judul, maupun gambar sepenuhnya merupakan milik penerbit terkait. Titera News hanya bertindak sebagai peramban untuk memudahkan akses informasi tanpa mengubah substansi asli.
+        </div>
+
+        <button class="popup-btn" onclick="togglePolicyPopup()">Mengerti</button>
     </div>
 
     <script>
@@ -908,6 +1032,12 @@
             document.getElementById('sidebar').classList.toggle('active');
             document.getElementById('overlay').classList.toggle('active');
             document.getElementById('search-modal').classList.remove('active');
+            // Mengunci scroll saat sidebar aktif
+            if (document.getElementById('sidebar').classList.contains('active')) {
+                document.body.classList.add('no-scroll');
+            } else {
+                document.body.classList.remove('no-scroll');
+            }
         }
 
         function toggleSearch() {
@@ -915,8 +1045,12 @@
             const overlay = document.getElementById('overlay');
             modal.classList.toggle('active');
             overlay.classList.toggle('active');
+            
             if(modal.classList.contains('active')) {
+                document.body.classList.add('no-scroll');
                 setTimeout(() => document.getElementById('google-search-input').focus(), 300);
+            } else {
+                document.body.classList.remove('no-scroll');
             }
         }
 
@@ -924,7 +1058,27 @@
             document.getElementById('sidebar').classList.remove('active');
             document.getElementById('search-modal').classList.remove('active');
             document.getElementById('overlay').classList.remove('active');
+            
+            const policyOverlay = document.getElementById('policy-overlay');
+            if (policyOverlay) policyOverlay.classList.remove('active');
+            
+            const policyPopup = document.getElementById('policy-popup');
+            if (policyPopup) policyPopup.classList.remove('active');
+            
+            // Melepas kunci scroll saat semua tertutup
+            document.body.classList.remove('no-scroll');
+            
             setTimeout(()=> { document.getElementById('google-search-input').value = ''; },500);
+        }
+
+        function togglePolicyPopup() {
+            const popup = document.getElementById('policy-popup');
+            const overlay = document.getElementById('policy-overlay');
+            popup.classList.toggle('active');
+            overlay.classList.toggle('active');
+            
+            // Mengunci atau melepas scroll saat popup kebijakan dipencet
+            document.body.classList.toggle('no-scroll');
         }
 
         function handleSearchKeyPress(e) {
@@ -1136,55 +1290,54 @@
             getNews(category);
         }
 
-async function getNews(category = 'terkini', isInitialLoad = false) {
-    const container = document.getElementById('news-container');
-    const loadMoreContainer = document.getElementById('load-more-container');
-    const btn = document.getElementById('load-more-btn');
-    
-    // Reset data jika user klik kategori lain (bukan loading awal)
-    if (!isInitialLoad) {
-        allNewsData = [];
-        currentIndex = 0;
-        container.innerHTML = getSkeletonHTML() + getSkeletonHTML() + getSkeletonHTML() + getSkeletonHTML();
-        loadMoreContainer.style.display = 'none';
-    }
-
-    const sources = newsCategories[category];
-    
-    try {
-        const requests = sources.map(source => 
-            fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(source.url)}`)
-                .then(res => res.json())
-                .then(data => data.status === 'ok' ? data.items.map(i => ({...i, sourceName: source.name, domain: source.domain})) : [])
-                .catch(() => [])
-        );
-        const results = await Promise.all(requests);
-        
-        // Gabungkan dan acak berita
-        allNewsData = results.flat().sort(() => Math.random() - 0.5);
-        
-        if (allNewsData.length > 0) {
+        async function getNews(category = 'terkini', isInitialLoad = false) {
+            const container = document.getElementById('news-container');
+            const loadMoreContainer = document.getElementById('load-more-container');
+            const btn = document.getElementById('load-more-btn');
+            
+            // Reset data jika user klik kategori lain (bukan loading awal)
             if (!isInitialLoad) {
-                // Jika ganti kategori, hapus skeleton dan render dari nol
-                container.innerHTML = ''; 
-                renderNews(10);
-            } else {
-                // JIKA AWAL (BOT): Hitung jumlah berita yang sudah dipasang bot
-                currentIndex = container.querySelectorAll('.news-item').length;
+                allNewsData = [];
+                currentIndex = 0;
+                container.innerHTML = getSkeletonHTML() + getSkeletonHTML() + getSkeletonHTML() + getSkeletonHTML();
+                loadMoreContainer.style.display = 'none';
+            }
+
+            const sources = newsCategories[category];
+            
+            try {
+                const requests = sources.map(source => 
+                    fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(source.url)}`)
+                        .then(res => res.json())
+                        .then(data => data.status === 'ok' ? data.items.map(i => ({...i, sourceName: source.name, domain: source.domain})) : [])
+                        .catch(() => [])
+                );
+                const results = await Promise.all(requests);
                 
-                // Jika data API ternyata lebih banyak dari berita bot, munculkan tombol
-                if (allNewsData.length > currentIndex) {
-                    loadMoreContainer.style.display = "flex";
-                    btn.style.display = 'block';
+                // Gabungkan dan acak berita
+                allNewsData = results.flat().sort(() => Math.random() - 0.5);
+                
+                if (allNewsData.length > 0) {
+                    if (!isInitialLoad) {
+                        // Jika ganti kategori, hapus skeleton dan render dari nol
+                        container.innerHTML = ''; 
+                        renderNews(10);
+                    } else {
+                        // JIKA AWAL (BOT): Hitung jumlah berita yang sudah dipasang bot
+                        currentIndex = container.querySelectorAll('.news-item').length;
+                        
+                        // Jika data API ternyata lebih banyak dari berita bot, munculkan tombol
+                        if (allNewsData.length > currentIndex) {
+                            loadMoreContainer.style.display = "flex";
+                            btn.style.display = 'block';
+                        }
+                    }
                 }
+            } catch (e) { 
+                if (!isInitialLoad) container.innerHTML = "<p style='text-align:center;'>Gagal memuat berita.</p>"; 
             }
         }
-    } catch (e) { 
-        if (!isInitialLoad) container.innerHTML = "<p style='text-align:center;'>Gagal memuat berita.</p>"; 
-    }
-}
 
-        
         let prayerTimesToday = [];
         async function fetchPrayerTimes() {
             try {
@@ -1216,18 +1369,18 @@ async function getNews(category = 'terkini', isInitialLoad = false) {
             document.getElementById('prayer-container').innerHTML = `<span class="prayer-badge">${nextPrayer.name} ${nextPrayer.time.replace(':', '.')}</span>`;
         }
 
-// Listener untuk tombol
-document.getElementById('load-more-btn').addEventListener('click', () => renderNews(10));
+        // Listener untuk tombol
+        document.getElementById('load-more-btn').addEventListener('click', () => renderNews(10));
 
-// Interval jam & cuaca
-setInterval(updateClock, 1000);
-updateClock();
-getWeatherData();
-updateMarketData(); 
-fetchPrayerTimes();
+        // Interval jam & cuaca
+        setInterval(updateClock, 1000);
+        updateClock();
+        getWeatherData();
+        updateMarketData(); 
+        fetchPrayerTimes();
 
-// SINKRONISASI: Isi data di balik layar tanpa menghapus berita dari bot
-getNews('terkini', true); 
+        // SINKRONISASI: Isi data di balik layar tanpa menghapus berita dari bot
+        getNews('terkini', true); 
 
     </script>
 </body>
