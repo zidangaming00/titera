@@ -9,6 +9,32 @@
     <link rel="apple-touch-icon" href="https://zidangaming00.github.io/Portofolio/tnews.png" />
     
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <noscript>
+    <style>
+        .header-grid, 
+        .stock-card, 
+        .category-wrapper,
+        .menu-trigger,
+        .search-trigger,
+        .load-more-container,
+        .policy-trigger {
+            display: none !important;
+        }
+        
+        /* Tengahkan logo agar simetris */
+        .header-bar {
+            justify-content: center !important;
+        }
+        
+        /* Mode desktop: buat berita melebar penuh (menghapus ruang kosong widget) */
+        @media (min-width: 900px) {
+            .news-card {
+                margin-right: 0 !important;
+            }
+        }
+    </style>
+    </noscript>
+    
     <style>
         :root {
             --bg-green: #0b9444;
@@ -812,6 +838,20 @@
             </div>
             <div id="news-container">
                     
+        <a class="news-item" href="https://www.antaranews.com/berita/5477306/peralta-selamatkan-borneo-fc-dari-kekalahan-lawan-persib-bandung" target="_blank">
+            <div class="news-info">
+                <div class="source-wrapper">
+                    <img src="https://www.google.com/s2/favicons?sz=64&domain=antaranews.com" class="news-favicon" alt="icon">
+                    <span class="source-tag">Antara</span>
+                </div>
+                <h3 class="news-headline">Peralta selamatkan Borneo FC dari kekalahan lawan Persib Bandung</h3>
+                <div class="news-time">Hari ini, 16.24</div>
+            </div>
+            <div class="news-img-wrapper loaded">
+                <img src="https://img.antaranews.com/cache/800x533/2026/03/15/borneo-fc-samarinda-lawan-persib-bandung-2753138.jpg" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
+            </div>
+        </a>
+        
         <a class="news-item" href="https://news.detik.com/berita/d-8401694/10-tahun-terbengkalai-jalan-teluk-leok-dan-tobek-godang-kini-diaspal" target="_blank">
             <div class="news-info">
                 <div class="source-wrapper">
@@ -826,129 +866,115 @@
             </div>
         </a>
         
-        <a class="news-item" href="https://news.detik.com/berita/d-8401599/maling-motor-kabur-usai-beraksi-di-cianjur-berakhir-ditangkap-di-bogor" target="_blank">
+        <a class="news-item" href="https://news.detik.com/berita/d-8401566/kehilangan-rumah-dan-usaha-keluarga-di-pidie-jaya-bangkit-dari-huntara" target="_blank">
             <div class="news-info">
                 <div class="source-wrapper">
                     <img src="https://www.google.com/s2/favicons?sz=64&domain=detik.com" class="news-favicon" alt="icon">
                     <span class="source-tag">Detik</span>
                 </div>
-                <h3 class="news-headline">Maling Motor Kabur Usai Beraksi di Cianjur, Berakhir Ditangkap di Bogor</h3>
-                <div class="news-time">Hari ini, 12.50</div>
+                <h3 class="news-headline">Kehilangan Rumah dan Usaha, Keluarga di Pidie Jaya Bangkit dari Huntara</h3>
+                <div class="news-time">Hari ini, 12.22</div>
             </div>
             <div class="news-img-wrapper loaded">
-                <img src="https://akcdn.detik.net.id/community/media/visual/2015/11/27/43b9b986-299d-4864-86b9-b24bdabe6c84_169.jpg?w=360&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
+                <img src="https://akcdn.detik.net.id/community/media/visual/2026/03/15/kehilangan-rumah-dan-usaha-keluarga-di-pidie-jaya-bangkit-dari-huntara-1773577357672.jpeg?w=360&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
             </div>
         </a>
         
-        <a class="news-item" href="https://www.antaranews.com/berita/5477330/malaysia-alokasi-rp8-triliun-tiap-bulan-untuk-subsidi-bbm" target="_blank">
+        <a class="news-item" href="https://www.antaranews.com/berita/5477338/garbelotto-tekad-kuat-pemain-kesatria-mampu-tundukkan-rans-di-kandang" target="_blank">
             <div class="news-info">
                 <div class="source-wrapper">
                     <img src="https://www.google.com/s2/favicons?sz=64&domain=antaranews.com" class="news-favicon" alt="icon">
                     <span class="source-tag">Antara</span>
                 </div>
-                <h3 class="news-headline">Malaysia alokasi Rp8 triliun tiap bulan untuk subsidi BBM</h3>
-                <div class="news-time">Hari ini, 16.35</div>
+                <h3 class="news-headline">Garbelotto: Tekad kuat pemain Kesatria mampu tundukkan RANS di kandang</h3>
+                <div class="news-time">Hari ini, 16.39</div>
             </div>
             <div class="news-img-wrapper loaded">
-                <img src="https://img.antaranews.com/cache/800x533/2026/03/15/IMG_20260315_210717_434.jpg" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
+                <img src="https://img.antaranews.com/cache/800x533/2026/03/08/bogor-hornbills-menang-atas-kesatria-bengawan-solo-2746859.jpg" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
             </div>
         </a>
         
-        <a class="news-item" href="https://www.antaranews.com/berita/5477322/bologna-menang-tipis-atas-sassuolo-pisa-hantam-cagliari" target="_blank">
-            <div class="news-info">
-                <div class="source-wrapper">
-                    <img src="https://www.google.com/s2/favicons?sz=64&domain=antaranews.com" class="news-favicon" alt="icon">
-                    <span class="source-tag">Antara</span>
-                </div>
-                <h3 class="news-headline">Bologna menang tipis atas Sassuolo, Pisa hantam Cagliari</h3>
-                <div class="news-time">Hari ini, 16.30</div>
-            </div>
-            <div class="news-img-wrapper loaded">
-                <img src="https://img.antaranews.com/cache/800x533/2026/03/15/image-5.jpg" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
-            </div>
-        </a>
-        
-        <a class="news-item" href="https://www.cnbcindonesia.com/news/20260315194637-4-719195/esdm-pertamina-bph-migas-tinjau-keandalan-energi-jelang-idulfitri" target="_blank">
+        <a class="news-item" href="https://www.cnbcindonesia.com/news/20260315185547-4-719187/masih-ada-truk-besar-beroperasi-jelang-lebaran-menhub-tegaskan-ini" target="_blank">
             <div class="news-info">
                 <div class="source-wrapper">
                     <img src="https://www.google.com/s2/favicons?sz=64&domain=cnbcindonesia.com" class="news-favicon" alt="icon">
                     <span class="source-tag">CNBC Indo</span>
                 </div>
-                <h3 class="news-headline">ESDM, Pertamina dan BPH Migas Tinjau Keandalan Energi Jelang Idulfitri</h3>
-                <div class="news-time">Hari ini, 12.52</div>
+                <h3 class="news-headline">Masih Ada Truk Besar Beroperasi Jelang Lebaran, Menhub Tegaskan Ini</h3>
+                <div class="news-time">Hari ini, 12.22</div>
             </div>
             <div class="news-img-wrapper loaded">
-                <img src="https://awsimages.detik.net.id/visual/2026/03/15/pertamina-dan-esdm-serta-bph-migas-1773579148351_169.jpeg?w=1200&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
+                <img src="https://awsimages.detik.net.id/visual/2025/05/19/truk-melintas-di-jalan-tol-lingkar-luar-jakarta-1952025-rencana-pemerintah-untuk-menertibkan-truk-over-dimension-over-load-odo-1747650970820_169.jpeg?w=1200&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
             </div>
         </a>
         
-        <a class="news-item" href="https://www.antaranews.com/berita/5477334/indonesia-punya-dua-misi-di-avc-mens-volleyball-champions-league-2026" target="_blank">
-            <div class="news-info">
-                <div class="source-wrapper">
-                    <img src="https://www.google.com/s2/favicons?sz=64&domain=antaranews.com" class="news-favicon" alt="icon">
-                    <span class="source-tag">Antara</span>
-                </div>
-                <h3 class="news-headline">Indonesia punya dua misi di AVC Mens Volleyball Champions League 2026</h3>
-                <div class="news-time">Hari ini, 16.35</div>
-            </div>
-            <div class="news-img-wrapper loaded">
-                <img src="https://img.antaranews.com/cache/800x533/2026/03/15/voli.jpeg" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
-            </div>
-        </a>
-        
-        <a class="news-item" href="https://www.antaranews.com/berita/5477310/satgas-gulbencal-kerahkan-100-personel-atasi-bencana-banjir-sungai-tukka" target="_blank">
-            <div class="news-info">
-                <div class="source-wrapper">
-                    <img src="https://www.google.com/s2/favicons?sz=64&domain=antaranews.com" class="news-favicon" alt="icon">
-                    <span class="source-tag">Antara</span>
-                </div>
-                <h3 class="news-headline">Satgas Gulbencal kerahkan 100 personel atasi bencana banjir Sungai Tukka</h3>
-                <div class="news-time">Hari ini, 16.24</div>
-            </div>
-            <div class="news-img-wrapper loaded">
-                <img src="https://img.antaranews.com/cache/800x533/2026/03/15/WhatsApp-Image-2026-03-15-at-22.52.53.jpeg" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
-            </div>
-        </a>
-        
-        <a class="news-item" href="https://news.detik.com/berita/d-8401567/polisi-tegaskan-foto-penyiram-air-keras-aktivis-kontras-di-medsos-hasil-ai" target="_blank">
-            <div class="news-info">
-                <div class="source-wrapper">
-                    <img src="https://www.google.com/s2/favicons?sz=64&domain=detik.com" class="news-favicon" alt="icon">
-                    <span class="source-tag">Detik</span>
-                </div>
-                <h3 class="news-headline">Polisi Tegaskan Foto Penyiram Air Keras Aktivis KontraS di Medsos Hasil AI</h3>
-                <div class="news-time">Hari ini, 12.27</div>
-            </div>
-            <div class="news-img-wrapper loaded">
-                <img src="https://akcdn.detik.net.id/community/media/visual/2026/03/15/kabid-humas-polda-metro-jaya-kombes-budi-hermanto-1773577427293_169.jpeg?w=360&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
-            </div>
-        </a>
-        
-        <a class="news-item" href="https://www.cnbcindonesia.com/news/20260315164516-4-719178/panas-perang-timteng-as-china-mendadak-mau-bertemu-di-paris-ada-apa" target="_blank">
+        <a class="news-item" href="https://www.cnbcindonesia.com/news/20260315121631-4-719138/pedagang-ramai-jual-avanza-bekas-rp-70-jutaan-begini-kondisinya" target="_blank">
             <div class="news-info">
                 <div class="source-wrapper">
                     <img src="https://www.google.com/s2/favicons?sz=64&domain=cnbcindonesia.com" class="news-favicon" alt="icon">
                     <span class="source-tag">CNBC Indo</span>
                 </div>
-                <h3 class="news-headline">Panas Perang Timteng! AS-China Mendadak Mau Bertemu di Paris, Ada Apa?</h3>
-                <div class="news-time">Hari ini, 14.00</div>
+                <h3 class="news-headline">Pedagang Ramai Jual Avanza Bekas Rp 70 Jutaan, Begini Kondisinya</h3>
+                <div class="news-time">Hari ini, 11.45</div>
             </div>
             <div class="news-img-wrapper loaded">
-                <img src="https://awsimages.detik.net.id/visual/2026/01/11/bendera-as-china-1768108640745_169.png?w=1200&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
+                <img src="https://awsimages.detik.net.id/visual/2025/07/24/penjual-mobil-bekas-di-wtc-mangga-dua-jakarta-utara-ungkap-mobil-toyota-avanza-masih-diminati-oleh-pembeli-mobil-bekas-cnbc-in-1753350893766_169.jpeg?w=1200&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
             </div>
         </a>
         
-        <a class="news-item" href="https://www.cnbcindonesia.com/news/20260315173103-4-719179/iran-tembak-rudal-ke-banyak-negara-hamas-muncul-dan-kasih-pesan-ini" target="_blank">
+        <a class="news-item" href="https://www.cnbcindonesia.com/news/20260313144308-4-718828/mudik-jakarta-sukabumi-via-tol-bocimi-sudah-tembus-sampai-sini" target="_blank">
             <div class="news-info">
                 <div class="source-wrapper">
                     <img src="https://www.google.com/s2/favicons?sz=64&domain=cnbcindonesia.com" class="news-favicon" alt="icon">
                     <span class="source-tag">CNBC Indo</span>
                 </div>
-                <h3 class="news-headline">Iran Tembak Rudal ke Banyak Negara, Hamas Muncul dan Kasih Pesan Ini</h3>
-                <div class="news-time">Hari ini, 14.30</div>
+                <h3 class="news-headline">Mudik Jakarta-Sukabumi via Tol Bocimi Sudah Tembus Sampai Sini</h3>
+                <div class="news-time">Hari ini, 12.00</div>
             </div>
             <div class="news-img-wrapper loaded">
-                <img src="https://awsimages.detik.net.id/visual/2025/01/20/orang-orang-yang-membawa-bendera-berdiri-di-atas-bus-saat-mereka-bereaksi-terhadap-kedatangan-bus-yang-membawa-warga-palestina_169.jpeg?w=1200&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
+                <img src="https://awsimages.detik.net.id/visual/2025/12/11/jalan-tol-bogor-ciawi-sukabumi-bocimi-telah-menyiapkan-berbagai-langkah-untuk-mengantisipasi-kemacetan-yang-biasanya-terjadi-p-1765430669118_169.jpeg?w=1200&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
+            </div>
+        </a>
+        
+        <a class="news-item" href="https://www.antaranews.com/berita/5477314/mu-kembali-ke-jalur-kemenangan-setelah-taklukkan-aston-villa-3-1" target="_blank">
+            <div class="news-info">
+                <div class="source-wrapper">
+                    <img src="https://www.google.com/s2/favicons?sz=64&domain=antaranews.com" class="news-favicon" alt="icon">
+                    <span class="source-tag">Antara</span>
+                </div>
+                <h3 class="news-headline">MU kembali ke jalur kemenangan setelah taklukkan Aston Villa 3-1</h3>
+                <div class="news-time">Hari ini, 16.26</div>
+            </div>
+            <div class="news-img-wrapper loaded">
+                <img src="https://img.antaranews.com/cache/800x533/2026/03/15/2266201716.jpg" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
+            </div>
+        </a>
+        
+        <a class="news-item" href="https://www.cnbcindonesia.com/news/20260315175712-4-719182/perang-di-timteng-masih-sengit-ini-ramalan-terbaru-harga-minyak-dunia" target="_blank">
+            <div class="news-info">
+                <div class="source-wrapper">
+                    <img src="https://www.google.com/s2/favicons?sz=64&domain=cnbcindonesia.com" class="news-favicon" alt="icon">
+                    <span class="source-tag">CNBC Indo</span>
+                </div>
+                <h3 class="news-headline">Perang di Timteng Masih Sengit, Ini Ramalan Terbaru Harga Minyak Dunia</h3>
+                <div class="news-time">Hari ini, 14.45</div>
+            </div>
+            <div class="news-img-wrapper loaded">
+                <img src="https://awsimages.detik.net.id/visual/2018/01/08/70992265-bbe6-4b0f-803c-33b29dfbdefa_169.jpeg?w=1200&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
+            </div>
+        </a>
+        
+        <a class="news-item" href="https://www.cnbcindonesia.com/news/20260315121331-4-719136/program-subsidi-lenyap-bos-motor-listrik-ini-ungkap-hal-tak-terduga" target="_blank">
+            <div class="news-info">
+                <div class="source-wrapper">
+                    <img src="https://www.google.com/s2/favicons?sz=64&domain=cnbcindonesia.com" class="news-favicon" alt="icon">
+                    <span class="source-tag">CNBC Indo</span>
+                </div>
+                <h3 class="news-headline">Program Subsidi Lenyap, Bos Motor Listrik Ini Ungkap Hal Tak Terduga</h3>
+                <div class="news-time">Hari ini, 12.45</div>
+            </div>
+            <div class="news-img-wrapper loaded">
+                <img src="https://awsimages.detik.net.id/visual/2023/09/22/alva_169.jpeg?w=1200&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
             </div>
         </a>
         
