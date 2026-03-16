@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fs = require('fs'); // Fix 1: Huruf kecil 'c'
 
 async function masakHTML() {
 
@@ -40,25 +40,43 @@ async function masakHTML() {
         if (newsDate.toDateString() === now.toDateString()) displayDate = `Hari ini, ${displayDate}`;
         else displayDate = `${newsDate.toLocaleDateString('id-ID', {day:'numeric', month:'short'})}, ${displayDate}`;
 
-        // PERUBAHAN DI SINI: Menukar posisi wrapper gambar ke atas wrapper teks
+        // Fix 2: Bikin data item untuk fungsi save
+        const itemData = encodeURIComponent(JSON.stringify({
+            title: item.title,
+            link: item.link,
+            sourceName: item.sourceName,
+            domain: item.domain,
+            pubDate: displayDate,
+            thumb: thumb || '',
+            fromStorage: true
+        }));
+
+        // Fix 3: Default isSaved adalah false saat di-build oleh Node.js
+        const isSaved = false;
+
         htmlBerita += `
-        <a class="news-item" href="${item.link}" target="_blank">
+        <a class="news-item" href="${item.link}" target="_blank" onmousedown="applyRipple(event)">
             <div class="news-img-wrapper loaded">
                 <img src="${thumb}" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
             </div>
-            <div class="news-info">
-                <div class="source-wrapper">
-                    <img src="${iconUrl}" class="news-favicon" alt="icon">
-                    <span class="source-tag">${item.sourceName}</span>
+            <div class="news-info" style="display: flex; flex-direction: column; min-width: 0;">
+                
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                    <div class="source-wrapper" style="margin-bottom: 0;">
+                        <img src="${iconUrl}" class="news-favicon" alt="icon">
+                        <span class="source-tag">${item.sourceName}</span>
+                    </div>
+                    
+                    <button data-item="${itemData}" onclick="toggleSaveNews(event, this)" style="position:absolute;right:16px;bottom:5px; background: none; border: none; cursor: pointer; color: ${isSaved ? 'var(--google-blue)' : 'var(--text-gray)'}; padding: 4px; margin: -4px -4px 0 0; border-radius: 50%; transition: transform 0.2s ease, color 0.2s; -webkit-tap-highlight-color: transparent;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="${isSaved ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                    </button>
                 </div>
-                <button data-item="${itemData}" onclick="toggleSaveNews(event, this)" style="position:absolute;right:16px;bottom:5px; background: none; border: none; cursor: pointer; color: ${isSaved ? 'var(--google-blue)' : 'var(--text-gray)'}; padding: 4px; margin: -4px -4px 0 0; border-radius: 50%; transition: transform 0.2s ease, color 0.2s; -webkit-tap-highlight-color: transparent;">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="${isSaved ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-                    </svg>
-                </button>
-                            
+
                 <h3 class="news-headline">${item.title}</h3>
-                <div class="news-time">${displayDate}</div>
+                
+                <div class="news-time" style="margin-top: auto;">${displayDate}</div>
             </div>
         </a>
         `;
@@ -66,7 +84,7 @@ async function masakHTML() {
 
     // 4. Buka template.html, ganti penanda dengan HTML berita matang
     let template = fs.readFileSync('template.html', 'utf-8');
-    template = template.replace('<!-- BERITA_TERKINI_DISINI -->', htmlBerita);
+    template = template.replace('', htmlBerita);
 
     // 5. Simpan hasilnya menjadi index.html
     fs.writeFileSync('index.html', template);
