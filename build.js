@@ -28,7 +28,7 @@ async function masakHTML() {
     // Acak dan ambil 10 berita untuk halaman depan
     semuaBerita = semuaBerita.sort(() => Math.random() - 0.5).slice(0, 10);
 
-    // 3. Susun menjadi elemen HTML persis seperti desainmu
+    // 3. Susun menjadi elemen HTML persis seperti desain titik tiga terbaru
     let htmlBerita = '';
     semuaBerita.forEach(item => {
         let thumb = item.enclosure?.link || item.thumbnail || (item.description?.match(/<img[^>]+src="([^">]+)"/)?.[1]) || 'https://via.placeholder.com/100?text=News';
@@ -51,7 +51,8 @@ async function masakHTML() {
             fromStorage: true
         }));
 
-        // Fix 3: Default isSaved adalah false saat di-build oleh Node.js
+        // Fix 3: Default isSaved adalah false saat di-build oleh Node.js 
+        // (Karena SSR tidak bisa membaca localStorage user)
         const isSaved = false;
 
         htmlBerita += `
@@ -67,11 +68,24 @@ async function masakHTML() {
                         <span class="source-tag">${item.sourceName}</span>
                     </div>
                     
-                    <button data-item="${itemData}" onclick="toggleSaveNews(event, this)" style="position:absolute;right:16px;bottom:5px; background: none; border: none; cursor: pointer; color: ${isSaved ? 'var(--google-blue)' : 'var(--text-gray)'}; padding: 4px; margin: -4px -4px 0 0; border-radius: 50%; transition: transform 0.2s ease, color 0.2s; -webkit-tap-highlight-color: transparent;">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="${isSaved ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-                        </svg>
-                    </button>
+                    <div class="dropdown-container">
+                        <button class="three-dot-btn" onclick="toggleNewsMenu(event, this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <circle cx="12" cy="5" r="2.2"></circle>
+                                <circle cx="12" cy="12" r="2.2"></circle>
+                                <circle cx="12" cy="19" r="2.2"></circle>
+                            </svg>
+                        </button>
+                        <div class="news-dropdown">
+                            <button class="dropdown-item" data-item="${itemData}" onclick="toggleSaveNews(event, this)">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg> <span class="action-text">Simpan Berita</span>
+                            </button>
+                            <button class="dropdown-item" onclick="reportNewsContent(event, this)">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
+                                <span>Laporkan Konten</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
                 <h3 class="news-headline">${item.title}</h3>
@@ -88,7 +102,7 @@ async function masakHTML() {
 
     // 5. Simpan hasilnya menjadi index.html
     fs.writeFileSync('index.html', template);
-    console.log("Selesai! Berhasil merakit index.html dengan thumbnail di kiri.");
+    console.log("Selesai! Berhasil merakit index.html dengan UI dropdown titik tiga terbaru.");
 }
 
 masakHTML();
