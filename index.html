@@ -261,7 +261,6 @@
             display: inline-block;
         }
 
-        /* --- WRAPPER UNTUK BARIS 1 (USD & EMAS) --- */
         .stock-mini-wrapper {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -269,7 +268,6 @@
             width: 100%;
         }
 
-        /* --- WRAPPER UNTUK BARIS 2 (SLIDER SAHAM LAINNYA) --- */
         .market-slider-wrapper {
             display: flex;
             overflow-x: auto;
@@ -282,7 +280,6 @@
         }
         .market-slider-wrapper::-webkit-scrollbar { display: none; }
 
-        /* --- DESAIN BOX UNIVERSAL (Digunakan di Baris 1 & Baris 2) --- */
         .slider-box {
             min-width: 110px; 
             background: #ffffff; 
@@ -323,13 +320,11 @@
             display: inline-block;
         }
 
-        /* --- CATEGORY SLIDER STYLES (FULL WIDTH & STICKY) --- */
         .category-wrapper {
-            /* Trik Margin Negatif: Mengabaikan padding body 16px kiri-kanan */
             width: calc(100% + 32px);
             margin-left: -16px;
             margin-right: -16px;
-            padding: 12px 16px 8px 16px; /* Kembalikan padding dalam agar tombol sejajar */
+            padding: 12px 16px 8px 16px; 
             box-sizing: border-box;
 
             overflow-x: auto;
@@ -388,7 +383,7 @@
             padding: 16px 20px;
             border-bottom: 1px solid #f1f3f4;
             position: relative;
-            overflow: hidden;
+            overflow: visible; 
             text-decoration: none !important;
             color: var(--text-dark) !important;
             cursor: pointer;
@@ -474,185 +469,95 @@
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         @media (min-width: 900px) {
-            .app-container {
-                max-width: 1000px;
-                display: block; 
-            }
-
-            .header-bar {
-                margin-bottom: 24px;
-            }
-
-            .header-grid {
-                float: right;
-                clear: right;
-                width: 320px;
-                display: flex;
-                flex-direction: column;
-                gap: 12px;
-                margin-bottom: 12px;
-            }
-
-            .header-grid .card {
-                width: 100%;
-                box-sizing: border-box; 
-            }
-
-            .stock-card {
-                float: right;
-                clear: right;
-                width: 320px;
-                margin-bottom: 12px;
-                box-sizing: border-box; 
-            }
-
-            .category-wrapper {
-                width: auto; 
-                margin-left: 0;
-                margin-right: 344px; 
-                padding-left: 0;
-                padding-right: 0;
-            }
-
-            .news-card {
-                width: auto;
-                margin-right: 344px;
-                box-sizing: border-box;
-            }
-
-            .app-container::after {
-                content: "";
-                display: table;
-                clear: both;
-            }
-
-            #news-container {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 16px;
-                padding: 16px;
-            }
-
-            .news-item {
-                border: 1px solid var(--border-light);
-                border-radius: 12px;
-                padding: 16px;
-            }
+            .app-container { max-width: 1000px; display: block; }
+            .header-bar { margin-bottom: 24px; }
+            .header-grid { float: right; clear: right; width: 320px; display: flex; flex-direction: column; gap: 12px; margin-bottom: 12px; }
+            .header-grid .card { width: 100%; box-sizing: border-box; }
+            .stock-card { float: right; clear: right; width: 320px; margin-bottom: 12px; box-sizing: border-box; }
+            .category-wrapper { width: auto; margin-left: 0; margin-right: 344px; padding-left: 0; padding-right: 0; }
+            .news-card { width: auto; margin-right: 344px; box-sizing: border-box; }
+            .app-container::after { content: ""; display: table; clear: both; }
+            #news-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; padding: 16px; }
+            .news-item { border: 1px solid var(--border-light); border-radius: 12px; padding: 16px; }
         }
 
-        #policy-overlay {
-            z-index: 1200;
-        }
+        #policy-overlay { z-index: 1200; }
         .policy-popup {
-            position: fixed;
-            bottom: -100%;
-            left: 0;
-            width: 100%;
-            background: var(--card-white);
-            z-index: 1201;
-            border-radius: 24px 24px 0 0;
-            padding: 12px 20px 24px 20px;
-            box-sizing: border-box;
-            transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
-            font-family: 'Plus Jakarta Sans', sans-serif;
+            position: fixed; bottom: -100%; left: 0; width: 100%; background: var(--card-white);
+            z-index: 1201; border-radius: 24px 24px 0 0; padding: 12px 20px 24px 20px;
+            box-sizing: border-box; transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.15); font-family: 'Plus Jakarta Sans', sans-serif;
         }
-        .policy-popup.active {
-            bottom: 0;
-        }
-        .popup-drag-handle {
-            width: 36px;
-            height: 4px;
-            background: #dadce0;
-            border-radius: 4px;
-            margin: 0 auto 20px auto;
-        }
-        .popup-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid var(--border-light);
-        }
-        .popup-header-icon {
-            background: rgba(26, 115, 232, 0.1);
-            color: var(--google-blue);
-            padding: 8px;
-            border-radius: 8px;
-            display: flex;
-        }
-        .popup-header h3 {
-            margin: 0;
-            font-size: 0.95rem; 
-            color: var(--text-dark);
-        }
-        .popup-text {
-            color: var(--text-dark);
-            font-size: 0.85rem; 
-            line-height: 1.5;
-            padding: 0 4px 8px 4px;
-        }
+        .policy-popup.active { bottom: 0; }
+        .popup-drag-handle { width: 36px; height: 4px; background: #dadce0; border-radius: 4px; margin: 0 auto 20px auto; }
+        .popup-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--border-light); }
+        .popup-header-icon { background: rgba(26, 115, 232, 0.1); color: var(--google-blue); padding: 8px; border-radius: 8px; display: flex; }
+        .popup-header h3 { margin: 0; font-size: 0.95rem; color: var(--text-dark); }
+        .popup-text { color: var(--text-dark); font-size: 0.85rem; line-height: 1.5; padding: 0 4px 8px 4px; }
         .popup-btn {
-            width: 100%;
-            padding: 10px 12px; 
-            margin-top: 20px;
-            background-color: var(--google-blue);
-            color: #ffffff;
-            border: none;
-            border-radius: 100px;
-            font-size: 0.85rem; 
-            font-weight: 600;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            cursor: pointer;
-            transition: background 0.2s;
-            -webkit-tap-highlight-color: transparent;
-            letter-spacing: normal; 
+            width: 100%; padding: 10px 12px; margin-top: 20px; background-color: var(--google-blue);
+            color: #ffffff; border: none; border-radius: 100px; font-size: 0.85rem; font-weight: 600;
+            font-family: 'Plus Jakarta Sans', sans-serif; cursor: pointer; transition: background 0.2s;
+            -webkit-tap-highlight-color: transparent; letter-spacing: normal; 
         }
-        .popup-btn:active {
-            background-color: #1557b0;
-        }
+        .popup-btn:active { background-color: #1557b0; }
 
         @media (min-width: 900px) {
-            .policy-popup {
-                width: 400px;
-                left: 50%;
-                transform: translateX(-50%);
-                border-radius: 20px;
-                bottom: -100%;
-                padding: 24px;
-            }
-            .policy-popup.active {
-                bottom: 50%;
-                transform: translate(-50%, 50%);
-            }
+            .policy-popup { width: 400px; left: 50%; transform: translateX(-50%); border-radius: 20px; bottom: -100%; padding: 24px; }
+            .policy-popup.active { bottom: 50%; transform: translate(-50%, 50%); }
             .popup-drag-handle { display: none; }
         }
 
-        /* --- TAMBAHAN CSS UNTUK TOAST NOTIFICATION --- */
         .toast-notification {
-            position: fixed;
-            bottom: -60px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #323232;
-            color: #ffffff;
-            padding: 12px 24px;
-            border-radius: 100px;
-            font-size: 0.85rem;
+            position: fixed; bottom: -60px; left: 50%; transform: translateX(-50%);
+            background-color: #323232; color: #ffffff; padding: 12px 24px; border-radius: 100px;
+            font-size: 0.85rem; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15); z-index: 9999;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); opacity: 0; pointer-events: none; white-space: nowrap;
+        }
+        .toast-notification.show { bottom: 24px; opacity: 1; }
+
+        /* --- CSS TAMBAHAN UNTUK DROPDOWN MENU & TOMBOL TITIK TIGA --- */
+        .dropdown-container {
+            position: relative; 
+        }
+        
+        .three-dot-btn {
+            background: none; border: none; padding: 4px; cursor: pointer;
+            color: var(--text-gray); border-radius: 50%; transition: background 0.2s;
+            -webkit-tap-highlight-color: transparent; display: flex; align-items: center; justify-content: center;
+            /* Margin negatif untuk memastikan presisi penuh terhadap batas padding kanan wadahnya */
+            right: -4px; position: absolute; top: -4px;
+            
+        }
+        .three-dot-btn:active { background: rgba(0,0,0,0.05); }
+        
+        .news-dropdown {
+            display: none; position: absolute; right: 0; top: 100%;
+            background: #ffffff; box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+            border-radius: 10px; 
+            min-width: 170px; /* Ukuran kembalikan ke ideal */
+            z-index: 100;
+            border: 1px solid var(--border-light); padding: 6px 0; 
+            transform-origin: top right;
+            animation: scaleIn 0.2s cubic-bezier(0.2, 0, 0, 1);
+        }
+        .news-dropdown.active { display: block; }
+        
+        .dropdown-item {
+            width: 100%; text-align: left; padding: 10px 16px; /* Padding ideal */
+            background: none; border: none; cursor: pointer;
+            font-size: 0.80rem; /* Ukuran baca ideal untuk menu */
             font-family: 'Plus Jakarta Sans', sans-serif;
-            font-weight: 500;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            z-index: 9999;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            opacity: 0;
-            pointer-events: none;
-            white-space: nowrap;
+            color: var(--text-dark); display: flex; align-items: center; gap: 12px; 
+            transition: background 0.2s; -webkit-tap-highlight-color: transparent;
         }
-        .toast-notification.show {
-            bottom: 24px;
-            opacity: 1;
+        .dropdown-item:hover, .dropdown-item:active { background: rgba(0,0,0,0.04); }
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
         }
+
     </style>
 </head>
 <body>
@@ -812,7 +717,7 @@
                     </div>
                     <h2 style="margin: 0; font-size: 1.15rem; color: var(--google-blue); font-weight: 600;" id="section-title">Terkini &rsaquo;</h2>
                 </div>
-                <button onclick="togglePolicyPopup()" style="background: none; border: none; padding: 4px; cursor: pointer; color: var(--text-gray); display: flex; align-items: center; justify-content: center; border-radius: 50%; -webkit-tap-highlight-color: transparent;">
+                <button onclick="togglePolicyPopup()" style="background: none; border: none; padding: 4px; cursor: pointer; color: var(--text-gray); display: flex; align-items: center; justify-content: center; border-radius: 50%; -webkit-tap-highlight-color: transparent; margin-right: -4px;">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                         <circle cx="12" cy="5" r="2.2"></circle>
                         <circle cx="12" cy="12" r="2.2"></circle>
@@ -833,257 +738,6 @@
                         <span style="font-size: 0.8rem;">Mohon aktifkan JavaScript untuk memuat lebih banyak berita dan fungsi.</span>
                     </div>
                 </noscript>
-                
-        <a class="news-item" href="https://www.cnbcindonesia.com/news/20260316175516-4-719558/anggaran-kementerian-lembaga-mau-dipotong-ini-kata-purbaya-soal-mbg" target="_blank" onmousedown="applyRipple(event)">
-            <div class="news-img-wrapper loaded">
-                <img src="https://awsimages.detik.net.id/visual/2026/02/23/menteri-keuangan-menkeu-purbaya-yudhi-sadewa-saat-menyampaikan-pemaparan-dalam-konferensi-pers-apbn-kita-edisi-februari-2026-d-1771820076491_169.jpeg?w=1200&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
-            </div>
-            <div class="news-info" style="display: flex; flex-direction: column; min-width: 0;">
-                
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
-                    <div class="source-wrapper" style="margin-bottom: 0;">
-                        <img src="https://www.google.com/s2/favicons?sz=64&domain=cnbcindonesia.com" class="news-favicon" alt="icon">
-                        <span class="source-tag">CNBC Indo</span>
-                    </div>
-                    
-                    <button data-item="%7B%22title%22%3A%22Anggaran%20Kementerian%2FLembaga%20Mau%20Dipotong%2C%20Ini%20Kata%20Purbaya%20Soal%20MBG%22%2C%22link%22%3A%22https%3A%2F%2Fwww.cnbcindonesia.com%2Fnews%2F20260316175516-4-719558%2Fanggaran-kementerian-lembaga-mau-dipotong-ini-kata-purbaya-soal-mbg%22%2C%22sourceName%22%3A%22CNBC%20Indo%22%2C%22domain%22%3A%22cnbcindonesia.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2012.40%22%2C%22thumb%22%3A%22https%3A%2F%2Fawsimages.detik.net.id%2Fvisual%2F2026%2F02%2F23%2Fmenteri-keuangan-menkeu-purbaya-yudhi-sadewa-saat-menyampaikan-pemaparan-dalam-konferensi-pers-apbn-kita-edisi-februari-2026-d-1771820076491_169.jpeg%3Fw%3D1200%26amp%3Bq%3D90%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)" style="position:absolute;right:16px;bottom:5px; background: none; border: none; cursor: pointer; color: var(--text-gray); padding: 4px; margin: -4px -4px 0 0; border-radius: 50%; transition: transform 0.2s ease, color 0.2s; -webkit-tap-highlight-color: transparent;">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-                        </svg>
-                    </button>
-                </div>
-
-                <h3 class="news-headline">Anggaran Kementerian/Lembaga Mau Dipotong, Ini Kata Purbaya Soal MBG</h3>
-                
-                <div class="news-time" style="margin-top: auto;">Hari ini, 12.40</div>
-            </div>
-        </a>
-        
-        <a class="news-item" href="https://www.antaranews.com/berita/5479110/f1-the-movie-menang-oscar-kategori-tata-suara-terbaik" target="_blank" onmousedown="applyRipple(event)">
-            <div class="news-img-wrapper loaded">
-                <img src="https://img.antaranews.com/cache/800x533/2025/03/15/Brad.jpg" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
-            </div>
-            <div class="news-info" style="display: flex; flex-direction: column; min-width: 0;">
-                
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
-                    <div class="source-wrapper" style="margin-bottom: 0;">
-                        <img src="https://www.google.com/s2/favicons?sz=64&domain=antaranews.com" class="news-favicon" alt="icon">
-                        <span class="source-tag">Antara</span>
-                    </div>
-                    
-                    <button data-item="%7B%22title%22%3A%22F1%20The%20Movie%20menang%20Oscar%20kategori%20tata%20suara%20terbaik%22%2C%22link%22%3A%22https%3A%2F%2Fwww.antaranews.com%2Fberita%2F5479110%2Ff1-the-movie-menang-oscar-kategori-tata-suara-terbaik%22%2C%22sourceName%22%3A%22Antara%22%2C%22domain%22%3A%22antaranews.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2013.09%22%2C%22thumb%22%3A%22https%3A%2F%2Fimg.antaranews.com%2Fcache%2F800x533%2F2025%2F03%2F15%2FBrad.jpg%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)" style="position:absolute;right:16px;bottom:5px; background: none; border: none; cursor: pointer; color: var(--text-gray); padding: 4px; margin: -4px -4px 0 0; border-radius: 50%; transition: transform 0.2s ease, color 0.2s; -webkit-tap-highlight-color: transparent;">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-                        </svg>
-                    </button>
-                </div>
-
-                <h3 class="news-headline">F1 The Movie menang Oscar kategori tata suara terbaik</h3>
-                
-                <div class="news-time" style="margin-top: auto;">Hari ini, 13.09</div>
-            </div>
-        </a>
-        
-        <a class="news-item" href="https://www.cnbcindonesia.com/news/20260316170153-8-719537/video-mudik-seru-transmedia-2026-berangkatkan-ratusan-karyawan" target="_blank" onmousedown="applyRipple(event)">
-            <div class="news-img-wrapper loaded">
-                <img src="https://awsimages.detik.net.id/visual/2026/03/16/cnbc-indonesia-tv-1773656654398_169.png?w=1200&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
-            </div>
-            <div class="news-info" style="display: flex; flex-direction: column; min-width: 0;">
-                
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
-                    <div class="source-wrapper" style="margin-bottom: 0;">
-                        <img src="https://www.google.com/s2/favicons?sz=64&domain=cnbcindonesia.com" class="news-favicon" alt="icon">
-                        <span class="source-tag">CNBC Indo</span>
-                    </div>
-                    
-                    <button data-item="%7B%22title%22%3A%22Video%3A%20Mudik%20Seru%20Transmedia%202026%2C%20Berangkatkan%20Ratusan%20Karyawan%22%2C%22link%22%3A%22https%3A%2F%2Fwww.cnbcindonesia.com%2Fnews%2F20260316170153-8-719537%2Fvideo-mudik-seru-transmedia-2026-berangkatkan-ratusan-karyawan%22%2C%22sourceName%22%3A%22CNBC%20Indo%22%2C%22domain%22%3A%22cnbcindonesia.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2011.45%22%2C%22thumb%22%3A%22https%3A%2F%2Fawsimages.detik.net.id%2Fvisual%2F2026%2F03%2F16%2Fcnbc-indonesia-tv-1773656654398_169.png%3Fw%3D1200%26amp%3Bq%3D90%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)" style="position:absolute;right:16px;bottom:5px; background: none; border: none; cursor: pointer; color: var(--text-gray); padding: 4px; margin: -4px -4px 0 0; border-radius: 50%; transition: transform 0.2s ease, color 0.2s; -webkit-tap-highlight-color: transparent;">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-                        </svg>
-                    </button>
-                </div>
-
-                <h3 class="news-headline">Video: Mudik Seru Transmedia 2026, Berangkatkan Ratusan Karyawan</h3>
-                
-                <div class="news-time" style="margin-top: auto;">Hari ini, 11.45</div>
-            </div>
-        </a>
-        
-        <a class="news-item" href="https://www.antaranews.com/berita/5479126/mui-imbau-umat-tunggu-hasil-sidang-isbat-soal-penetapan-idul-fitri" target="_blank" onmousedown="applyRipple(event)">
-            <div class="news-img-wrapper loaded">
-                <img src="https://img.antaranews.com/cache/800x533/2026/03/16/arus-mudik-idul-fitri-di-terminal-mengwi-bali-2753910.jpg" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
-            </div>
-            <div class="news-info" style="display: flex; flex-direction: column; min-width: 0;">
-                
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
-                    <div class="source-wrapper" style="margin-bottom: 0;">
-                        <img src="https://www.google.com/s2/favicons?sz=64&domain=antaranews.com" class="news-favicon" alt="icon">
-                        <span class="source-tag">Antara</span>
-                    </div>
-                    
-                    <button data-item="%7B%22title%22%3A%22MUI%20imbau%20umat%20tunggu%20hasil%20sidang%20isbat%20soal%20penetapan%20Idul%20Fitri%22%2C%22link%22%3A%22https%3A%2F%2Fwww.antaranews.com%2Fberita%2F5479126%2Fmui-imbau-umat-tunggu-hasil-sidang-isbat-soal-penetapan-idul-fitri%22%2C%22sourceName%22%3A%22Antara%22%2C%22domain%22%3A%22antaranews.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2013.15%22%2C%22thumb%22%3A%22https%3A%2F%2Fimg.antaranews.com%2Fcache%2F800x533%2F2026%2F03%2F16%2Farus-mudik-idul-fitri-di-terminal-mengwi-bali-2753910.jpg%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)" style="position:absolute;right:16px;bottom:5px; background: none; border: none; cursor: pointer; color: var(--text-gray); padding: 4px; margin: -4px -4px 0 0; border-radius: 50%; transition: transform 0.2s ease, color 0.2s; -webkit-tap-highlight-color: transparent;">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-                        </svg>
-                    </button>
-                </div>
-
-                <h3 class="news-headline">MUI imbau umat tunggu hasil sidang isbat soal penetapan Idul Fitri</h3>
-                
-                <div class="news-time" style="margin-top: auto;">Hari ini, 13.15</div>
-            </div>
-        </a>
-        
-        <a class="news-item" href="https://www.cnbcindonesia.com/news/20260316175120-4-719556/airnav-ungkap-lonjakan-penerbangan-mudik-lebaran-2026-kena-efek-ini" target="_blank" onmousedown="applyRipple(event)">
-            <div class="news-img-wrapper loaded">
-                <img src="https://awsimages.detik.net.id/visual/2026/03/16/executive-vice-president-evp-of-corporate-secretary-airnav-indonesia-hermana-soegijantoro-kiri-dan-direktur-operasional-airnav-1773658408393_169.jpeg?w=1200&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
-            </div>
-            <div class="news-info" style="display: flex; flex-direction: column; min-width: 0;">
-                
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
-                    <div class="source-wrapper" style="margin-bottom: 0;">
-                        <img src="https://www.google.com/s2/favicons?sz=64&domain=cnbcindonesia.com" class="news-favicon" alt="icon">
-                        <span class="source-tag">CNBC Indo</span>
-                    </div>
-                    
-                    <button data-item="%7B%22title%22%3A%22AirNav%20Ungkap%20Lonjakan%20Penerbangan%20Mudik%20Lebaran%202026%20Kena%20Efek%20Ini%22%2C%22link%22%3A%22https%3A%2F%2Fwww.cnbcindonesia.com%2Fnews%2F20260316175120-4-719556%2Fairnav-ungkap-lonjakan-penerbangan-mudik-lebaran-2026-kena-efek-ini%22%2C%22sourceName%22%3A%22CNBC%20Indo%22%2C%22domain%22%3A%22cnbcindonesia.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2011.35%22%2C%22thumb%22%3A%22https%3A%2F%2Fawsimages.detik.net.id%2Fvisual%2F2026%2F03%2F16%2Fexecutive-vice-president-evp-of-corporate-secretary-airnav-indonesia-hermana-soegijantoro-kiri-dan-direktur-operasional-airnav-1773658408393_169.jpeg%3Fw%3D1200%26amp%3Bq%3D90%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)" style="position:absolute;right:16px;bottom:5px; background: none; border: none; cursor: pointer; color: var(--text-gray); padding: 4px; margin: -4px -4px 0 0; border-radius: 50%; transition: transform 0.2s ease, color 0.2s; -webkit-tap-highlight-color: transparent;">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-                        </svg>
-                    </button>
-                </div>
-
-                <h3 class="news-headline">AirNav Ungkap Lonjakan Penerbangan Mudik Lebaran 2026 Kena Efek Ini</h3>
-                
-                <div class="news-time" style="margin-top: auto;">Hari ini, 11.35</div>
-            </div>
-        </a>
-        
-        <a class="news-item" href="https://www.antaranews.com/foto/5479114/antisipasi-tebing-rawan-longsor-di-malalak-sumatera-barat" target="_blank" onmousedown="applyRipple(event)">
-            <div class="news-img-wrapper loaded">
-                <img src="https://img.antaranews.com/cache/800x533/2026/03/16/Penanganan-tebing-longsor-di-Malalak-160326-Ief-3A.jpg" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
-            </div>
-            <div class="news-info" style="display: flex; flex-direction: column; min-width: 0;">
-                
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
-                    <div class="source-wrapper" style="margin-bottom: 0;">
-                        <img src="https://www.google.com/s2/favicons?sz=64&domain=antaranews.com" class="news-favicon" alt="icon">
-                        <span class="source-tag">Antara</span>
-                    </div>
-                    
-                    <button data-item="%7B%22title%22%3A%22Antisipasi%20tebing%20rawan%20longsor%20di%20Malalak%20Sumatera%20Barat%22%2C%22link%22%3A%22https%3A%2F%2Fwww.antaranews.com%2Ffoto%2F5479114%2Fantisipasi-tebing-rawan-longsor-di-malalak-sumatera-barat%22%2C%22sourceName%22%3A%22Antara%22%2C%22domain%22%3A%22antaranews.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2013.09%22%2C%22thumb%22%3A%22https%3A%2F%2Fimg.antaranews.com%2Fcache%2F800x533%2F2026%2F03%2F16%2FPenanganan-tebing-longsor-di-Malalak-160326-Ief-3A.jpg%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)" style="position:absolute;right:16px;bottom:5px; background: none; border: none; cursor: pointer; color: var(--text-gray); padding: 4px; margin: -4px -4px 0 0; border-radius: 50%; transition: transform 0.2s ease, color 0.2s; -webkit-tap-highlight-color: transparent;">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-                        </svg>
-                    </button>
-                </div>
-
-                <h3 class="news-headline">Antisipasi tebing rawan longsor di Malalak Sumatera Barat</h3>
-                
-                <div class="news-time" style="margin-top: auto;">Hari ini, 13.09</div>
-            </div>
-        </a>
-        
-        <a class="news-item" href="https://www.cnbcindonesia.com/news/20260316170152-8-719536/arus-mudik-mulai-padat-rest-area-km-57-karawang-dipenuhi-kendaraan" target="_blank" onmousedown="applyRipple(event)">
-            <div class="news-img-wrapper loaded">
-                <img src="https://awsimages.detik.net.id/visual/2026/03/16/cnbc-indonesia-tv-1773656654320_169.png?w=1200&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
-            </div>
-            <div class="news-info" style="display: flex; flex-direction: column; min-width: 0;">
-                
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
-                    <div class="source-wrapper" style="margin-bottom: 0;">
-                        <img src="https://www.google.com/s2/favicons?sz=64&domain=cnbcindonesia.com" class="news-favicon" alt="icon">
-                        <span class="source-tag">CNBC Indo</span>
-                    </div>
-                    
-                    <button data-item="%7B%22title%22%3A%22Arus%20Mudik%20Mulai%20Padat%2C%20Rest%20Area%20KM%2057%20Karawang%20Dipenuhi%20Kendaraan%22%2C%22link%22%3A%22https%3A%2F%2Fwww.cnbcindonesia.com%2Fnews%2F20260316170152-8-719536%2Farus-mudik-mulai-padat-rest-area-km-57-karawang-dipenuhi-kendaraan%22%2C%22sourceName%22%3A%22CNBC%20Indo%22%2C%22domain%22%3A%22cnbcindonesia.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2012.00%22%2C%22thumb%22%3A%22https%3A%2F%2Fawsimages.detik.net.id%2Fvisual%2F2026%2F03%2F16%2Fcnbc-indonesia-tv-1773656654320_169.png%3Fw%3D1200%26amp%3Bq%3D90%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)" style="position:absolute;right:16px;bottom:5px; background: none; border: none; cursor: pointer; color: var(--text-gray); padding: 4px; margin: -4px -4px 0 0; border-radius: 50%; transition: transform 0.2s ease, color 0.2s; -webkit-tap-highlight-color: transparent;">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-                        </svg>
-                    </button>
-                </div>
-
-                <h3 class="news-headline">Arus Mudik Mulai Padat, Rest Area KM 57 Karawang Dipenuhi Kendaraan</h3>
-                
-                <div class="news-time" style="margin-top: auto;">Hari ini, 12.00</div>
-            </div>
-        </a>
-        
-        <a class="news-item" href="https://www.cnbcindonesia.com/news/20260316165919-4-719529/trump-uring-uringan-soal-iran-ancam-tuntut-media-sebut-tak-patriotik" target="_blank" onmousedown="applyRipple(event)">
-            <div class="news-img-wrapper loaded">
-                <img src="https://awsimages.detik.net.id/visual/2026/03/06/presiden-as-donald-trump-berbicara-pada-hari-ia-memberikan-penghargaan-kepada-para-pemain-dan-official-tim-inter-miami-cf-juar-1772760025878_169.jpeg?w=1200&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
-            </div>
-            <div class="news-info" style="display: flex; flex-direction: column; min-width: 0;">
-                
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
-                    <div class="source-wrapper" style="margin-bottom: 0;">
-                        <img src="https://www.google.com/s2/favicons?sz=64&domain=cnbcindonesia.com" class="news-favicon" alt="icon">
-                        <span class="source-tag">CNBC Indo</span>
-                    </div>
-                    
-                    <button data-item="%7B%22title%22%3A%22Trump%20Uring-uringan%20soal%20Iran%2C%20Ancam%20Tuntut%20Media-Sebut%20Tak%20Patriotik%22%2C%22link%22%3A%22https%3A%2F%2Fwww.cnbcindonesia.com%2Fnews%2F20260316165919-4-719529%2Ftrump-uring-uringan-soal-iran-ancam-tuntut-media-sebut-tak-patriotik%22%2C%22sourceName%22%3A%22CNBC%20Indo%22%2C%22domain%22%3A%22cnbcindonesia.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2012.10%22%2C%22thumb%22%3A%22https%3A%2F%2Fawsimages.detik.net.id%2Fvisual%2F2026%2F03%2F06%2Fpresiden-as-donald-trump-berbicara-pada-hari-ia-memberikan-penghargaan-kepada-para-pemain-dan-official-tim-inter-miami-cf-juar-1772760025878_169.jpeg%3Fw%3D1200%26amp%3Bq%3D90%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)" style="position:absolute;right:16px;bottom:5px; background: none; border: none; cursor: pointer; color: var(--text-gray); padding: 4px; margin: -4px -4px 0 0; border-radius: 50%; transition: transform 0.2s ease, color 0.2s; -webkit-tap-highlight-color: transparent;">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-                        </svg>
-                    </button>
-                </div>
-
-                <h3 class="news-headline">Trump Uring-uringan soal Iran, Ancam Tuntut Media-Sebut Tak Patriotik</h3>
-                
-                <div class="news-time" style="margin-top: auto;">Hari ini, 12.10</div>
-            </div>
-        </a>
-        
-        <a class="news-item" href="https://www.cnbcindonesia.com/news/20260316180241-4-719559/wamendag-roro-bertemu-menteri-menteri-asean-kasih-tahu-rencana-ri-ini" target="_blank" onmousedown="applyRipple(event)">
-            <div class="news-img-wrapper loaded">
-                <img src="https://awsimages.detik.net.id/visual/2026/03/16/pertemuan-wamendag-roro-dengan-wamendag-singapura-kim-yong-dan-wamendag-malaysia-sim-tze-tzin-di-sela-sela-asean-economic-mini-1773659026986_169.jpeg?w=1200&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
-            </div>
-            <div class="news-info" style="display: flex; flex-direction: column; min-width: 0;">
-                
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
-                    <div class="source-wrapper" style="margin-bottom: 0;">
-                        <img src="https://www.google.com/s2/favicons?sz=64&domain=cnbcindonesia.com" class="news-favicon" alt="icon">
-                        <span class="source-tag">CNBC Indo</span>
-                    </div>
-                    
-                    <button data-item="%7B%22title%22%3A%22Wamendag%20Roro%20Bertemu%20Menteri-Menteri%20ASEAN%2C%20Kasih%20Tahu%20Rencana%20RI%20Ini%22%2C%22link%22%3A%22https%3A%2F%2Fwww.cnbcindonesia.com%2Fnews%2F20260316180241-4-719559%2Fwamendag-roro-bertemu-menteri-menteri-asean-kasih-tahu-rencana-ri-ini%22%2C%22sourceName%22%3A%22CNBC%20Indo%22%2C%22domain%22%3A%22cnbcindonesia.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2011.45%22%2C%22thumb%22%3A%22https%3A%2F%2Fawsimages.detik.net.id%2Fvisual%2F2026%2F03%2F16%2Fpertemuan-wamendag-roro-dengan-wamendag-singapura-kim-yong-dan-wamendag-malaysia-sim-tze-tzin-di-sela-sela-asean-economic-mini-1773659026986_169.jpeg%3Fw%3D1200%26amp%3Bq%3D90%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)" style="position:absolute;right:16px;bottom:5px; background: none; border: none; cursor: pointer; color: var(--text-gray); padding: 4px; margin: -4px -4px 0 0; border-radius: 50%; transition: transform 0.2s ease, color 0.2s; -webkit-tap-highlight-color: transparent;">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-                        </svg>
-                    </button>
-                </div>
-
-                <h3 class="news-headline">Wamendag Roro Bertemu Menteri-Menteri ASEAN, Kasih Tahu Rencana RI Ini</h3>
-                
-                <div class="news-time" style="margin-top: auto;">Hari ini, 11.45</div>
-            </div>
-        </a>
-        
-        <a class="news-item" href="https://www.antaranews.com/berita/5479106/menpanrb-cek-kesiapan-layanan-kesehatan-jelang-nyepi-dan-idul-fitri" target="_blank" onmousedown="applyRipple(event)">
-            <div class="news-img-wrapper loaded">
-                <img src="https://img.antaranews.com/cache/800x533/2026/03/16/1000474612.jpg" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
-            </div>
-            <div class="news-info" style="display: flex; flex-direction: column; min-width: 0;">
-                
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
-                    <div class="source-wrapper" style="margin-bottom: 0;">
-                        <img src="https://www.google.com/s2/favicons?sz=64&domain=antaranews.com" class="news-favicon" alt="icon">
-                        <span class="source-tag">Antara</span>
-                    </div>
-                    
-                    <button data-item="%7B%22title%22%3A%22MenPANRB%20cek%20kesiapan%20layanan%20kesehatan%20jelang%20Nyepi%20dan%20Idul%20Fitri%22%2C%22link%22%3A%22https%3A%2F%2Fwww.antaranews.com%2Fberita%2F5479106%2Fmenpanrb-cek-kesiapan-layanan-kesehatan-jelang-nyepi-dan-idul-fitri%22%2C%22sourceName%22%3A%22Antara%22%2C%22domain%22%3A%22antaranews.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2013.07%22%2C%22thumb%22%3A%22https%3A%2F%2Fimg.antaranews.com%2Fcache%2F800x533%2F2026%2F03%2F16%2F1000474612.jpg%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)" style="position:absolute;right:16px;bottom:5px; background: none; border: none; cursor: pointer; color: var(--text-gray); padding: 4px; margin: -4px -4px 0 0; border-radius: 50%; transition: transform 0.2s ease, color 0.2s; -webkit-tap-highlight-color: transparent;">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-                        </svg>
-                    </button>
-                </div>
-
-                <h3 class="news-headline">MenPANRB cek kesiapan layanan kesehatan jelang Nyepi dan Idul Fitri</h3>
-                
-                <div class="news-time" style="margin-top: auto;">Hari ini, 13.07</div>
-            </div>
-        </a>
-        
                 </div>
             
             <div class="load-more-container" id="load-more-container" style="min-height: 80px; box-sizing: border-box; justify-content: center;">
@@ -1198,6 +852,10 @@
             const policyPopup = document.getElementById('policy-popup');
             if (policyPopup) policyPopup.classList.remove('active');
             
+            document.querySelectorAll('.news-dropdown.active').forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+
             document.body.classList.remove('no-scroll');
             
             setTimeout(()=> { document.getElementById('google-search-input').value = ''; },500);
@@ -1232,6 +890,8 @@
         }
 
         function applyRipple(e) {
+            if (e.target.closest('.dropdown-container')) return;
+
             const item = e.currentTarget;
             const oldRipples = item.querySelectorAll(".ripple");
             oldRipples.forEach(r => r.remove());
@@ -1437,7 +1097,6 @@
     </script>
 
     <script>
-        // --- TAMBAHAN JS UNTUK FUNGSI TOAST NOTIFICATION ---
         let toastTimeout;
         function showToastMessage(message) {
             const toast = document.getElementById('app-toast');
@@ -1450,6 +1109,35 @@
                 }, 2500);
             }
         }
+
+        function toggleNewsMenu(event, btn) {
+            event.preventDefault();
+            event.stopPropagation();
+            
+            document.querySelectorAll('.news-dropdown.active').forEach(dropdown => {
+                if (dropdown !== btn.nextElementSibling) {
+                    dropdown.classList.remove('active');
+                }
+            });
+
+            const dropdown = btn.nextElementSibling;
+            dropdown.classList.toggle('active');
+        }
+
+        function reportNewsContent(event, btn) {
+            event.preventDefault();
+            event.stopPropagation();
+            showToastMessage('Konten berhasil dilaporkan');
+            btn.closest('.news-dropdown').classList.remove('active');
+        }
+
+        document.addEventListener('click', (event) => {
+            if (!event.target.closest('.dropdown-container')) {
+                document.querySelectorAll('.news-dropdown.active').forEach(dropdown => {
+                    dropdown.classList.remove('active');
+                });
+            }
+        });
 
         const originalGetNewsTitera = getNews;
 
@@ -1469,7 +1157,7 @@
                                 <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
                             </svg>
                             <br><b style="color: var(--text-dark);">Belum ada berita tersimpan</b>
-                            <p style="font-size: 0.8rem; margin-top: 4px;">Tekan ikon pita pada berita untuk menyimpannya.</p>
+                            <p style="font-size: 0.8rem; margin-top: 4px;">Buka menu titik tiga pada berita untuk menyimpannya.</p>
                         </div>`;
                     loadMoreContainer.style.display = 'none';
                     return;
@@ -1524,6 +1212,7 @@
                         fromStorage: true
                     }));
 
+                    // PERUBAHAN: Dimasukkan ke dalam flex flow, hapus position absolute
                     newsLink.innerHTML = `
                         <div class="news-img-wrapper">
                             <img src="${thumb || 'https://via.placeholder.com/100?text=News'}" class="news-img" onload="this.parentElement.classList.add('loaded')" onerror="this.parentElement.classList.add('loaded');">
@@ -1536,11 +1225,27 @@
                                     <span class="source-tag">${item.sourceName}</span>
                                 </div>
                                 
-                                <button data-item="${itemData}" onclick="toggleSaveNews(event, this)" style="position:absolute;right:16px;bottom:5px; background: none; border: none; cursor: pointer; color: ${isSaved ? 'var(--google-blue)' : 'var(--text-gray)'}; padding: 4px; margin: -4px -4px 0 0; border-radius: 50%; transition: transform 0.2s ease, color 0.2s; -webkit-tap-highlight-color: transparent;">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="${isSaved ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-                                    </svg>
-                                </button>
+                                <div class="dropdown-container">
+                                    <button class="three-dot-btn" onclick="toggleNewsMenu(event, this)">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                            <circle cx="12" cy="5" r="2.2"></circle>
+                                            <circle cx="12" cy="12" r="2.2"></circle>
+                                            <circle cx="12" cy="19" r="2.2"></circle>
+                                        </svg>
+                                    </button>
+                                    <div class="news-dropdown">
+                                        <button class="dropdown-item" data-item="${itemData}" onclick="toggleSaveNews(event, this)">
+                                            ${isSaved ? 
+                                            `<svg width="18" height="18" viewBox="0 0 24 24" fill="var(--google-blue)" stroke="var(--google-blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg> <span class="action-text" style="color: var(--google-blue); font-weight: 600;">Hapus Tersimpan</span>` : 
+                                            `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg> <span class="action-text">Simpan Berita</span>`
+                                            }
+                                        </button>
+                                        <button class="dropdown-item" onclick="reportNewsContent(event, this)">
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
+                                            <span>Laporkan Konten</span>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
 
                             <h3 class="news-headline">${item.title}</h3>
@@ -1571,13 +1276,14 @@
             let saved = JSON.parse(localStorage.getItem('titera_saved_news')) || [];
             const index = saved.findIndex(s => s.link === itemData.link);
             const newsItemEl = btnElement.closest('.news-item'); 
+            const dropdownEl = btnElement.closest('.news-dropdown');
 
             if (index > -1) {
                 saved.splice(index, 1);
-                btnElement.style.color = 'var(--text-gray)';
-                btnElement.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>`;
                 
-                showToastMessage('Dihapus dari Tersimpan'); // --- Trigger Toast Hapus ---
+                btnElement.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg> <span class="action-text">Simpan Berita</span>`;
+                
+                showToastMessage('Dihapus dari Tersimpan');
 
                 const activeCategory = document.querySelector('.category-btn.active');
                 if (activeCategory && activeCategory.innerText.toLowerCase() === 'tersimpan') {
@@ -1609,7 +1315,7 @@
                                             <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
                                         </svg>
                                         <br><b style="color: var(--text-dark);">Belum ada berita tersimpan</b>
-                                        <p style="font-size: 0.8rem; margin-top: 4px;">Tekan ikon pita pada berita untuk menyimpannya.</p>
+                                        <p style="font-size: 0.8rem; margin-top: 4px;">Buka menu titik tiga pada berita untuk menyimpannya.</p>
                                     </div>`;
                             }
                         }, 400); 
@@ -1617,14 +1323,13 @@
                 }
             } else {
                 saved.push(itemData);
-                btnElement.style.color = 'var(--google-blue)';
-                btnElement.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>`;
                 
-                showToastMessage('Ditambahkan ke Tersimpan'); // --- Trigger Toast Tambah ---
-
-                btnElement.style.transform = 'scale(1.2)';
-                setTimeout(() => btnElement.style.transform = 'scale(1)', 150);
+                btnElement.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="var(--google-blue)" stroke="var(--google-blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg> <span class="action-text" style="color: var(--google-blue); font-weight: 600;">Hapus Tersimpan</span>`;
+                
+                showToastMessage('Ditambahkan ke Tersimpan');
             }
+
+            if (dropdownEl) dropdownEl.classList.remove('active');
 
             localStorage.setItem('titera_saved_news', JSON.stringify(saved));
         }
