@@ -388,7 +388,7 @@
             color: var(--text-dark) !important;
             cursor: pointer;
             -webkit-tap-highlight-color: transparent;
-            z-index: 1;
+            
             transition: background-color 0.3s ease;
         }
 
@@ -520,6 +520,7 @@
         /* --- CSS TAMBAHAN UNTUK DROPDOWN MENU & TOMBOL TITIK TIGA --- */
         .dropdown-container {
             position: relative; 
+            
         }
         
         .three-dot-btn {
@@ -556,6 +557,47 @@
         @keyframes scaleIn {
             from { opacity: 0; transform: scale(0.95); }
             to { opacity: 1; transform: scale(1); }
+        }
+
+        /* OVERRIDE UNTUK MOBILE BOTTOM SHEET (Menu Berita) */
+        @media (max-width: 899px) {
+            .news-dropdown {
+                display: block; 
+                position: fixed;
+                bottom: -100%;
+                left: 0;
+                top: auto;
+                width: 100%;
+                background: var(--card-white);
+                z-index: 1201; 
+                border-radius: 24px 24px 0 0;
+                padding: 12px 20px 24px 20px;
+                box-sizing: border-box;
+                transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+                visibility: hidden;
+                opacity: 0;
+                transform-origin: bottom;
+                animation: none; 
+            }
+            .news-dropdown.active {
+                bottom: 0;
+                visibility: visible;
+                opacity: 1;
+            }
+            .news-dropdown::before {
+                content: '';
+                display: block;
+                width: 36px;
+                height: 4px;
+                background: #dadce0;
+                border-radius: 4px;
+                margin: 0 auto 20px auto;
+            }
+            .dropdown-item {
+                padding: 14px 8px; 
+                font-size: 0.95rem;
+            }
         }
 
     </style>
@@ -739,85 +781,9 @@
                     </div>
                 </noscript>
                 
-        <a class="news-item" href="https://www.cnbcindonesia.com/news/20260316152252-4-719478/bahlil-sebut-daerah-ini-rawan-terjadi-tanah-bergerak" target="_blank" onmousedown="applyRipple(event)">
+        <a class="news-item" href="https://www.antaranews.com/berita/5479602/menhub-perkuat-penyeberangan-jawa-sumatra-jelang-puncak-arus-mudik" target="_blank" onmousedown="applyRipple(event)">
             <div class="news-img-wrapper loaded">
-                <img src="https://awsimages.detik.net.id/visual/2026/03/13/menteri-esdm-bahlil-lahadalia-saat-mengikuti-sidang-kabinet-paripurna-istana-negara-jakarta-jumat-1332026-1773396679259_169.png?w=1200&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
-            </div>
-            <div class="news-info" style="display: flex; flex-direction: column; min-width: 0;">
-                
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
-                    <div class="source-wrapper" style="margin-bottom: 0;">
-                        <img src="https://www.google.com/s2/favicons?sz=64&domain=cnbcindonesia.com" class="news-favicon" alt="icon">
-                        <span class="source-tag">CNBC Indo</span>
-                    </div>
-                    
-                    <div class="dropdown-container">
-                        <button class="three-dot-btn" onclick="toggleNewsMenu(event, this)">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                <circle cx="12" cy="5" r="2.2"></circle>
-                                <circle cx="12" cy="12" r="2.2"></circle>
-                                <circle cx="12" cy="19" r="2.2"></circle>
-                            </svg>
-                        </button>
-                        <div class="news-dropdown">
-                            <button class="dropdown-item" data-item="%7B%22title%22%3A%22Bahlil%20Sebut%20Daerah%20Ini%20Rawan%20Terjadi%20Tanah%20Bergerak%22%2C%22link%22%3A%22https%3A%2F%2Fwww.cnbcindonesia.com%2Fnews%2F20260316152252-4-719478%2Fbahlil-sebut-daerah-ini-rawan-terjadi-tanah-bergerak%22%2C%22sourceName%22%3A%22CNBC%20Indo%22%2C%22domain%22%3A%22cnbcindonesia.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2012.35%22%2C%22thumb%22%3A%22https%3A%2F%2Fawsimages.detik.net.id%2Fvisual%2F2026%2F03%2F13%2Fmenteri-esdm-bahlil-lahadalia-saat-mengikuti-sidang-kabinet-paripurna-istana-negara-jakarta-jumat-1332026-1773396679259_169.png%3Fw%3D1200%26amp%3Bq%3D90%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg> <span class="action-text">Simpan Berita</span>
-                            </button>
-                            <button class="dropdown-item" onclick="reportNewsContent(event, this)">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
-                                <span>Laporkan Konten</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <h3 class="news-headline">Bahlil Sebut Daerah Ini Rawan Terjadi Tanah Bergerak</h3>
-                
-                <div class="news-time" style="margin-top: auto;">Hari ini, 12.35</div>
-            </div>
-        </a>
-        
-        <a class="news-item" href="https://news.detik.com/berita/d-8403266/bgn-suspend-2-dapur-mbg-di-ponorogo-usai-pemilik-ngaku-cucu-menteri" target="_blank" onmousedown="applyRipple(event)">
-            <div class="news-img-wrapper loaded">
-                <img src="https://akcdn.detik.net.id/community/media/visual/2025/09/19/pengawasan-kualitas-makan-bergizi-gratis-jadi-sorotan-1758268443608_169.jpeg?w=360&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
-            </div>
-            <div class="news-info" style="display: flex; flex-direction: column; min-width: 0;">
-                
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
-                    <div class="source-wrapper" style="margin-bottom: 0;">
-                        <img src="https://www.google.com/s2/favicons?sz=64&domain=detik.com" class="news-favicon" alt="icon">
-                        <span class="source-tag">Detik</span>
-                    </div>
-                    
-                    <div class="dropdown-container">
-                        <button class="three-dot-btn" onclick="toggleNewsMenu(event, this)">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                <circle cx="12" cy="5" r="2.2"></circle>
-                                <circle cx="12" cy="12" r="2.2"></circle>
-                                <circle cx="12" cy="19" r="2.2"></circle>
-                            </svg>
-                        </button>
-                        <div class="news-dropdown">
-                            <button class="dropdown-item" data-item="%7B%22title%22%3A%22BGN%20Suspend%202%20Dapur%20MBG%20di%20Ponorogo%20Usai%20Pemilik%20Ngaku%20Cucu%20Menteri%22%2C%22link%22%3A%22https%3A%2F%2Fnews.detik.com%2Fberita%2Fd-8403266%2Fbgn-suspend-2-dapur-mbg-di-ponorogo-usai-pemilik-ngaku-cucu-menteri%22%2C%22sourceName%22%3A%22Detik%22%2C%22domain%22%3A%22detik.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2012.12%22%2C%22thumb%22%3A%22https%3A%2F%2Fakcdn.detik.net.id%2Fcommunity%2Fmedia%2Fvisual%2F2025%2F09%2F19%2Fpengawasan-kualitas-makan-bergizi-gratis-jadi-sorotan-1758268443608_169.jpeg%3Fw%3D360%26amp%3Bq%3D90%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg> <span class="action-text">Simpan Berita</span>
-                            </button>
-                            <button class="dropdown-item" onclick="reportNewsContent(event, this)">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
-                                <span>Laporkan Konten</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <h3 class="news-headline">BGN Suspend 2 Dapur MBG di Ponorogo Usai Pemilik Ngaku Cucu Menteri</h3>
-                
-                <div class="news-time" style="margin-top: auto;">Hari ini, 12.12</div>
-            </div>
-        </a>
-        
-        <a class="news-item" href="https://www.antaranews.com/video/5479478/pemudik-di-tanjung-perak-dapat-fasilitas-bus-gratis-ke-berbagai-tujuan" target="_blank" onmousedown="applyRipple(event)">
-            <div class="news-img-wrapper loaded">
-                <img src="https://img.antaranews.com/cache/800x533/2026/03/SANS_PEMUDIK-DI-TANJUNG-PERAK-DAPAT-FASILITAS-BUS-GRATIS-KE-BERBAGAI-TUJUAN.jpg" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
+                <img src="https://img.antaranews.com/cache/800x533/2026/03/16/38581920-55DD-484A-B440-27DEB2ADF786.jpeg" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
             </div>
             <div class="news-info" style="display: flex; flex-direction: column; min-width: 0;">
                 
@@ -836,7 +802,7 @@
                             </svg>
                         </button>
                         <div class="news-dropdown">
-                            <button class="dropdown-item" data-item="%7B%22title%22%3A%22Pemudik%20di%20Tanjung%20Perak%20dapat%20fasilitas%20bus%20gratis%20ke%20berbagai%20tujuan%22%2C%22link%22%3A%22https%3A%2F%2Fwww.antaranews.com%2Fvideo%2F5479478%2Fpemudik-di-tanjung-perak-dapat-fasilitas-bus-gratis-ke-berbagai-tujuan%22%2C%22sourceName%22%3A%22Antara%22%2C%22domain%22%3A%22antaranews.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2015.40%22%2C%22thumb%22%3A%22https%3A%2F%2Fimg.antaranews.com%2Fcache%2F800x533%2F2026%2F03%2FSANS_PEMUDIK-DI-TANJUNG-PERAK-DAPAT-FASILITAS-BUS-GRATIS-KE-BERBAGAI-TUJUAN.jpg%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)">
+                            <button class="dropdown-item" data-item="%7B%22title%22%3A%22Menhub%20perkuat%20penyeberangan%20Jawa-Sumatra%20jelang%20puncak%20arus%20mudik%22%2C%22link%22%3A%22https%3A%2F%2Fwww.antaranews.com%2Fberita%2F5479602%2Fmenhub-perkuat-penyeberangan-jawa-sumatra-jelang-puncak-arus-mudik%22%2C%22sourceName%22%3A%22Antara%22%2C%22domain%22%3A%22antaranews.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2015.36%22%2C%22thumb%22%3A%22https%3A%2F%2Fimg.antaranews.com%2Fcache%2F800x533%2F2026%2F03%2F16%2F38581920-55DD-484A-B440-27DEB2ADF786.jpeg%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg> <span class="action-text">Simpan Berita</span>
                             </button>
                             <button class="dropdown-item" onclick="reportNewsContent(event, this)">
@@ -847,15 +813,15 @@
                     </div>
                 </div>
 
-                <h3 class="news-headline">Pemudik di Tanjung Perak dapat fasilitas bus gratis ke berbagai tujuan</h3>
+                <h3 class="news-headline">Menhub perkuat penyeberangan Jawa-Sumatra jelang puncak arus mudik</h3>
                 
-                <div class="news-time" style="margin-top: auto;">Hari ini, 15.40</div>
+                <div class="news-time" style="margin-top: auto;">Hari ini, 15.36</div>
             </div>
         </a>
         
-        <a class="news-item" href="https://www.cnbcindonesia.com/news/20260316175516-4-719558/anggaran-kementerian-lembaga-mau-dipotong-ini-kata-purbaya-soal-mbg" target="_blank" onmousedown="applyRipple(event)">
+        <a class="news-item" href="https://www.cnbcindonesia.com/news/20260316211736-4-719606/menko-airlangga-ri-sudah-swasembada-solar" target="_blank" onmousedown="applyRipple(event)">
             <div class="news-img-wrapper loaded">
-                <img src="https://awsimages.detik.net.id/visual/2026/02/23/menteri-keuangan-menkeu-purbaya-yudhi-sadewa-saat-menyampaikan-pemaparan-dalam-konferensi-pers-apbn-kita-edisi-februari-2026-d-1771820076491_169.jpeg?w=1200&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
+                <img src="https://awsimages.detik.net.id/visual/2025/11/10/menko-perekonomian-airlangga-hartarto-di-istana-negara-jakarta-senin-10112025-cnbc-indonesiatri-susilo-1762747577714_169.jpeg?w=1200&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
             </div>
             <div class="news-info" style="display: flex; flex-direction: column; min-width: 0;">
                 
@@ -874,7 +840,7 @@
                             </svg>
                         </button>
                         <div class="news-dropdown">
-                            <button class="dropdown-item" data-item="%7B%22title%22%3A%22Anggaran%20Kementerian%2FLembaga%20Mau%20Dipotong%2C%20Ini%20Kata%20Purbaya%20Soal%20MBG%22%2C%22link%22%3A%22https%3A%2F%2Fwww.cnbcindonesia.com%2Fnews%2F20260316175516-4-719558%2Fanggaran-kementerian-lembaga-mau-dipotong-ini-kata-purbaya-soal-mbg%22%2C%22sourceName%22%3A%22CNBC%20Indo%22%2C%22domain%22%3A%22cnbcindonesia.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2012.40%22%2C%22thumb%22%3A%22https%3A%2F%2Fawsimages.detik.net.id%2Fvisual%2F2026%2F02%2F23%2Fmenteri-keuangan-menkeu-purbaya-yudhi-sadewa-saat-menyampaikan-pemaparan-dalam-konferensi-pers-apbn-kita-edisi-februari-2026-d-1771820076491_169.jpeg%3Fw%3D1200%26amp%3Bq%3D90%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)">
+                            <button class="dropdown-item" data-item="%7B%22title%22%3A%22Menko%20Airlangga%3A%20RI%20Sudah%20Swasembada%20Solar%22%2C%22link%22%3A%22https%3A%2F%2Fwww.cnbcindonesia.com%2Fnews%2F20260316211736-4-719606%2Fmenko-airlangga-ri-sudah-swasembada-solar%22%2C%22sourceName%22%3A%22CNBC%20Indo%22%2C%22domain%22%3A%22cnbcindonesia.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2014.24%22%2C%22thumb%22%3A%22https%3A%2F%2Fawsimages.detik.net.id%2Fvisual%2F2025%2F11%2F10%2Fmenko-perekonomian-airlangga-hartarto-di-istana-negara-jakarta-senin-10112025-cnbc-indonesiatri-susilo-1762747577714_169.jpeg%3Fw%3D1200%26amp%3Bq%3D90%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg> <span class="action-text">Simpan Berita</span>
                             </button>
                             <button class="dropdown-item" onclick="reportNewsContent(event, this)">
@@ -885,15 +851,15 @@
                     </div>
                 </div>
 
-                <h3 class="news-headline">Anggaran Kementerian/Lembaga Mau Dipotong, Ini Kata Purbaya Soal MBG</h3>
+                <h3 class="news-headline">Menko Airlangga: RI Sudah Swasembada Solar</h3>
                 
-                <div class="news-time" style="margin-top: auto;">Hari ini, 12.40</div>
+                <div class="news-time" style="margin-top: auto;">Hari ini, 14.24</div>
             </div>
         </a>
         
-        <a class="news-item" href="https://news.detik.com/berita/d-8403269/ekonomi-surabaya-tumbuh-5-87-pemkot-genjot-ekraf-dan-wisata-kota" target="_blank" onmousedown="applyRipple(event)">
+        <a class="news-item" href="https://news.detik.com/berita/d-8403322/bareskrim-bongkar-peredaran-ekstasi-di-club-bali-manager-waiters-diringkus" target="_blank" onmousedown="applyRipple(event)">
             <div class="news-img-wrapper loaded">
-                <img src="https://akcdn.detik.net.id/community/media/visual/2026/03/16/pemkot-surabaya-1773663390735_169.jpeg?w=360&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
+                <img src="https://akcdn.detik.net.id/community/media/visual/2026/03/16/direktorat-tindak-pidana-narkoba-dirtipidnarkoba-bareskrim-polri-membongkar-peredaran-ekstasi-di-sebuah-club-di-denpasar-bali--1773664949052_169.jpeg?w=360&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
             </div>
             <div class="news-info" style="display: flex; flex-direction: column; min-width: 0;">
                 
@@ -912,7 +878,7 @@
                             </svg>
                         </button>
                         <div class="news-dropdown">
-                            <button class="dropdown-item" data-item="%7B%22title%22%3A%22Ekonomi%20Surabaya%20Tumbuh%205%2C87%25%2C%20Pemkot%20Genjot%20Ekraf%20dan%20Wisata%20Kota%22%2C%22link%22%3A%22https%3A%2F%2Fnews.detik.com%2Fberita%2Fd-8403269%2Fekonomi-surabaya-tumbuh-5-87-pemkot-genjot-ekraf-dan-wisata-kota%22%2C%22sourceName%22%3A%22Detik%22%2C%22domain%22%3A%22detik.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2012.18%22%2C%22thumb%22%3A%22https%3A%2F%2Fakcdn.detik.net.id%2Fcommunity%2Fmedia%2Fvisual%2F2026%2F03%2F16%2Fpemkot-surabaya-1773663390735_169.jpeg%3Fw%3D360%26amp%3Bq%3D90%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)">
+                            <button class="dropdown-item" data-item="%7B%22title%22%3A%22Bareskrim%20Bongkar%20Peredaran%20Ekstasi%20di%20Club%20Bali%2C%20Manager-Waiters%20Diringkus%22%2C%22link%22%3A%22https%3A%2F%2Fnews.detik.com%2Fberita%2Fd-8403322%2Fbareskrim-bongkar-peredaran-ekstasi-di-club-bali-manager-waiters-diringkus%22%2C%22sourceName%22%3A%22Detik%22%2C%22domain%22%3A%22detik.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2012.53%22%2C%22thumb%22%3A%22https%3A%2F%2Fakcdn.detik.net.id%2Fcommunity%2Fmedia%2Fvisual%2F2026%2F03%2F16%2Fdirektorat-tindak-pidana-narkoba-dirtipidnarkoba-bareskrim-polri-membongkar-peredaran-ekstasi-di-sebuah-club-di-denpasar-bali--1773664949052_169.jpeg%3Fw%3D360%26amp%3Bq%3D90%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg> <span class="action-text">Simpan Berita</span>
                             </button>
                             <button class="dropdown-item" onclick="reportNewsContent(event, this)">
@@ -923,22 +889,22 @@
                     </div>
                 </div>
 
-                <h3 class="news-headline">Ekonomi Surabaya Tumbuh 5,87%, Pemkot Genjot Ekraf dan Wisata Kota</h3>
+                <h3 class="news-headline">Bareskrim Bongkar Peredaran Ekstasi di Club Bali, Manager-Waiters Diringkus</h3>
                 
-                <div class="news-time" style="margin-top: auto;">Hari ini, 12.18</div>
+                <div class="news-time" style="margin-top: auto;">Hari ini, 12.53</div>
             </div>
         </a>
         
-        <a class="news-item" href="https://www.cnbcindonesia.com/news/20260316173403-4-719549/tepis-batu-bara-pembangkit-menipis-bahlil-rata-rata-stok-14-hari" target="_blank" onmousedown="applyRipple(event)">
+        <a class="news-item" href="https://news.detik.com/berita/d-8403277/polri-sebut-pengedar-daging-impor-busuk-tahu-barang-expired-tapi-dijual-lagi" target="_blank" onmousedown="applyRipple(event)">
             <div class="news-img-wrapper loaded">
-                <img src="https://awsimages.detik.net.id/visual/2018/03/05/e9a0833d-d703-4b44-a044-dcdb73521842_169.jpeg?w=1200&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
+                <img src="https://akcdn.detik.net.id/community/media/visual/2026/03/16/bareskrim-polri-tetapkan-4-tersangka-kasus-peredaran-daging-impor-kedaluwarsa-ondangdetikcom-1773651331998_169.jpeg?w=360&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
             </div>
             <div class="news-info" style="display: flex; flex-direction: column; min-width: 0;">
                 
                 <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
                     <div class="source-wrapper" style="margin-bottom: 0;">
-                        <img src="https://www.google.com/s2/favicons?sz=64&domain=cnbcindonesia.com" class="news-favicon" alt="icon">
-                        <span class="source-tag">CNBC Indo</span>
+                        <img src="https://www.google.com/s2/favicons?sz=64&domain=detik.com" class="news-favicon" alt="icon">
+                        <span class="source-tag">Detik</span>
                     </div>
                     
                     <div class="dropdown-container">
@@ -950,7 +916,7 @@
                             </svg>
                         </button>
                         <div class="news-dropdown">
-                            <button class="dropdown-item" data-item="%7B%22title%22%3A%22Tepis%20Batu%20Bara%20Pembangkit%20Menipis%2C%20Bahlil%3A%20Rata-Rata%20Stok%2014%20Hari%22%2C%22link%22%3A%22https%3A%2F%2Fwww.cnbcindonesia.com%2Fnews%2F20260316173403-4-719549%2Ftepis-batu-bara-pembangkit-menipis-bahlil-rata-rata-stok-14-hari%22%2C%22sourceName%22%3A%22CNBC%20Indo%22%2C%22domain%22%3A%22cnbcindonesia.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2012.00%22%2C%22thumb%22%3A%22https%3A%2F%2Fawsimages.detik.net.id%2Fvisual%2F2018%2F03%2F05%2Fe9a0833d-d703-4b44-a044-dcdb73521842_169.jpeg%3Fw%3D1200%26amp%3Bq%3D90%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)">
+                            <button class="dropdown-item" data-item="%7B%22title%22%3A%22Polri%20Sebut%20Pengedar%20Daging%20Impor%20Busuk%20Tahu%20Barang%20Expired%20tapi%20Dijual%20Lagi%22%2C%22link%22%3A%22https%3A%2F%2Fnews.detik.com%2Fberita%2Fd-8403277%2Fpolri-sebut-pengedar-daging-impor-busuk-tahu-barang-expired-tapi-dijual-lagi%22%2C%22sourceName%22%3A%22Detik%22%2C%22domain%22%3A%22detik.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2012.24%22%2C%22thumb%22%3A%22https%3A%2F%2Fakcdn.detik.net.id%2Fcommunity%2Fmedia%2Fvisual%2F2026%2F03%2F16%2Fbareskrim-polri-tetapkan-4-tersangka-kasus-peredaran-daging-impor-kedaluwarsa-ondangdetikcom-1773651331998_169.jpeg%3Fw%3D360%26amp%3Bq%3D90%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg> <span class="action-text">Simpan Berita</span>
                             </button>
                             <button class="dropdown-item" onclick="reportNewsContent(event, this)">
@@ -961,9 +927,9 @@
                     </div>
                 </div>
 
-                <h3 class="news-headline">Tepis Batu Bara Pembangkit Menipis, Bahlil: Rata-Rata Stok 14 Hari</h3>
+                <h3 class="news-headline">Polri Sebut Pengedar Daging Impor Busuk Tahu Barang Expired tapi Dijual Lagi</h3>
                 
-                <div class="news-time" style="margin-top: auto;">Hari ini, 12.00</div>
+                <div class="news-time" style="margin-top: auto;">Hari ini, 12.24</div>
             </div>
         </a>
         
@@ -1005,9 +971,161 @@
             </div>
         </a>
         
-        <a class="news-item" href="https://www.cnbcindonesia.com/news/20260316193645-8-719581/video-jelang-lebaran-electronic-city-gandeng-artha-graha-peduli" target="_blank" onmousedown="applyRipple(event)">
+        <a class="news-item" href="https://news.detik.com/berita/d-8403311/pilu-janin-bayi-perempuan-ditemukan-dalam-kaleng-roti-di-semarang" target="_blank" onmousedown="applyRipple(event)">
             <div class="news-img-wrapper loaded">
-                <img src="https://awsimages.detik.net.id/visual/2026/03/16/jelang-lebaran-electronic-city-gandeng-artha-graha-peduli-gelar-operasi-pasar-murah-1773664819199_169.png?w=1200&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
+                <img src="https://akcdn.detik.net.id/community/media/visual/2026/03/16/lokasi-penemuan-janin-dalam-kaleng-roti-di-dusun-jetis-desa-leyangan-kecamatan-ungaran-timur-kabupaten-semarang-senin-1632026-1773649448802_169.jpeg?w=360&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
+            </div>
+            <div class="news-info" style="display: flex; flex-direction: column; min-width: 0;">
+                
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                    <div class="source-wrapper" style="margin-bottom: 0;">
+                        <img src="https://www.google.com/s2/favicons?sz=64&domain=detik.com" class="news-favicon" alt="icon">
+                        <span class="source-tag">Detik</span>
+                    </div>
+                    
+                    <div class="dropdown-container">
+                        <button class="three-dot-btn" onclick="toggleNewsMenu(event, this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <circle cx="12" cy="5" r="2.2"></circle>
+                                <circle cx="12" cy="12" r="2.2"></circle>
+                                <circle cx="12" cy="19" r="2.2"></circle>
+                            </svg>
+                        </button>
+                        <div class="news-dropdown">
+                            <button class="dropdown-item" data-item="%7B%22title%22%3A%22Pilu%20Janin%20Bayi%20Perempuan%20Ditemukan%20dalam%20Kaleng%20Roti%20di%20Semarang%22%2C%22link%22%3A%22https%3A%2F%2Fnews.detik.com%2Fberita%2Fd-8403311%2Fpilu-janin-bayi-perempuan-ditemukan-dalam-kaleng-roti-di-semarang%22%2C%22sourceName%22%3A%22Detik%22%2C%22domain%22%3A%22detik.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2012.47%22%2C%22thumb%22%3A%22https%3A%2F%2Fakcdn.detik.net.id%2Fcommunity%2Fmedia%2Fvisual%2F2026%2F03%2F16%2Flokasi-penemuan-janin-dalam-kaleng-roti-di-dusun-jetis-desa-leyangan-kecamatan-ungaran-timur-kabupaten-semarang-senin-1632026-1773649448802_169.jpeg%3Fw%3D360%26amp%3Bq%3D90%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg> <span class="action-text">Simpan Berita</span>
+                            </button>
+                            <button class="dropdown-item" onclick="reportNewsContent(event, this)">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
+                                <span>Laporkan Konten</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="news-headline">Pilu Janin Bayi Perempuan Ditemukan dalam Kaleng Roti di Semarang</h3>
+                
+                <div class="news-time" style="margin-top: auto;">Hari ini, 12.47</div>
+            </div>
+        </a>
+        
+        <a class="news-item" href="https://news.detik.com/berita/d-8403267/akses-jalan-sdn-rungkut-menanggal-2-ditutup-dprd-surabaya-cari-solusi" target="_blank" onmousedown="applyRipple(event)">
+            <div class="news-img-wrapper loaded">
+                <img src="https://akcdn.detik.net.id/community/media/visual/2026/03/16/akses-jalan-sdn-rungkut-menanggal-2-ditutup-dprd-surabaya-cari-solusi-1773663199339_43.jpeg?w=360&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
+            </div>
+            <div class="news-info" style="display: flex; flex-direction: column; min-width: 0;">
+                
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                    <div class="source-wrapper" style="margin-bottom: 0;">
+                        <img src="https://www.google.com/s2/favicons?sz=64&domain=detik.com" class="news-favicon" alt="icon">
+                        <span class="source-tag">Detik</span>
+                    </div>
+                    
+                    <div class="dropdown-container">
+                        <button class="three-dot-btn" onclick="toggleNewsMenu(event, this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <circle cx="12" cy="5" r="2.2"></circle>
+                                <circle cx="12" cy="12" r="2.2"></circle>
+                                <circle cx="12" cy="19" r="2.2"></circle>
+                            </svg>
+                        </button>
+                        <div class="news-dropdown">
+                            <button class="dropdown-item" data-item="%7B%22title%22%3A%22Akses%20Jalan%20SDN%20Rungkut%20Menanggal%202%20Ditutup%2C%20DPRD%20Surabaya%20Cari%20Solusi%22%2C%22link%22%3A%22https%3A%2F%2Fnews.detik.com%2Fberita%2Fd-8403267%2Fakses-jalan-sdn-rungkut-menanggal-2-ditutup-dprd-surabaya-cari-solusi%22%2C%22sourceName%22%3A%22Detik%22%2C%22domain%22%3A%22detik.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2012.13%22%2C%22thumb%22%3A%22https%3A%2F%2Fakcdn.detik.net.id%2Fcommunity%2Fmedia%2Fvisual%2F2026%2F03%2F16%2Fakses-jalan-sdn-rungkut-menanggal-2-ditutup-dprd-surabaya-cari-solusi-1773663199339_43.jpeg%3Fw%3D360%26amp%3Bq%3D90%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg> <span class="action-text">Simpan Berita</span>
+                            </button>
+                            <button class="dropdown-item" onclick="reportNewsContent(event, this)">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
+                                <span>Laporkan Konten</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="news-headline">Akses Jalan SDN Rungkut Menanggal 2 Ditutup, DPRD Surabaya Cari Solusi</h3>
+                
+                <div class="news-time" style="margin-top: auto;">Hari ini, 12.13</div>
+            </div>
+        </a>
+        
+        <a class="news-item" href="https://www.antaranews.com/berita/5479610/jalan-tol-cipali-dilintasi-279-ribu-kendaraan-hingga-h-6-lebaran" target="_blank" onmousedown="applyRipple(event)">
+            <div class="news-img-wrapper loaded">
+                <img src="https://img.antaranews.com/cache/800x533/2026/03/16/1001281119.jpg" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
+            </div>
+            <div class="news-info" style="display: flex; flex-direction: column; min-width: 0;">
+                
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                    <div class="source-wrapper" style="margin-bottom: 0;">
+                        <img src="https://www.google.com/s2/favicons?sz=64&domain=antaranews.com" class="news-favicon" alt="icon">
+                        <span class="source-tag">Antara</span>
+                    </div>
+                    
+                    <div class="dropdown-container">
+                        <button class="three-dot-btn" onclick="toggleNewsMenu(event, this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <circle cx="12" cy="5" r="2.2"></circle>
+                                <circle cx="12" cy="12" r="2.2"></circle>
+                                <circle cx="12" cy="19" r="2.2"></circle>
+                            </svg>
+                        </button>
+                        <div class="news-dropdown">
+                            <button class="dropdown-item" data-item="%7B%22title%22%3A%22Jalan%20Tol%20Cipali%20dilintasi%20279%20ribu%20kendaraan%20hingga%20H-6%20Lebaran%22%2C%22link%22%3A%22https%3A%2F%2Fwww.antaranews.com%2Fberita%2F5479610%2Fjalan-tol-cipali-dilintasi-279-ribu-kendaraan-hingga-h-6-lebaran%22%2C%22sourceName%22%3A%22Antara%22%2C%22domain%22%3A%22antaranews.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2015.40%22%2C%22thumb%22%3A%22https%3A%2F%2Fimg.antaranews.com%2Fcache%2F800x533%2F2026%2F03%2F16%2F1001281119.jpg%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg> <span class="action-text">Simpan Berita</span>
+                            </button>
+                            <button class="dropdown-item" onclick="reportNewsContent(event, this)">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
+                                <span>Laporkan Konten</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="news-headline">Jalan Tol Cipali dilintasi 279 ribu kendaraan hingga H-6 Lebaran</h3>
+                
+                <div class="news-time" style="margin-top: auto;">Hari ini, 15.40</div>
+            </div>
+        </a>
+        
+        <a class="news-item" href="https://news.detik.com/berita/d-8403269/ekonomi-surabaya-tumbuh-5-87-pemkot-genjot-ekraf-dan-wisata-kota" target="_blank" onmousedown="applyRipple(event)">
+            <div class="news-img-wrapper loaded">
+                <img src="https://akcdn.detik.net.id/community/media/visual/2026/03/16/pemkot-surabaya-1773663390735_169.jpeg?w=360&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
+            </div>
+            <div class="news-info" style="display: flex; flex-direction: column; min-width: 0;">
+                
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                    <div class="source-wrapper" style="margin-bottom: 0;">
+                        <img src="https://www.google.com/s2/favicons?sz=64&domain=detik.com" class="news-favicon" alt="icon">
+                        <span class="source-tag">Detik</span>
+                    </div>
+                    
+                    <div class="dropdown-container">
+                        <button class="three-dot-btn" onclick="toggleNewsMenu(event, this)">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <circle cx="12" cy="5" r="2.2"></circle>
+                                <circle cx="12" cy="12" r="2.2"></circle>
+                                <circle cx="12" cy="19" r="2.2"></circle>
+                            </svg>
+                        </button>
+                        <div class="news-dropdown">
+                            <button class="dropdown-item" data-item="%7B%22title%22%3A%22Ekonomi%20Surabaya%20Tumbuh%205%2C87%25%2C%20Pemkot%20Genjot%20Ekraf%20dan%20Wisata%20Kota%22%2C%22link%22%3A%22https%3A%2F%2Fnews.detik.com%2Fberita%2Fd-8403269%2Fekonomi-surabaya-tumbuh-5-87-pemkot-genjot-ekraf-dan-wisata-kota%22%2C%22sourceName%22%3A%22Detik%22%2C%22domain%22%3A%22detik.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2012.18%22%2C%22thumb%22%3A%22https%3A%2F%2Fakcdn.detik.net.id%2Fcommunity%2Fmedia%2Fvisual%2F2026%2F03%2F16%2Fpemkot-surabaya-1773663390735_169.jpeg%3Fw%3D360%26amp%3Bq%3D90%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg> <span class="action-text">Simpan Berita</span>
+                            </button>
+                            <button class="dropdown-item" onclick="reportNewsContent(event, this)">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
+                                <span>Laporkan Konten</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="news-headline">Ekonomi Surabaya Tumbuh 5,87%, Pemkot Genjot Ekraf dan Wisata Kota</h3>
+                
+                <div class="news-time" style="margin-top: auto;">Hari ini, 12.18</div>
+            </div>
+        </a>
+        
+        <a class="news-item" href="https://www.cnbcindonesia.com/news/20260316133810-4-719419/trump-bujuk-china-turun-ke-hormuz-minta-xi-jinping-kirim-kapal-perang" target="_blank" onmousedown="applyRipple(event)">
+            <div class="news-img-wrapper loaded">
+                <img src="https://awsimages.detik.net.id/visual/2025/10/30/usa-trumpxi-1761800471844_169.jpeg?w=1200&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
             </div>
             <div class="news-info" style="display: flex; flex-direction: column; min-width: 0;">
                 
@@ -1026,7 +1144,7 @@
                             </svg>
                         </button>
                         <div class="news-dropdown">
-                            <button class="dropdown-item" data-item="%7B%22title%22%3A%22Video%3A%20Jelang%20Lebaran%2C%20Electronic%20City%20Gandeng%20Artha%20Graha%20Peduli%22%2C%22link%22%3A%22https%3A%2F%2Fwww.cnbcindonesia.com%2Fnews%2F20260316193645-8-719581%2Fvideo-jelang-lebaran-electronic-city-gandeng-artha-graha-peduli%22%2C%22sourceName%22%3A%22CNBC%20Indo%22%2C%22domain%22%3A%22cnbcindonesia.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2012.50%22%2C%22thumb%22%3A%22https%3A%2F%2Fawsimages.detik.net.id%2Fvisual%2F2026%2F03%2F16%2Fjelang-lebaran-electronic-city-gandeng-artha-graha-peduli-gelar-operasi-pasar-murah-1773664819199_169.png%3Fw%3D1200%26amp%3Bq%3D90%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)">
+                            <button class="dropdown-item" data-item="%7B%22title%22%3A%22Trump%20Bujuk%20China%20Turun%20ke%20Hormuz%2C%20Minta%20Xi%20Jinping%20Kirim%20Kapal%20Perang%22%2C%22link%22%3A%22https%3A%2F%2Fwww.cnbcindonesia.com%2Fnews%2F20260316133810-4-719419%2Ftrump-bujuk-china-turun-ke-hormuz-minta-xi-jinping-kirim-kapal-perang%22%2C%22sourceName%22%3A%22CNBC%20Indo%22%2C%22domain%22%3A%22cnbcindonesia.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2014.18%22%2C%22thumb%22%3A%22https%3A%2F%2Fawsimages.detik.net.id%2Fvisual%2F2025%2F10%2F30%2Fusa-trumpxi-1761800471844_169.jpeg%3Fw%3D1200%26amp%3Bq%3D90%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg> <span class="action-text">Simpan Berita</span>
                             </button>
                             <button class="dropdown-item" onclick="reportNewsContent(event, this)">
@@ -1037,85 +1155,9 @@
                     </div>
                 </div>
 
-                <h3 class="news-headline">Video: Jelang Lebaran, Electronic City Gandeng Artha Graha Peduli</h3>
+                <h3 class="news-headline">Trump Bujuk China Turun ke Hormuz, Minta Xi Jinping Kirim Kapal Perang</h3>
                 
-                <div class="news-time" style="margin-top: auto;">Hari ini, 12.50</div>
-            </div>
-        </a>
-        
-        <a class="news-item" href="https://news.detik.com/berita/d-8403265/gus-ipul-ungkap-tahap-awal-persiapan-muktamar-nu-2026" target="_blank" onmousedown="applyRipple(event)">
-            <div class="news-img-wrapper loaded">
-                <img src="https://akcdn.detik.net.id/community/media/visual/2026/03/16/pbnu-1773662920328_169.jpeg?w=360&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
-            </div>
-            <div class="news-info" style="display: flex; flex-direction: column; min-width: 0;">
-                
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
-                    <div class="source-wrapper" style="margin-bottom: 0;">
-                        <img src="https://www.google.com/s2/favicons?sz=64&domain=detik.com" class="news-favicon" alt="icon">
-                        <span class="source-tag">Detik</span>
-                    </div>
-                    
-                    <div class="dropdown-container">
-                        <button class="three-dot-btn" onclick="toggleNewsMenu(event, this)">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                <circle cx="12" cy="5" r="2.2"></circle>
-                                <circle cx="12" cy="12" r="2.2"></circle>
-                                <circle cx="12" cy="19" r="2.2"></circle>
-                            </svg>
-                        </button>
-                        <div class="news-dropdown">
-                            <button class="dropdown-item" data-item="%7B%22title%22%3A%22Gus%20Ipul%20Ungkap%20Tahap%20Awal%20Persiapan%20Muktamar%20NU%202026%22%2C%22link%22%3A%22https%3A%2F%2Fnews.detik.com%2Fberita%2Fd-8403265%2Fgus-ipul-ungkap-tahap-awal-persiapan-muktamar-nu-2026%22%2C%22sourceName%22%3A%22Detik%22%2C%22domain%22%3A%22detik.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2012.11%22%2C%22thumb%22%3A%22https%3A%2F%2Fakcdn.detik.net.id%2Fcommunity%2Fmedia%2Fvisual%2F2026%2F03%2F16%2Fpbnu-1773662920328_169.jpeg%3Fw%3D360%26amp%3Bq%3D90%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg> <span class="action-text">Simpan Berita</span>
-                            </button>
-                            <button class="dropdown-item" onclick="reportNewsContent(event, this)">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
-                                <span>Laporkan Konten</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <h3 class="news-headline">Gus Ipul Ungkap Tahap Awal Persiapan Muktamar NU 2026</h3>
-                
-                <div class="news-time" style="margin-top: auto;">Hari ini, 12.11</div>
-            </div>
-        </a>
-        
-        <a class="news-item" href="https://news.detik.com/berita/d-8403256/2-truk-kecelakaan-di-tol-tangerang-merak-1-orang-terluka" target="_blank" onmousedown="applyRipple(event)">
-            <div class="news-img-wrapper loaded">
-                <img src="https://akcdn.detik.net.id/community/media/visual/2023/04/11/ilustrasi-kecelakaan_169.jpeg?w=360&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
-            </div>
-            <div class="news-info" style="display: flex; flex-direction: column; min-width: 0;">
-                
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
-                    <div class="source-wrapper" style="margin-bottom: 0;">
-                        <img src="https://www.google.com/s2/favicons?sz=64&domain=detik.com" class="news-favicon" alt="icon">
-                        <span class="source-tag">Detik</span>
-                    </div>
-                    
-                    <div class="dropdown-container">
-                        <button class="three-dot-btn" onclick="toggleNewsMenu(event, this)">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                <circle cx="12" cy="5" r="2.2"></circle>
-                                <circle cx="12" cy="12" r="2.2"></circle>
-                                <circle cx="12" cy="19" r="2.2"></circle>
-                            </svg>
-                        </button>
-                        <div class="news-dropdown">
-                            <button class="dropdown-item" data-item="%7B%22title%22%3A%222%20Truk%20Kecelakaan%20di%20Tol%20Tangerang-Merak%2C%201%20Orang%20Terluka%22%2C%22link%22%3A%22https%3A%2F%2Fnews.detik.com%2Fberita%2Fd-8403256%2F2-truk-kecelakaan-di-tol-tangerang-merak-1-orang-terluka%22%2C%22sourceName%22%3A%22Detik%22%2C%22domain%22%3A%22detik.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2011.59%22%2C%22thumb%22%3A%22https%3A%2F%2Fakcdn.detik.net.id%2Fcommunity%2Fmedia%2Fvisual%2F2023%2F04%2F11%2Filustrasi-kecelakaan_169.jpeg%3Fw%3D360%26amp%3Bq%3D90%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg> <span class="action-text">Simpan Berita</span>
-                            </button>
-                            <button class="dropdown-item" onclick="reportNewsContent(event, this)">
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
-                                <span>Laporkan Konten</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <h3 class="news-headline">2 Truk Kecelakaan di Tol Tangerang-Merak, 1 Orang Terluka</h3>
-                
-                <div class="news-time" style="margin-top: auto;">Hari ini, 11.59</div>
+                <div class="news-time" style="margin-top: auto;">Hari ini, 14.18</div>
             </div>
         </a>
         
@@ -1127,6 +1169,8 @@
             </div>
         </div>
     </div>
+
+    <div class="overlay" id="news-overlay" onclick="closeNewsMenus()"></div>
 
     <div class="overlay" id="policy-overlay" onclick="togglePolicyPopup()"></div>
     <div class="policy-popup" id="policy-popup">
@@ -1222,6 +1266,18 @@
             }
         }
 
+        function closeNewsMenus() {
+            document.querySelectorAll('.news-dropdown.active').forEach(dropdown => {
+                dropdown.classList.remove('active');
+            });
+            const overlay = document.getElementById('news-overlay');
+            if(overlay) overlay.classList.remove('active');
+            
+            if (!document.getElementById('sidebar').classList.contains('active') && !document.getElementById('search-modal').classList.contains('active') && !document.getElementById('policy-popup').classList.contains('active')) {
+                document.body.classList.remove('no-scroll');
+            }
+        }
+
         function closeAllMenus() {
             document.getElementById('sidebar').classList.remove('active');
             document.getElementById('search-modal').classList.remove('active');
@@ -1233,9 +1289,7 @@
             const policyPopup = document.getElementById('policy-popup');
             if (policyPopup) policyPopup.classList.remove('active');
             
-            document.querySelectorAll('.news-dropdown.active').forEach(dropdown => {
-                dropdown.classList.remove('active');
-            });
+            closeNewsMenus();
 
             document.body.classList.remove('no-scroll');
             
@@ -1503,20 +1557,47 @@
 
             const dropdown = btn.nextElementSibling;
             dropdown.classList.toggle('active');
+            
+            if (window.innerWidth < 900) {
+                const overlay = document.getElementById('news-overlay');
+                if (dropdown.classList.contains('active')) {
+                    overlay.classList.add('active');
+                    document.body.classList.add('no-scroll');
+                } else {
+                    overlay.classList.remove('active');
+                    document.body.classList.remove('no-scroll');
+                }
+            }
         }
 
         function reportNewsContent(event, btn) {
             event.preventDefault();
             event.stopPropagation();
             showToastMessage('Konten berhasil dilaporkan');
-            btn.closest('.news-dropdown').classList.remove('active');
+            closeNewsMenus();
+        }
+
+        function shareNews(event, btn) {
+            event.preventDefault();
+            event.stopPropagation();
+            const title = btn.getAttribute('data-title');
+            const url = btn.getAttribute('data-link');
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: title,
+                    url: url
+                }).catch((error) => console.log('Error sharing', error));
+            } else {
+                navigator.clipboard.writeText(url);
+                showToastMessage('Tautan disalin ke papan klip');
+            }
+            closeNewsMenus();
         }
 
         document.addEventListener('click', (event) => {
             if (!event.target.closest('.dropdown-container')) {
-                document.querySelectorAll('.news-dropdown.active').forEach(dropdown => {
-                    dropdown.classList.remove('active');
-                });
+                closeNewsMenus();
             }
         });
 
@@ -1593,7 +1674,6 @@
                         fromStorage: true
                     }));
 
-                    // PERUBAHAN: Dimasukkan ke dalam flex flow, hapus position absolute
                     newsLink.innerHTML = `
                         <div class="news-img-wrapper">
                             <img src="${thumb || 'https://via.placeholder.com/100?text=News'}" class="news-img" onload="this.parentElement.classList.add('loaded')" onerror="this.parentElement.classList.add('loaded');">
@@ -1620,6 +1700,10 @@
                                             `<svg width="18" height="18" viewBox="0 0 24 24" fill="var(--google-blue)" stroke="var(--google-blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg> <span class="action-text" style="color: var(--google-blue); font-weight: 600;">Hapus Tersimpan</span>` : 
                                             `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg> <span class="action-text">Simpan Berita</span>`
                                             }
+                                        </button>
+                                        <button class="dropdown-item" data-title="${item.title.replace(/"/g, '&quot;')}" data-link="${item.link}" onclick="shareNews(event, this)">
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+                                            <span>Bagikan Berita</span>
                                         </button>
                                         <button class="dropdown-item" onclick="reportNewsContent(event, this)">
                                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path><line x1="4" y1="22" x2="4" y2="15"></line></svg>
@@ -1657,7 +1741,6 @@
             let saved = JSON.parse(localStorage.getItem('titera_saved_news')) || [];
             const index = saved.findIndex(s => s.link === itemData.link);
             const newsItemEl = btnElement.closest('.news-item'); 
-            const dropdownEl = btnElement.closest('.news-dropdown');
 
             if (index > -1) {
                 saved.splice(index, 1);
@@ -1710,8 +1793,7 @@
                 showToastMessage('Ditambahkan ke Tersimpan');
             }
 
-            if (dropdownEl) dropdownEl.classList.remove('active');
-
+            closeNewsMenus();
             localStorage.setItem('titera_saved_news', JSON.stringify(saved));
         }
 
