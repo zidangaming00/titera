@@ -344,7 +344,7 @@
             background: rgba(248, 249, 250, 0.85);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
-            transition: box-shadow 0.3s ease; /* Transisi agar shadow sticky smooth */
+            transition: box-shadow 0.3s ease; 
         }
         
         .category-wrapper::-webkit-scrollbar { display: none; }
@@ -506,7 +506,6 @@
                 box-sizing: border-box; 
             }
 
-            /* Reset trick margin pada Desktop karena width container max 1000px */
             .category-wrapper {
                 width: auto; 
                 margin-left: 0;
@@ -628,6 +627,31 @@
                 transform: translate(-50%, 50%);
             }
             .popup-drag-handle { display: none; }
+        }
+
+        /* --- TAMBAHAN CSS UNTUK TOAST NOTIFICATION --- */
+        .toast-notification {
+            position: fixed;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #323232;
+            color: #ffffff;
+            padding: 12px 24px;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 500;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 9999;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+        .toast-notification.show {
+            bottom: 24px;
+            opacity: 1;
         }
     </style>
 </head>
@@ -810,9 +834,9 @@
                     </div>
                 </noscript>
                 
-        <a class="news-item" href="https://www.antaranews.com/berita/5478934/kasus-bea-cukai-kpk-sita-satu-mobil-dan-78-ribu-dolar-singapura" target="_blank" onmousedown="applyRipple(event)">
+        <a class="news-item" href="https://www.antaranews.com/berita/5479126/mui-imbau-umat-tunggu-hasil-sidang-isbat-soal-penetapan-idul-fitri" target="_blank" onmousedown="applyRipple(event)">
             <div class="news-img-wrapper loaded">
-                <img src="https://img.antaranews.com/cache/800x533/2026/03/16/WhatsApp-Image-2026-03-16-at-15.58.42.jpg" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
+                <img src="https://img.antaranews.com/cache/800x533/2026/03/16/arus-mudik-idul-fitri-di-terminal-mengwi-bali-2753910.jpg" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
             </div>
             <div class="news-info" style="display: flex; flex-direction: column; min-width: 0;">
                 
@@ -822,47 +846,22 @@
                         <span class="source-tag">Antara</span>
                     </div>
                     
-                    <button data-item="%7B%22title%22%3A%22Kasus%20Bea%20Cukai%2C%20KPK%20sita%20satu%20mobil%20dan%2078%20ribu%20dolar%20Singapura%22%2C%22link%22%3A%22https%3A%2F%2Fwww.antaranews.com%2Fberita%2F5478934%2Fkasus-bea-cukai-kpk-sita-satu-mobil-dan-78-ribu-dolar-singapura%22%2C%22sourceName%22%3A%22Antara%22%2C%22domain%22%3A%22antaranews.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2012.03%22%2C%22thumb%22%3A%22https%3A%2F%2Fimg.antaranews.com%2Fcache%2F800x533%2F2026%2F03%2F16%2FWhatsApp-Image-2026-03-16-at-15.58.42.jpg%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)" style="position:absolute;right:16px;bottom:5px; background: none; border: none; cursor: pointer; color: var(--text-gray); padding: 4px; margin: -4px -4px 0 0; border-radius: 50%; transition: transform 0.2s ease, color 0.2s; -webkit-tap-highlight-color: transparent;">
+                    <button data-item="%7B%22title%22%3A%22MUI%20imbau%20umat%20tunggu%20hasil%20sidang%20isbat%20soal%20penetapan%20Idul%20Fitri%22%2C%22link%22%3A%22https%3A%2F%2Fwww.antaranews.com%2Fberita%2F5479126%2Fmui-imbau-umat-tunggu-hasil-sidang-isbat-soal-penetapan-idul-fitri%22%2C%22sourceName%22%3A%22Antara%22%2C%22domain%22%3A%22antaranews.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2013.15%22%2C%22thumb%22%3A%22https%3A%2F%2Fimg.antaranews.com%2Fcache%2F800x533%2F2026%2F03%2F16%2Farus-mudik-idul-fitri-di-terminal-mengwi-bali-2753910.jpg%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)" style="position:absolute;right:16px;bottom:5px; background: none; border: none; cursor: pointer; color: var(--text-gray); padding: 4px; margin: -4px -4px 0 0; border-radius: 50%; transition: transform 0.2s ease, color 0.2s; -webkit-tap-highlight-color: transparent;">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
                         </svg>
                     </button>
                 </div>
 
-                <h3 class="news-headline">Kasus Bea Cukai, KPK sita satu mobil dan 78 ribu dolar Singapura</h3>
+                <h3 class="news-headline">MUI imbau umat tunggu hasil sidang isbat soal penetapan Idul Fitri</h3>
                 
-                <div class="news-time" style="margin-top: auto;">Hari ini, 12.03</div>
+                <div class="news-time" style="margin-top: auto;">Hari ini, 13.15</div>
             </div>
         </a>
         
-        <a class="news-item" href="https://www.cnbcindonesia.com/news/20260316170153-8-719537/video-mudik-seru-transmedia-2026-berangkatkan-ratusan-karyawan" target="_blank" onmousedown="applyRipple(event)">
+        <a class="news-item" href="https://news.detik.com/berita/d-8403265/gus-ipul-ungkap-tahap-awal-persiapan-muktamar-nu-2026" target="_blank" onmousedown="applyRipple(event)">
             <div class="news-img-wrapper loaded">
-                <img src="https://awsimages.detik.net.id/visual/2026/03/16/cnbc-indonesia-tv-1773656654398_169.png?w=1200&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
-            </div>
-            <div class="news-info" style="display: flex; flex-direction: column; min-width: 0;">
-                
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
-                    <div class="source-wrapper" style="margin-bottom: 0;">
-                        <img src="https://www.google.com/s2/favicons?sz=64&domain=cnbcindonesia.com" class="news-favicon" alt="icon">
-                        <span class="source-tag">CNBC Indo</span>
-                    </div>
-                    
-                    <button data-item="%7B%22title%22%3A%22Video%3A%20Mudik%20Seru%20Transmedia%202026%2C%20Berangkatkan%20Ratusan%20Karyawan%22%2C%22link%22%3A%22https%3A%2F%2Fwww.cnbcindonesia.com%2Fnews%2F20260316170153-8-719537%2Fvideo-mudik-seru-transmedia-2026-berangkatkan-ratusan-karyawan%22%2C%22sourceName%22%3A%22CNBC%20Indo%22%2C%22domain%22%3A%22cnbcindonesia.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2011.45%22%2C%22thumb%22%3A%22https%3A%2F%2Fawsimages.detik.net.id%2Fvisual%2F2026%2F03%2F16%2Fcnbc-indonesia-tv-1773656654398_169.png%3Fw%3D1200%26amp%3Bq%3D90%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)" style="position:absolute;right:16px;bottom:5px; background: none; border: none; cursor: pointer; color: var(--text-gray); padding: 4px; margin: -4px -4px 0 0; border-radius: 50%; transition: transform 0.2s ease, color 0.2s; -webkit-tap-highlight-color: transparent;">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-                        </svg>
-                    </button>
-                </div>
-
-                <h3 class="news-headline">Video: Mudik Seru Transmedia 2026, Berangkatkan Ratusan Karyawan</h3>
-                
-                <div class="news-time" style="margin-top: auto;">Hari ini, 11.45</div>
-            </div>
-        </a>
-        
-        <a class="news-item" href="https://news.detik.com/berita/d-8403071/menpan-rb-pastikan-layanan-kesehatan-tetap-jalan-saat-libur-nyepi-idulfitri" target="_blank" onmousedown="applyRipple(event)">
-            <div class="news-img-wrapper loaded">
-                <img src="https://akcdn.detik.net.id/community/media/visual/2026/03/16/menpan-rb-pastikan-layanan-kesehatan-tetap-jalan-saat-libur-nyepi-idulfitri-1773654655986.jpeg?w=360&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
+                <img src="https://akcdn.detik.net.id/community/media/visual/2026/03/16/pbnu-1773662920328_169.jpeg?w=360&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
             </div>
             <div class="news-info" style="display: flex; flex-direction: column; min-width: 0;">
                 
@@ -872,41 +871,16 @@
                         <span class="source-tag">Detik</span>
                     </div>
                     
-                    <button data-item="%7B%22title%22%3A%22MenPAN-RB%20Pastikan%20Layanan%20Kesehatan%20Tetap%20Jalan%20Saat%20Libur%20Nyepi-Idulfitri%22%2C%22link%22%3A%22https%3A%2F%2Fnews.detik.com%2Fberita%2Fd-8403071%2Fmenpan-rb-pastikan-layanan-kesehatan-tetap-jalan-saat-libur-nyepi-idulfitri%22%2C%22sourceName%22%3A%22Detik%22%2C%22domain%22%3A%22detik.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2009.51%22%2C%22thumb%22%3A%22https%3A%2F%2Fakcdn.detik.net.id%2Fcommunity%2Fmedia%2Fvisual%2F2026%2F03%2F16%2Fmenpan-rb-pastikan-layanan-kesehatan-tetap-jalan-saat-libur-nyepi-idulfitri-1773654655986.jpeg%3Fw%3D360%26amp%3Bq%3D90%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)" style="position:absolute;right:16px;bottom:5px; background: none; border: none; cursor: pointer; color: var(--text-gray); padding: 4px; margin: -4px -4px 0 0; border-radius: 50%; transition: transform 0.2s ease, color 0.2s; -webkit-tap-highlight-color: transparent;">
+                    <button data-item="%7B%22title%22%3A%22Gus%20Ipul%20Ungkap%20Tahap%20Awal%20Persiapan%20Muktamar%20NU%202026%22%2C%22link%22%3A%22https%3A%2F%2Fnews.detik.com%2Fberita%2Fd-8403265%2Fgus-ipul-ungkap-tahap-awal-persiapan-muktamar-nu-2026%22%2C%22sourceName%22%3A%22Detik%22%2C%22domain%22%3A%22detik.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2012.11%22%2C%22thumb%22%3A%22https%3A%2F%2Fakcdn.detik.net.id%2Fcommunity%2Fmedia%2Fvisual%2F2026%2F03%2F16%2Fpbnu-1773662920328_169.jpeg%3Fw%3D360%26amp%3Bq%3D90%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)" style="position:absolute;right:16px;bottom:5px; background: none; border: none; cursor: pointer; color: var(--text-gray); padding: 4px; margin: -4px -4px 0 0; border-radius: 50%; transition: transform 0.2s ease, color 0.2s; -webkit-tap-highlight-color: transparent;">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
                         </svg>
                     </button>
                 </div>
 
-                <h3 class="news-headline">MenPAN-RB Pastikan Layanan Kesehatan Tetap Jalan Saat Libur Nyepi-Idulfitri</h3>
+                <h3 class="news-headline">Gus Ipul Ungkap Tahap Awal Persiapan Muktamar NU 2026</h3>
                 
-                <div class="news-time" style="margin-top: auto;">Hari ini, 09.51</div>
-            </div>
-        </a>
-        
-        <a class="news-item" href="https://news.detik.com/berita/d-8403170/saksi-ungkap-alasan-kerja-sama-perusahaan-corpus-christi-soal-pengadaan-lng" target="_blank" onmousedown="applyRipple(event)">
-            <div class="news-img-wrapper loaded">
-                <img src="https://akcdn.detik.net.id/community/media/visual/2026/03/16/mantan-manajer-gas-alam-cair-atau-liquefied-natural-gas-lng-trading-pada-pt-pertamina-henny-trisnadewi-mengungkap-alasan-kerja-1773657883139_169.jpeg?w=360&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
-            </div>
-            <div class="news-info" style="display: flex; flex-direction: column; min-width: 0;">
-                
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
-                    <div class="source-wrapper" style="margin-bottom: 0;">
-                        <img src="https://www.google.com/s2/favicons?sz=64&domain=detik.com" class="news-favicon" alt="icon">
-                        <span class="source-tag">Detik</span>
-                    </div>
-                    
-                    <button data-item="%7B%22title%22%3A%22Saksi%20Ungkap%20Alasan%20Kerja%20Sama%20Perusahaan%20Corpus%20Christi%20soal%20Pengadaan%20LNG%22%2C%22link%22%3A%22https%3A%2F%2Fnews.detik.com%2Fberita%2Fd-8403170%2Fsaksi-ungkap-alasan-kerja-sama-perusahaan-corpus-christi-soal-pengadaan-lng%22%2C%22sourceName%22%3A%22Detik%22%2C%22domain%22%3A%22detik.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2010.46%22%2C%22thumb%22%3A%22https%3A%2F%2Fakcdn.detik.net.id%2Fcommunity%2Fmedia%2Fvisual%2F2026%2F03%2F16%2Fmantan-manajer-gas-alam-cair-atau-liquefied-natural-gas-lng-trading-pada-pt-pertamina-henny-trisnadewi-mengungkap-alasan-kerja-1773657883139_169.jpeg%3Fw%3D360%26amp%3Bq%3D90%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)" style="position:absolute;right:16px;bottom:5px; background: none; border: none; cursor: pointer; color: var(--text-gray); padding: 4px; margin: -4px -4px 0 0; border-radius: 50%; transition: transform 0.2s ease, color 0.2s; -webkit-tap-highlight-color: transparent;">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-                        </svg>
-                    </button>
-                </div>
-
-                <h3 class="news-headline">Saksi Ungkap Alasan Kerja Sama Perusahaan Corpus Christi soal Pengadaan LNG</h3>
-                
-                <div class="news-time" style="margin-top: auto;">Hari ini, 10.46</div>
+                <div class="news-time" style="margin-top: auto;">Hari ini, 12.11</div>
             </div>
         </a>
         
@@ -935,9 +909,9 @@
             </div>
         </a>
         
-        <a class="news-item" href="https://www.cnbcindonesia.com/news/20260316175516-4-719558/anggaran-kementerian-lembaga-mau-dipotong-ini-kata-purbaya-soal-mbg" target="_blank" onmousedown="applyRipple(event)">
+        <a class="news-item" href="https://www.cnbcindonesia.com/news/20260316165919-4-719529/trump-uring-uringan-soal-iran-ancam-tuntut-media-sebut-tak-patriotik" target="_blank" onmousedown="applyRipple(event)">
             <div class="news-img-wrapper loaded">
-                <img src="https://awsimages.detik.net.id/visual/2026/02/23/menteri-keuangan-menkeu-purbaya-yudhi-sadewa-saat-menyampaikan-pemaparan-dalam-konferensi-pers-apbn-kita-edisi-februari-2026-d-1771820076491_169.jpeg?w=1200&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
+                <img src="https://awsimages.detik.net.id/visual/2026/03/06/presiden-as-donald-trump-berbicara-pada-hari-ia-memberikan-penghargaan-kepada-para-pemain-dan-official-tim-inter-miami-cf-juar-1772760025878_169.jpeg?w=1200&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
             </div>
             <div class="news-info" style="display: flex; flex-direction: column; min-width: 0;">
                 
@@ -947,72 +921,47 @@
                         <span class="source-tag">CNBC Indo</span>
                     </div>
                     
-                    <button data-item="%7B%22title%22%3A%22Anggaran%20Kementerian%2FLembaga%20Mau%20Dipotong%2C%20Ini%20Kata%20Purbaya%20Soal%20MBG%22%2C%22link%22%3A%22https%3A%2F%2Fwww.cnbcindonesia.com%2Fnews%2F20260316175516-4-719558%2Fanggaran-kementerian-lembaga-mau-dipotong-ini-kata-purbaya-soal-mbg%22%2C%22sourceName%22%3A%22CNBC%20Indo%22%2C%22domain%22%3A%22cnbcindonesia.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2012.40%22%2C%22thumb%22%3A%22https%3A%2F%2Fawsimages.detik.net.id%2Fvisual%2F2026%2F02%2F23%2Fmenteri-keuangan-menkeu-purbaya-yudhi-sadewa-saat-menyampaikan-pemaparan-dalam-konferensi-pers-apbn-kita-edisi-februari-2026-d-1771820076491_169.jpeg%3Fw%3D1200%26amp%3Bq%3D90%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)" style="position:absolute;right:16px;bottom:5px; background: none; border: none; cursor: pointer; color: var(--text-gray); padding: 4px; margin: -4px -4px 0 0; border-radius: 50%; transition: transform 0.2s ease, color 0.2s; -webkit-tap-highlight-color: transparent;">
+                    <button data-item="%7B%22title%22%3A%22Trump%20Uring-uringan%20soal%20Iran%2C%20Ancam%20Tuntut%20Media-Sebut%20Tak%20Patriotik%22%2C%22link%22%3A%22https%3A%2F%2Fwww.cnbcindonesia.com%2Fnews%2F20260316165919-4-719529%2Ftrump-uring-uringan-soal-iran-ancam-tuntut-media-sebut-tak-patriotik%22%2C%22sourceName%22%3A%22CNBC%20Indo%22%2C%22domain%22%3A%22cnbcindonesia.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2012.10%22%2C%22thumb%22%3A%22https%3A%2F%2Fawsimages.detik.net.id%2Fvisual%2F2026%2F03%2F06%2Fpresiden-as-donald-trump-berbicara-pada-hari-ia-memberikan-penghargaan-kepada-para-pemain-dan-official-tim-inter-miami-cf-juar-1772760025878_169.jpeg%3Fw%3D1200%26amp%3Bq%3D90%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)" style="position:absolute;right:16px;bottom:5px; background: none; border: none; cursor: pointer; color: var(--text-gray); padding: 4px; margin: -4px -4px 0 0; border-radius: 50%; transition: transform 0.2s ease, color 0.2s; -webkit-tap-highlight-color: transparent;">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
                         </svg>
                     </button>
                 </div>
 
-                <h3 class="news-headline">Anggaran Kementerian/Lembaga Mau Dipotong, Ini Kata Purbaya Soal MBG</h3>
+                <h3 class="news-headline">Trump Uring-uringan soal Iran, Ancam Tuntut Media-Sebut Tak Patriotik</h3>
                 
-                <div class="news-time" style="margin-top: auto;">Hari ini, 12.40</div>
+                <div class="news-time" style="margin-top: auto;">Hari ini, 12.10</div>
             </div>
         </a>
         
-        <a class="news-item" href="https://www.antaranews.com/berita/5478950/polisi-waspadai-rawan-kecelakaan-di-jalan-siliwangi-banjar-saat-mudik" target="_blank" onmousedown="applyRipple(event)">
+        <a class="news-item" href="https://www.cnbcindonesia.com/news/20260316175120-4-719556/airnav-ungkap-lonjakan-penerbangan-mudik-lebaran-2026-kena-efek-ini" target="_blank" onmousedown="applyRipple(event)">
             <div class="news-img-wrapper loaded">
-                <img src="https://img.antaranews.com/cache/800x533/2026/03/16/tempImagewkFiM8.jpg" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
+                <img src="https://awsimages.detik.net.id/visual/2026/03/16/executive-vice-president-evp-of-corporate-secretary-airnav-indonesia-hermana-soegijantoro-kiri-dan-direktur-operasional-airnav-1773658408393_169.jpeg?w=1200&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
             </div>
             <div class="news-info" style="display: flex; flex-direction: column; min-width: 0;">
                 
                 <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
                     <div class="source-wrapper" style="margin-bottom: 0;">
-                        <img src="https://www.google.com/s2/favicons?sz=64&domain=antaranews.com" class="news-favicon" alt="icon">
-                        <span class="source-tag">Antara</span>
+                        <img src="https://www.google.com/s2/favicons?sz=64&domain=cnbcindonesia.com" class="news-favicon" alt="icon">
+                        <span class="source-tag">CNBC Indo</span>
                     </div>
                     
-                    <button data-item="%7B%22title%22%3A%22Polisi%20waspadai%20rawan%20kecelakaan%20di%20Jalan%20Siliwangi%20Banjar%20saat%20mudik%22%2C%22link%22%3A%22https%3A%2F%2Fwww.antaranews.com%2Fberita%2F5478950%2Fpolisi-waspadai-rawan-kecelakaan-di-jalan-siliwangi-banjar-saat-mudik%22%2C%22sourceName%22%3A%22Antara%22%2C%22domain%22%3A%22antaranews.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2012.08%22%2C%22thumb%22%3A%22https%3A%2F%2Fimg.antaranews.com%2Fcache%2F800x533%2F2026%2F03%2F16%2FtempImagewkFiM8.jpg%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)" style="position:absolute;right:16px;bottom:5px; background: none; border: none; cursor: pointer; color: var(--text-gray); padding: 4px; margin: -4px -4px 0 0; border-radius: 50%; transition: transform 0.2s ease, color 0.2s; -webkit-tap-highlight-color: transparent;">
+                    <button data-item="%7B%22title%22%3A%22AirNav%20Ungkap%20Lonjakan%20Penerbangan%20Mudik%20Lebaran%202026%20Kena%20Efek%20Ini%22%2C%22link%22%3A%22https%3A%2F%2Fwww.cnbcindonesia.com%2Fnews%2F20260316175120-4-719556%2Fairnav-ungkap-lonjakan-penerbangan-mudik-lebaran-2026-kena-efek-ini%22%2C%22sourceName%22%3A%22CNBC%20Indo%22%2C%22domain%22%3A%22cnbcindonesia.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2011.35%22%2C%22thumb%22%3A%22https%3A%2F%2Fawsimages.detik.net.id%2Fvisual%2F2026%2F03%2F16%2Fexecutive-vice-president-evp-of-corporate-secretary-airnav-indonesia-hermana-soegijantoro-kiri-dan-direktur-operasional-airnav-1773658408393_169.jpeg%3Fw%3D1200%26amp%3Bq%3D90%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)" style="position:absolute;right:16px;bottom:5px; background: none; border: none; cursor: pointer; color: var(--text-gray); padding: 4px; margin: -4px -4px 0 0; border-radius: 50%; transition: transform 0.2s ease, color 0.2s; -webkit-tap-highlight-color: transparent;">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
                         </svg>
                     </button>
                 </div>
 
-                <h3 class="news-headline">Polisi waspadai rawan kecelakaan di Jalan Siliwangi Banjar saat mudik</h3>
+                <h3 class="news-headline">AirNav Ungkap Lonjakan Penerbangan Mudik Lebaran 2026 Kena Efek Ini</h3>
                 
-                <div class="news-time" style="margin-top: auto;">Hari ini, 12.08</div>
+                <div class="news-time" style="margin-top: auto;">Hari ini, 11.35</div>
             </div>
         </a>
         
-        <a class="news-item" href="https://www.antaranews.com/berita/5478942/purbaya-pastikan-apbn-masih-kuat-serap-kenaikan-harga-minyak-global" target="_blank" onmousedown="applyRipple(event)">
+        <a class="news-item" href="https://news.detik.com/berita/d-8403311/pilu-janin-bayi-perempuan-ditemukan-dalam-kaleng-roti-di-semarang" target="_blank" onmousedown="applyRipple(event)">
             <div class="news-img-wrapper loaded">
-                <img src="https://img.antaranews.com/cache/800x533/2026/03/16/WhatsApp-Image-2026-03-16-at-15.52.50.jpeg" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
-            </div>
-            <div class="news-info" style="display: flex; flex-direction: column; min-width: 0;">
-                
-                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
-                    <div class="source-wrapper" style="margin-bottom: 0;">
-                        <img src="https://www.google.com/s2/favicons?sz=64&domain=antaranews.com" class="news-favicon" alt="icon">
-                        <span class="source-tag">Antara</span>
-                    </div>
-                    
-                    <button data-item="%7B%22title%22%3A%22Purbaya%20pastikan%20APBN%20masih%20kuat%20serap%20kenaikan%20harga%20minyak%20global%22%2C%22link%22%3A%22https%3A%2F%2Fwww.antaranews.com%2Fberita%2F5478942%2Fpurbaya-pastikan-apbn-masih-kuat-serap-kenaikan-harga-minyak-global%22%2C%22sourceName%22%3A%22Antara%22%2C%22domain%22%3A%22antaranews.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2012.07%22%2C%22thumb%22%3A%22https%3A%2F%2Fimg.antaranews.com%2Fcache%2F800x533%2F2026%2F03%2F16%2FWhatsApp-Image-2026-03-16-at-15.52.50.jpeg%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)" style="position:absolute;right:16px;bottom:5px; background: none; border: none; cursor: pointer; color: var(--text-gray); padding: 4px; margin: -4px -4px 0 0; border-radius: 50%; transition: transform 0.2s ease, color 0.2s; -webkit-tap-highlight-color: transparent;">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
-                        </svg>
-                    </button>
-                </div>
-
-                <h3 class="news-headline">Purbaya pastikan APBN masih kuat serap kenaikan harga minyak global</h3>
-                
-                <div class="news-time" style="margin-top: auto;">Hari ini, 12.07</div>
-            </div>
-        </a>
-        
-        <a class="news-item" href="https://news.detik.com/berita/d-8403154/jelang-idulfitri-2026-kemendagri-tegaskan-kawal-stabilitas-harga-bapok" target="_blank" onmousedown="applyRipple(event)">
-            <div class="news-img-wrapper loaded">
-                <img src="https://akcdn.detik.net.id/community/media/visual/2026/03/16/kemendagri-1773657655759_169.jpeg?w=360&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
+                <img src="https://akcdn.detik.net.id/community/media/visual/2026/03/16/lokasi-penemuan-janin-dalam-kaleng-roti-di-dusun-jetis-desa-leyangan-kecamatan-ungaran-timur-kabupaten-semarang-senin-1632026-1773649448802_169.jpeg?w=360&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
             </div>
             <div class="news-info" style="display: flex; flex-direction: column; min-width: 0;">
                 
@@ -1022,22 +971,47 @@
                         <span class="source-tag">Detik</span>
                     </div>
                     
-                    <button data-item="%7B%22title%22%3A%22Jelang%20Idulfitri%202026%2C%20Kemendagri%20Tegaskan%20Kawal%20Stabilitas%20Harga%20Bapok%22%2C%22link%22%3A%22https%3A%2F%2Fnews.detik.com%2Fberita%2Fd-8403154%2Fjelang-idulfitri-2026-kemendagri-tegaskan-kawal-stabilitas-harga-bapok%22%2C%22sourceName%22%3A%22Detik%22%2C%22domain%22%3A%22detik.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2010.41%22%2C%22thumb%22%3A%22https%3A%2F%2Fakcdn.detik.net.id%2Fcommunity%2Fmedia%2Fvisual%2F2026%2F03%2F16%2Fkemendagri-1773657655759_169.jpeg%3Fw%3D360%26amp%3Bq%3D90%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)" style="position:absolute;right:16px;bottom:5px; background: none; border: none; cursor: pointer; color: var(--text-gray); padding: 4px; margin: -4px -4px 0 0; border-radius: 50%; transition: transform 0.2s ease, color 0.2s; -webkit-tap-highlight-color: transparent;">
+                    <button data-item="%7B%22title%22%3A%22Pilu%20Janin%20Bayi%20Perempuan%20Ditemukan%20dalam%20Kaleng%20Roti%20di%20Semarang%22%2C%22link%22%3A%22https%3A%2F%2Fnews.detik.com%2Fberita%2Fd-8403311%2Fpilu-janin-bayi-perempuan-ditemukan-dalam-kaleng-roti-di-semarang%22%2C%22sourceName%22%3A%22Detik%22%2C%22domain%22%3A%22detik.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2012.47%22%2C%22thumb%22%3A%22https%3A%2F%2Fakcdn.detik.net.id%2Fcommunity%2Fmedia%2Fvisual%2F2026%2F03%2F16%2Flokasi-penemuan-janin-dalam-kaleng-roti-di-dusun-jetis-desa-leyangan-kecamatan-ungaran-timur-kabupaten-semarang-senin-1632026-1773649448802_169.jpeg%3Fw%3D360%26amp%3Bq%3D90%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)" style="position:absolute;right:16px;bottom:5px; background: none; border: none; cursor: pointer; color: var(--text-gray); padding: 4px; margin: -4px -4px 0 0; border-radius: 50%; transition: transform 0.2s ease, color 0.2s; -webkit-tap-highlight-color: transparent;">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
                         </svg>
                     </button>
                 </div>
 
-                <h3 class="news-headline">Jelang Idulfitri 2026, Kemendagri Tegaskan Kawal Stabilitas Harga Bapok</h3>
+                <h3 class="news-headline">Pilu Janin Bayi Perempuan Ditemukan dalam Kaleng Roti di Semarang</h3>
                 
-                <div class="news-time" style="margin-top: auto;">Hari ini, 10.41</div>
+                <div class="news-time" style="margin-top: auto;">Hari ini, 12.47</div>
             </div>
         </a>
         
-        <a class="news-item" href="https://news.detik.com/berita/d-8403149/uji-lab-daging-impor-kedaluwarsa-yang-dibongkar-bareskrim-tak-layak-konsumsi" target="_blank" onmousedown="applyRipple(event)">
+        <a class="news-item" href="https://www.cnbcindonesia.com/news/20260316173403-4-719549/tepis-batu-bara-pembangkit-menipis-bahlil-rata-rata-stok-14-hari" target="_blank" onmousedown="applyRipple(event)">
             <div class="news-img-wrapper loaded">
-                <img src="https://akcdn.detik.net.id/community/media/visual/2026/03/16/bareskrim-polri-tetapkan-4-tersangka-kasus-peredaran-daging-impor-kedaluwarsa-ondangdetikcom-1773651331944_169.jpeg?w=360&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
+                <img src="https://awsimages.detik.net.id/visual/2018/03/05/e9a0833d-d703-4b44-a044-dcdb73521842_169.jpeg?w=1200&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
+            </div>
+            <div class="news-info" style="display: flex; flex-direction: column; min-width: 0;">
+                
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                    <div class="source-wrapper" style="margin-bottom: 0;">
+                        <img src="https://www.google.com/s2/favicons?sz=64&domain=cnbcindonesia.com" class="news-favicon" alt="icon">
+                        <span class="source-tag">CNBC Indo</span>
+                    </div>
+                    
+                    <button data-item="%7B%22title%22%3A%22Tepis%20Batu%20Bara%20Pembangkit%20Menipis%2C%20Bahlil%3A%20Rata-Rata%20Stok%2014%20Hari%22%2C%22link%22%3A%22https%3A%2F%2Fwww.cnbcindonesia.com%2Fnews%2F20260316173403-4-719549%2Ftepis-batu-bara-pembangkit-menipis-bahlil-rata-rata-stok-14-hari%22%2C%22sourceName%22%3A%22CNBC%20Indo%22%2C%22domain%22%3A%22cnbcindonesia.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2012.00%22%2C%22thumb%22%3A%22https%3A%2F%2Fawsimages.detik.net.id%2Fvisual%2F2018%2F03%2F05%2Fe9a0833d-d703-4b44-a044-dcdb73521842_169.jpeg%3Fw%3D1200%26amp%3Bq%3D90%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)" style="position:absolute;right:16px;bottom:5px; background: none; border: none; cursor: pointer; color: var(--text-gray); padding: 4px; margin: -4px -4px 0 0; border-radius: 50%; transition: transform 0.2s ease, color 0.2s; -webkit-tap-highlight-color: transparent;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <h3 class="news-headline">Tepis Batu Bara Pembangkit Menipis, Bahlil: Rata-Rata Stok 14 Hari</h3>
+                
+                <div class="news-time" style="margin-top: auto;">Hari ini, 12.00</div>
+            </div>
+        </a>
+        
+        <a class="news-item" href="https://news.detik.com/berita/d-8403266/bgn-suspend-2-dapur-mbg-di-ponorogo-usai-pemilik-ngaku-cucu-menteri" target="_blank" onmousedown="applyRipple(event)">
+            <div class="news-img-wrapper loaded">
+                <img src="https://akcdn.detik.net.id/community/media/visual/2025/09/19/pengawasan-kualitas-makan-bergizi-gratis-jadi-sorotan-1758268443608_169.jpeg?w=360&amp;q=90" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
             </div>
             <div class="news-info" style="display: flex; flex-direction: column; min-width: 0;">
                 
@@ -1047,16 +1021,66 @@
                         <span class="source-tag">Detik</span>
                     </div>
                     
-                    <button data-item="%7B%22title%22%3A%22Uji%20Lab%20Daging%20Impor%20Kedaluwarsa%20yang%20Dibongkar%20Bareskrim%3A%20Tak%20Layak%20Konsumsi%22%2C%22link%22%3A%22https%3A%2F%2Fnews.detik.com%2Fberita%2Fd-8403149%2Fuji-lab-daging-impor-kedaluwarsa-yang-dibongkar-bareskrim-tak-layak-konsumsi%22%2C%22sourceName%22%3A%22Detik%22%2C%22domain%22%3A%22detik.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2010.37%22%2C%22thumb%22%3A%22https%3A%2F%2Fakcdn.detik.net.id%2Fcommunity%2Fmedia%2Fvisual%2F2026%2F03%2F16%2Fbareskrim-polri-tetapkan-4-tersangka-kasus-peredaran-daging-impor-kedaluwarsa-ondangdetikcom-1773651331944_169.jpeg%3Fw%3D360%26amp%3Bq%3D90%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)" style="position:absolute;right:16px;bottom:5px; background: none; border: none; cursor: pointer; color: var(--text-gray); padding: 4px; margin: -4px -4px 0 0; border-radius: 50%; transition: transform 0.2s ease, color 0.2s; -webkit-tap-highlight-color: transparent;">
+                    <button data-item="%7B%22title%22%3A%22BGN%20Suspend%202%20Dapur%20MBG%20di%20Ponorogo%20Usai%20Pemilik%20Ngaku%20Cucu%20Menteri%22%2C%22link%22%3A%22https%3A%2F%2Fnews.detik.com%2Fberita%2Fd-8403266%2Fbgn-suspend-2-dapur-mbg-di-ponorogo-usai-pemilik-ngaku-cucu-menteri%22%2C%22sourceName%22%3A%22Detik%22%2C%22domain%22%3A%22detik.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2012.12%22%2C%22thumb%22%3A%22https%3A%2F%2Fakcdn.detik.net.id%2Fcommunity%2Fmedia%2Fvisual%2F2025%2F09%2F19%2Fpengawasan-kualitas-makan-bergizi-gratis-jadi-sorotan-1758268443608_169.jpeg%3Fw%3D360%26amp%3Bq%3D90%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)" style="position:absolute;right:16px;bottom:5px; background: none; border: none; cursor: pointer; color: var(--text-gray); padding: 4px; margin: -4px -4px 0 0; border-radius: 50%; transition: transform 0.2s ease, color 0.2s; -webkit-tap-highlight-color: transparent;">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
                         </svg>
                     </button>
                 </div>
 
-                <h3 class="news-headline">Uji Lab Daging Impor Kedaluwarsa yang Dibongkar Bareskrim: Tak Layak Konsumsi</h3>
+                <h3 class="news-headline">BGN Suspend 2 Dapur MBG di Ponorogo Usai Pemilik Ngaku Cucu Menteri</h3>
                 
-                <div class="news-time" style="margin-top: auto;">Hari ini, 10.37</div>
+                <div class="news-time" style="margin-top: auto;">Hari ini, 12.12</div>
+            </div>
+        </a>
+        
+        <a class="news-item" href="https://www.antaranews.com/berita/5479094/menpanrb-tekankan-layanan-kesehatan-inklusif-saat-libur-lebaran" target="_blank" onmousedown="applyRipple(event)">
+            <div class="news-img-wrapper loaded">
+                <img src="https://img.antaranews.com/cache/800x533/2026/03/16/1000474613.jpg" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
+            </div>
+            <div class="news-info" style="display: flex; flex-direction: column; min-width: 0;">
+                
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                    <div class="source-wrapper" style="margin-bottom: 0;">
+                        <img src="https://www.google.com/s2/favicons?sz=64&domain=antaranews.com" class="news-favicon" alt="icon">
+                        <span class="source-tag">Antara</span>
+                    </div>
+                    
+                    <button data-item="%7B%22title%22%3A%22MenPANRB%20tekankan%20layanan%20kesehatan%20inklusif%20saat%20libur%20Lebaran%22%2C%22link%22%3A%22https%3A%2F%2Fwww.antaranews.com%2Fberita%2F5479094%2Fmenpanrb-tekankan-layanan-kesehatan-inklusif-saat-libur-lebaran%22%2C%22sourceName%22%3A%22Antara%22%2C%22domain%22%3A%22antaranews.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2013.02%22%2C%22thumb%22%3A%22https%3A%2F%2Fimg.antaranews.com%2Fcache%2F800x533%2F2026%2F03%2F16%2F1000474613.jpg%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)" style="position:absolute;right:16px;bottom:5px; background: none; border: none; cursor: pointer; color: var(--text-gray); padding: 4px; margin: -4px -4px 0 0; border-radius: 50%; transition: transform 0.2s ease, color 0.2s; -webkit-tap-highlight-color: transparent;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <h3 class="news-headline">MenPANRB tekankan layanan kesehatan inklusif saat libur Lebaran</h3>
+                
+                <div class="news-time" style="margin-top: auto;">Hari ini, 13.02</div>
+            </div>
+        </a>
+        
+        <a class="news-item" href="https://www.antaranews.com/berita/5479122/wamen-esdm-pastikan-pasokan-listrik-aman-jelang-lebaran-2026" target="_blank" onmousedown="applyRipple(event)">
+            <div class="news-img-wrapper loaded">
+                <img src="https://img.antaranews.com/cache/800x533/2026/03/16/274035.jpg" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
+            </div>
+            <div class="news-info" style="display: flex; flex-direction: column; min-width: 0;">
+                
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                    <div class="source-wrapper" style="margin-bottom: 0;">
+                        <img src="https://www.google.com/s2/favicons?sz=64&domain=antaranews.com" class="news-favicon" alt="icon">
+                        <span class="source-tag">Antara</span>
+                    </div>
+                    
+                    <button data-item="%7B%22title%22%3A%22Wamen%20ESDM%20pastikan%20pasokan%20listrik%20aman%20jelang%20Lebaran%202026%22%2C%22link%22%3A%22https%3A%2F%2Fwww.antaranews.com%2Fberita%2F5479122%2Fwamen-esdm-pastikan-pasokan-listrik-aman-jelang-lebaran-2026%22%2C%22sourceName%22%3A%22Antara%22%2C%22domain%22%3A%22antaranews.com%22%2C%22pubDate%22%3A%22Hari%20ini%2C%2013.14%22%2C%22thumb%22%3A%22https%3A%2F%2Fimg.antaranews.com%2Fcache%2F800x533%2F2026%2F03%2F16%2F274035.jpg%22%2C%22fromStorage%22%3Atrue%7D" onclick="toggleSaveNews(event, this)" style="position:absolute;right:16px;bottom:5px; background: none; border: none; cursor: pointer; color: var(--text-gray); padding: 4px; margin: -4px -4px 0 0; border-radius: 50%; transition: transform 0.2s ease, color 0.2s; -webkit-tap-highlight-color: transparent;">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <h3 class="news-headline">Wamen ESDM pastikan pasokan listrik aman jelang Lebaran 2026</h3>
+                
+                <div class="news-time" style="margin-top: auto;">Hari ini, 13.14</div>
             </div>
         </a>
         
@@ -1089,6 +1113,8 @@
 
         <button class="popup-btn" onclick="togglePolicyPopup()">Mengerti</button>
     </div>
+
+    <div id="app-toast" class="toast-notification">Berita berhasil disimpan</div>
 
     <script>
         let allNewsData = [];
@@ -1411,6 +1437,20 @@
     </script>
 
     <script>
+        // --- TAMBAHAN JS UNTUK FUNGSI TOAST NOTIFICATION ---
+        let toastTimeout;
+        function showToastMessage(message) {
+            const toast = document.getElementById('app-toast');
+            if (toast) {
+                toast.innerText = message;
+                toast.classList.add('show');
+                clearTimeout(toastTimeout);
+                toastTimeout = setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 2500);
+            }
+        }
+
         const originalGetNewsTitera = getNews;
 
         getNews = async function(category = 'terkini', isInitialLoad = false) {
@@ -1537,21 +1577,20 @@
                 btnElement.style.color = 'var(--text-gray)';
                 btnElement.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>`;
                 
+                showToastMessage('Dihapus dari Tersimpan'); // --- Trigger Toast Hapus ---
+
                 const activeCategory = document.querySelector('.category-btn.active');
                 if (activeCategory && activeCategory.innerText.toLowerCase() === 'tersimpan') {
                     if (newsItemEl) {
-                        // --- Logika animasi height smooth ---
                         newsItemEl.style.maxHeight = newsItemEl.offsetHeight + 'px';
                         newsItemEl.style.overflow = 'hidden';
                         
-                        // Force reflow agar maxHeight diaplikasikan sebelum ditransisi ke 0
                         void newsItemEl.offsetHeight;
 
                         newsItemEl.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
                         newsItemEl.style.opacity = '0';
                         newsItemEl.style.transform = 'scale(0.95) translateX(-10px)';
                         
-                        // Mulai susutkan elemen secara vertikal
                         newsItemEl.style.maxHeight = '0px';
                         newsItemEl.style.paddingTop = '0px';
                         newsItemEl.style.paddingBottom = '0px';
@@ -1573,7 +1612,7 @@
                                         <p style="font-size: 0.8rem; margin-top: 4px;">Tekan ikon pita pada berita untuk menyimpannya.</p>
                                     </div>`;
                             }
-                        }, 400); // Sinkron dengan durasi transisi 0.4s
+                        }, 400); 
                     }
                 }
             } else {
@@ -1581,6 +1620,8 @@
                 btnElement.style.color = 'var(--google-blue)';
                 btnElement.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>`;
                 
+                showToastMessage('Ditambahkan ke Tersimpan'); // --- Trigger Toast Tambah ---
+
                 btnElement.style.transform = 'scale(1.2)';
                 setTimeout(() => btnElement.style.transform = 'scale(1)', 150);
             }
@@ -1588,11 +1629,9 @@
             localStorage.setItem('titera_saved_news', JSON.stringify(saved));
         }
 
-        // --- Logika Shadow untuk Sticky Category ---
         window.addEventListener('scroll', () => {
             const catWrapper = document.getElementById('category-wrapper');
             if (catWrapper) {
-                // Saat scroll menyentuh titik teratas
                 if (catWrapper.getBoundingClientRect().top <= 0) {
                     catWrapper.style.boxShadow = '0 4px 12px rgba(0,0,0,0.05)';
                 } else {
