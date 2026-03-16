@@ -40,8 +40,12 @@ async function masakHTML() {
         if (newsDate.toDateString() === now.toDateString()) displayDate = `Hari ini, ${displayDate}`;
         else displayDate = `${newsDate.toLocaleDateString('id-ID', {day:'numeric', month:'short'})}, ${displayDate}`;
 
+        // PERUBAHAN DI SINI: Menukar posisi wrapper gambar ke atas wrapper teks
         htmlBerita += `
         <a class="news-item" href="${item.link}" target="_blank">
+            <div class="news-img-wrapper loaded">
+                <img src="${thumb}" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
+            </div>
             <div class="news-info">
                 <div class="source-wrapper">
                     <img src="${iconUrl}" class="news-favicon" alt="icon">
@@ -50,20 +54,17 @@ async function masakHTML() {
                 <h3 class="news-headline">${item.title}</h3>
                 <div class="news-time">${displayDate}</div>
             </div>
-            <div class="news-img-wrapper loaded">
-                <img src="${thumb}" class="news-img" onerror="this.src='https://via.placeholder.com/100?text=News'">
-            </div>
         </a>
         `;
     });
 
     // 4. Buka template.html, ganti penanda dengan HTML berita matang
     let template = fs.readFileSync('template.html', 'utf-8');
-    template = template.replace('<!-- BERITA_TERKINI_DISINI -->', htmlBerita);
+    template = template.replace('', htmlBerita);
 
     // 5. Simpan hasilnya menjadi index.html
     fs.writeFileSync('index.html', template);
-    console.log("Selesai! Berhasil merakit index.html");
+    console.log("Selesai! Berhasil merakit index.html dengan thumbnail di kiri.");
 }
 
 masakHTML();
