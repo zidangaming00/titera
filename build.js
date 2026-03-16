@@ -51,6 +51,12 @@ async function masakHTML() {
                     <img src="${iconUrl}" class="news-favicon" alt="icon">
                     <span class="source-tag">${item.sourceName}</span>
                 </div>
+                <button data-item="${itemData}" onclick="toggleSaveNews(event, this)" style="position:absolute;right:16px;bottom:5px; background: none; border: none; cursor: pointer; color: ${isSaved ? 'var(--google-blue)' : 'var(--text-gray)'}; padding: 4px; margin: -4px -4px 0 0; border-radius: 50%; transition: transform 0.2s ease, color 0.2s; -webkit-tap-highlight-color: transparent;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="${isSaved ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                </button>
+                            
                 <h3 class="news-headline">${item.title}</h3>
                 <div class="news-time">${displayDate}</div>
             </div>
