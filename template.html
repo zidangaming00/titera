@@ -418,7 +418,7 @@
         
         .news-item { 
             display: grid; 
-            grid-template-columns: 1fr 100px; 
+            grid-template-columns: 100px 1fr; /* Diubah: Gambar (100px) di kiri, teks (1fr) di kanan */
             gap: 16px; 
             padding: 16px 20px;
             border-bottom: 1px solid #f1f3f4;
@@ -838,20 +838,19 @@
             </div>
             <div id="news-container">
                 <noscript>
-    <div style="padding: 40px 20px; text-align: center; color: var(--text-gray); font-family: 'Plus Jakarta Sans', sans-serif;">
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#dadce0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 12px;">
-            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
-            <line x1="12" y1="9" x2="12" y2="13"></line>
-            <line x1="12" y1="17" x2="12.01" y2="17"></line>
-        </svg>
-        <br>
-        <b style="font-size: 0.95rem; color: var(--text-dark);">JavaScript Dinonaktifkan</b><br>
-        <span style="font-size: 0.8rem;">Mohon aktifkan JavaScript untuk memuat lebih banyak berita dan fungsi.</span>
-    </div>
+                    <div style="padding: 40px 20px; text-align: center; color: var(--text-gray); font-family: 'Plus Jakarta Sans', sans-serif;">
+                        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#dadce0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 12px;">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                            <line x1="12" y1="9" x2="12" y2="13"></line>
+                            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                        </svg>
+                        <br>
+                        <b style="font-size: 0.95rem; color: var(--text-dark);">JavaScript Dinonaktifkan</b><br>
+                        <span style="font-size: 0.8rem;">Mohon aktifkan JavaScript untuk memuat lebih banyak berita dan fungsi.</span>
+                    </div>
                 </noscript>
-                
-                    <!-- BERITA_TERKINI_DISINI -->
-                </div>
+                <!-- BERITA_TERKINI_DISINI -->
+                    </div>
             
             <div class="load-more-container" id="load-more-container" style="min-height: 80px; box-sizing: border-box; justify-content: center;">
                 <div id="loading-spinner" class="spinner"></div>
@@ -912,19 +911,19 @@
                 { name: 'CNN Indonesia', url: 'https://www.cnnindonesia.com/olahraga/rss', domain: 'cnnindonesia.com' }
             ],
             'hiburan': [
-        { name: 'Antara', url: 'https://antaranews.com/rss/hiburan.xml', domain: 'antaranews.com' },
-        { name: 'CNN Hiburan', url: 'https://www.cnnindonesia.com/hiburan/rss', domain: 'cnnindonesia.com' },
-        { name: 'CNBC Lifestyle', url: 'https://www.cnbcindonesia.com/lifestyle/rss', domain: 'cnbcindonesia.com' }
-    ],
-    'otomotif': [
-        { name: 'Detik Oto', url: 'https://oto.detik.com/rss', domain: 'detik.com' },
-        { name: 'Kompas Otomotif', url: 'https://otomotif.kompas.com/rss', domain: 'kompas.com' },
-        { name: 'Antara Otomotif', url: 'https://www.antaranews.com/rss/otomotif.xml', domain: 'antaranews.com' }
-    ],
-    'kesehatan': [
-        { name: 'Detik Health', url: 'https://health.detik.com/rss', domain: 'detik.com' },
-        { name: 'Kompas Health', url: 'https://health.kompas.com/rss', domain: 'kompas.com' }
-    ],
+                { name: 'Antara', url: 'https://antaranews.com/rss/hiburan.xml', domain: 'antaranews.com' },
+                { name: 'CNN Hiburan', url: 'https://www.cnnindonesia.com/hiburan/rss', domain: 'cnnindonesia.com' },
+                { name: 'CNBC Lifestyle', url: 'https://www.cnbcindonesia.com/lifestyle/rss', domain: 'cnbcindonesia.com' }
+            ],
+            'otomotif': [
+                { name: 'Detik Oto', url: 'https://oto.detik.com/rss', domain: 'detik.com' },
+                { name: 'Kompas Otomotif', url: 'https://otomotif.kompas.com/rss', domain: 'kompas.com' },
+                { name: 'Antara Otomotif', url: 'https://www.antaranews.com/rss/otomotif.xml', domain: 'antaranews.com' }
+            ],
+            'kesehatan': [
+                { name: 'Detik Health', url: 'https://health.detik.com/rss', domain: 'detik.com' },
+                { name: 'Kompas Health', url: 'https://health.kompas.com/rss', domain: 'kompas.com' }
+            ],
         };
 
         function toggleSidebar() {
@@ -1105,13 +1104,13 @@
         function getSkeletonHTML() {
             return `
                 <div class="news-item" style="pointer-events: none; border-bottom: none;">
+                    <div class="skeleton" style="width: 100px; height: 72px; border-radius: 12px;"></div>
                     <div class="news-info">
                         <div class="skeleton" style="width: 40%; height: 14px; margin-bottom: 12px; border-radius: 4px;"></div>
                         <div class="skeleton" style="width: 100%; height: 16px; margin-bottom: 6px; border-radius: 4px;"></div>
                         <div class="skeleton" style="width: 80%; height: 16px; margin-bottom: 12px; border-radius: 4px;"></div>
                         <div class="skeleton" style="width: 30%; height: 12px; border-radius: 4px;"></div>
                     </div>
-                    <div class="skeleton" style="width: 100px; height: 72px; border-radius: 12px;"></div>
                 </div>
             `;
         }
@@ -1142,6 +1141,9 @@
                     else displayDate = `${newsDate.toLocaleDateString('id-ID', {day:'numeric', month:'short', year: 'numeric'})}`;
 
                     newsLink.innerHTML = `
+                        <div class="news-img-wrapper">
+                            <img src="${thumb || 'https://via.placeholder.com/100?text=News'}" class="news-img" onload="this.parentElement.classList.add('loaded')" onerror="this.parentElement.classList.add('loaded');">
+                        </div>
                         <div class="news-info">
                             <div class="source-wrapper">
                                 <img src="${iconUrl}" class="news-favicon" alt="icon">
@@ -1149,9 +1151,6 @@
                             </div>
                             <h3 class="news-headline">${item.title}</h3>
                             <div class="news-time">${displayDate}</div>
-                        </div>
-                        <div class="news-img-wrapper">
-                            <img src="${thumb || 'https://via.placeholder.com/100?text=News'}" class="news-img" onload="this.parentElement.classList.add('loaded')" onerror="this.parentElement.classList.add('loaded');">
                         </div>
                     `;
                     container.appendChild(newsLink);
