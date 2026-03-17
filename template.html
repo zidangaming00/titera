@@ -600,6 +600,43 @@
             }
         }
 
+        /* --- CSS TAMBAHAN UNTUK POPUP SHARE --- */
+        #share-overlay { z-index: 1200; }
+        #share-popup { z-index: 1201; padding-bottom: 24px; }
+        
+        .share-grid {
+            display: flex;
+            overflow-x: auto;
+            gap: 24px;
+            padding: 10px 4px 20px 4px;
+            text-align: center;
+            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none; /* Firefox */
+        }
+        .share-grid::-webkit-scrollbar {
+            display: none; /* Chrome, Safari and Opera */
+        }
+        
+        .share-btn {
+            background: none; border: none; padding: 0; cursor: pointer;
+            display: flex; flex-direction: column; align-items: center; gap: 10px;
+            font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent;
+            flex-shrink: 0;
+            min-width: 60px;
+        }
+        
+        .share-btn span {
+            font-size: 0.75rem; color: var(--text-dark); font-weight: 500;
+        }
+        
+        .share-icon {
+            width: 48px; height: 48px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            transition: transform 0.2s;
+        }
+        
+        .share-btn:active .share-icon { transform: scale(0.9); }
+
     </style>
 </head>
 <body>
@@ -780,7 +817,6 @@
                         <span style="font-size: 0.8rem;">Mohon aktifkan JavaScript untuk memuat lebih banyak berita dan fungsi.</span>
                     </div>
                 </noscript>
-                <!-- BERITA_TERKINI_DISINI -->
                 </div>
             
             <div class="load-more-container" id="load-more-container" style="min-height: 80px; box-sizing: border-box; justify-content: center;">
@@ -810,7 +846,57 @@
             Hak cipta penuh atas seluruh konten teks, judul, maupun gambar sepenuhnya merupakan milik penerbit terkait. Titera News hanya bertindak sebagai peramban untuk memudahkan akses informasi tanpa mengubah substansi asli.
         </div>
 
-        <button class="popup-btn" onclick="togglePolicyPopup()">Mengerti</button>
+        <button class="popup-btn" style="margin-bottom: 8px;" onclick="togglePolicyPopup()">Mengerti</button>
+    </div>
+
+    <div class="overlay" id="share-overlay" onclick="toggleSharePopup()"></div>
+    <div class="policy-popup" id="share-popup">
+        <div class="popup-drag-handle"></div>
+        <div class="popup-header" style="margin-bottom: 8px;">
+            <div class="popup-header-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="18" cy="5" r="3"></circle>
+                    <circle cx="6" cy="12" r="3"></circle>
+                    <circle cx="18" cy="19" r="3"></circle>
+                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                </svg>
+            </div>
+            <h3>Bagikan Berita</h3>
+        </div>
+        
+        <div class="share-grid">
+            <button class="share-btn" onclick="executeShare('copy')">
+                <div class="share-icon" style="background: #f1f3f4; color: #5f6368;">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                </div>
+                <span>Salin</span>
+            </button>
+            <button class="share-btn" onclick="executeShare('whatsapp')">
+                <div class="share-icon" style="background: #25D366; color: white;">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                </div>
+                <span>WhatsApp</span>
+            </button>
+            <button class="share-btn" onclick="executeShare('twitter')">
+                <div class="share-icon" style="background: #000000; color: white;">
+                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                </div>
+                <span>X</span>
+            </button>
+            <button class="share-btn" onclick="executeShare('facebook')">
+                <div class="share-icon" style="background: #1877F2; color: white;">
+                    <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M14 13.5h2.5l1-4H14v-2c0-1.03 0-2 2-2h1.5V2.14c-.326-.043-1.557-.14-2.857-.14C11.928 2 10 3.657 10 6.7v2.8H7v4h3V22h4v-8.5z"/></svg>
+                </div>
+                <span>Facebook</span>
+            </button>
+            <button class="share-btn" onclick="executeShare('native')">
+                <div class="share-icon" style="background: #f1f3f4; color: var(--text-dark);">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1.5"></circle><circle cx="19" cy="12" r="1.5"></circle><circle cx="5" cy="12" r="1.5"></circle></svg>
+                </div>
+                <span>Lainnya</span>
+            </button>
+        </div>
     </div>
 
     <div id="app-toast" class="toast-notification">Berita berhasil disimpan</div>
@@ -894,7 +980,10 @@
             const overlay = document.getElementById('news-overlay');
             if(overlay) overlay.classList.remove('active');
             
-            if (!document.getElementById('sidebar').classList.contains('active') && !document.getElementById('search-modal').classList.contains('active') && !document.getElementById('policy-popup').classList.contains('active')) {
+            if (!document.getElementById('sidebar').classList.contains('active') && 
+                !document.getElementById('search-modal').classList.contains('active') && 
+                !document.getElementById('policy-popup').classList.contains('active') &&
+                !document.getElementById('share-popup').classList.contains('active')) {
                 document.body.classList.remove('no-scroll');
             }
         }
@@ -909,6 +998,12 @@
             
             const policyPopup = document.getElementById('policy-popup');
             if (policyPopup) policyPopup.classList.remove('active');
+
+            const shareOverlay = document.getElementById('share-overlay');
+            if (shareOverlay) shareOverlay.classList.remove('active');
+
+            const sharePopup = document.getElementById('share-popup');
+            if (sharePopup) sharePopup.classList.remove('active');
             
             closeNewsMenus();
 
@@ -1198,26 +1293,108 @@
             closeNewsMenus();
         }
 
+        // Variabel penampung data berita yang sedang mau dibagikan
+        let currentShareData = { title: '', url: '' };
+
         function shareNews(event, btn) {
             event.preventDefault();
             event.stopPropagation();
-            const title = btn.getAttribute('data-title');
-            const url = btn.getAttribute('data-link');
             
-            if (navigator.share) {
-                navigator.share({
-                    title: title,
-                    url: url
-                }).catch((error) => console.log('Error sharing', error));
-            } else {
-                navigator.clipboard.writeText(url);
-                showToastMessage('Tautan disalin ke papan klip');
-            }
+            // Simpan data berita yang di-klik
+            currentShareData.title = btn.getAttribute('data-title');
+            currentShareData.url = btn.getAttribute('data-link');
+            
+            // Tutup dropdown menu titik tiga
             closeNewsMenus();
+            
+            // Buka popup share
+            toggleSharePopup();
+        }
+
+        function toggleSharePopup() {
+            const popup = document.getElementById('share-popup');
+            const overlay = document.getElementById('share-overlay');
+            popup.classList.toggle('active');
+            overlay.classList.toggle('active');
+            
+            if (popup.classList.contains('active')) {
+                document.body.classList.add('no-scroll');
+            } else {
+                if (!document.getElementById('sidebar').classList.contains('active') && 
+                    !document.getElementById('search-modal').classList.contains('active') && 
+                    !document.getElementById('policy-popup').classList.contains('active')) {
+                    document.body.classList.remove('no-scroll');
+                }
+            }
+        }
+
+        function executeShare(platform) {
+            const title = currentShareData.title; 
+            const encodedTitle = encodeURIComponent(currentShareData.title);
+            const encodedUrl = encodeURIComponent(currentShareData.url);
+            
+            switch(platform) {
+                case 'copy':
+                    // Cara paling ampuh untuk copy text (Bypass security block di Local File/Mobile)
+                    const textArea = document.createElement("textarea");
+                    textArea.value = currentShareData.url;
+                    textArea.style.position = "fixed"; // Hindari scroll ke bawah
+                    textArea.style.top = "0";
+                    textArea.style.left = "0";
+                    textArea.style.opacity = "0";
+                    document.body.appendChild(textArea);
+                    
+                    // Hack khusus untuk iOS / Safari
+                    if (navigator.userAgent.match(/ipad|iphone/i)) {
+                        const range = document.createRange();
+                        range.selectNodeContents(textArea);
+                        const selection = window.getSelection();
+                        selection.removeAllRanges();
+                        selection.addRange(range);
+                        textArea.setSelectionRange(0, 999999);
+                    } else {
+                        textArea.focus();
+                        textArea.select();
+                    }
+                    
+                    try {
+                        const successful = document.execCommand('copy');
+                        if (successful) {
+                            showToastMessage('Tautan berhasil disalin');
+                        } else {
+                            showToastMessage('Gagal menyalin tautan');
+                        }
+                    } catch (err) {
+                        showToastMessage('Gagal menyalin tautan');
+                    }
+                    
+                    document.body.removeChild(textArea);
+                    break;
+                case 'whatsapp':
+                    window.open(`https://api.whatsapp.com/send?text=${encodedTitle}%0A${encodedUrl}`, '_blank');
+                    break;
+                case 'twitter':
+                    window.open(`https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`, '_blank');
+                    break;
+                case 'facebook':
+                    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`, '_blank');
+                    break;
+                case 'native':
+                    if (navigator.share) {
+                        navigator.share({
+                            title: title,
+                            url: currentShareData.url
+                        }).catch((error) => console.log('Error sharing', error));
+                    } else {
+                        showToastMessage('Browser tidak mendukung fitur ini');
+                    }
+                    break;
+            }
+            toggleSharePopup(); 
         }
 
         document.addEventListener('click', (event) => {
-            if (!event.target.closest('.dropdown-container')) {
+            if (!event.target.closest('.dropdown-container') && !event.target.closest('#share-popup')) {
                 closeNewsMenus();
             }
         });
