@@ -2,43 +2,55 @@ const fs = require('fs'); // Fix 1: Huruf kecil 'c'
 
 async function masakHTML() {
 
-    // 1. Daftar sumber berita Terkini
-    const sumberTerkini = [
-        { name: 'Detik', url: 'https://news.detik.com/berita/rss', domain: 'detik.com' },
-        { name: 'CNBC Indo', url: 'https://www.cnbcindonesia.com/news/rss', domain: 'cnbcindonesia.com' },
-        { name: 'Antara', url: 'https://www.antaranews.com/rss/terkini.xml', domain: 'antaranews.com' }
-    ];
-
     let semuaBerita = [];
 
-    // 2. Robot mengambil data via RSS2JSON
-    for (const sumber of sumberTerkini) {
-        try {
-            const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(sumber.url)}`);
-            const data = await res.json();
-            if (data.status === 'ok') {
-                const items = data.items.map(i => ({ ...i, sourceName: sumber.name, domain: sumber.domain }));
-                semuaBerita.push(...items);
-            }
-        } catch (e) {
-            console.log(`Gagal mengambil dari ${sumber.name}`);
-        }
+    // 1. Robot mengambil data via API Terintegrasi
+    try {
+        console.log("Mengambil berita dari API...");
+        const res = await fetch('https://news.searchdata.workers.dev?category=terkini');
+        const data = await res.json();
+        
+        // Memastikan format balikan API tertampung dengan benar
+        semuaBerita = Array.isArray(data) ? data : (data.data || data.items || []);
+    } catch (e) {
+        console.log("Gagal mengambil dari API terintegrasi:", e);
     }
 
-    // Acak dan ambil 10 berita untuk halaman depan
+    // 2. Acak dan ambil 10 berita untuk halaman depan
     semuaBerita = semuaBerita.sort(() => Math.random() - 0.5).slice(0, 10);
 
     // 3. Susun menjadi elemen HTML persis seperti desain titik tiga terbaru
     let htmlBerita = '';
     semuaBerita.forEach(item => {
-        let thumb = item.enclosure?.link || item.thumbnail || (item.description?.match(/<img[^>]+src="([^">]+)"/)?.[1]) || 'https://via.placeholder.com/100?text=News';
+        let thumb = item.thumb || item.enclosure?.link || item.thumbnail || (item.description?.match(/<img[^>]+src="([^">]+)"/)?.[1]) || 'https://via.placeholder.com/100?text=News';
         const iconUrl = `https://www.google.com/s2/favicons?sz=64&domain=${item.domain}`;
         
-        const newsDate = new Date(item.pubDate.replace(' ', 'T') + 'Z');
-        const now = new Date();
-        let displayDate = newsDate.toLocaleTimeString('id-ID', {hour:'2-digit', minute:'2-digit'});
-        if (newsDate.toDateString() === now.toDateString()) displayDate = `Hari ini, ${displayDate}`;
-        else displayDate = `${newsDate.toLocaleDateString('id-ID', {day:'numeric', month:'short'})}, ${displayDate}`;
+        // Format Tanggal (Selaras dengan perbaikan di frontend)
+        let displayDate = item.pubDate || '';
+        if (item.pubDate) {
+            let dateString = item.pubDate;
+            if (dateString.match(/^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$/)) {
+                dateString = dateString.replace(' ', 'T') + 'Z'; 
+            }
+            
+            const newsDate = new Date(dateString);
+            
+            if (!isNaN(newsDate.getTime())) {
+                const now = new Date();
+                const yesterday = new Date(now);
+                yesterday.setDate(yesterday.getDate() - 1);
+
+                const timeStr = newsDate.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }).replace('.', ':');
+                
+                if (newsDate.toDateString() === now.toDateString()) {
+                    displayDate = `Hari ini, ${timeStr}`;
+                } else if (newsDate.toDateString() === yesterday.toDateString()) {
+                    displayDate = `Kemarin, ${timeStr}`;
+                } else {
+                    displayDate = `${newsDate.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}`;
+                }
+            }
+        }
 
         // Fix 2: Bikin data item untuk fungsi save
         const itemData = encodeURIComponent(JSON.stringify({
@@ -102,12 +114,16 @@ async function masakHTML() {
     });
 
     // 4. Buka template.html, ganti penanda dengan HTML berita matang
-    let template = fs.readFileSync('template.html', 'utf-8');
-    template = template.replace('<!-- BERITA_TERKINI_DISINI -->', htmlBerita);
+    try {
+        let template = fs.readFileSync('template.html', 'utf-8');
+        template = template.replace('<!-- BERITA_TERKINI_DISINI -->', htmlBerita);
 
-    // 5. Simpan hasilnya menjadi index.html
-    fs.writeFileSync('index.html', template);
-    console.log("Selesai! Berhasil merakit index.html dengan UI dropdown titik tiga terbaru.");
+        // 5. Simpan hasilnya menjadi index.html
+        fs.writeFileSync('index.html', template);
+        console.log("Selesai! Berhasil merakit index.html dengan data dari API.");
+    } catch (err) {
+        console.error("Gagal membaca atau menulis file HTML:", err);
+    }
 }
 
 masakHTML();
