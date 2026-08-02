@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZzzJaw Profile</title>
+    <!-- Import Font Montserrat lengkap dari 400 sampai 900 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            padding: 16px;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        /* Navbar Header */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-icon {
+            color: #ccff00;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .logo-text {
+            color: #ccff00;
+            font-size: 22px;
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -0.5px;
+        }
+
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 24px;
+            height: 2px;
+            background-color: #ffffff;
+            border-radius: 2px;
+        }
+
+        /* Sub-header / Actions */
+        .sub-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .last-updated {
+            color: #888888;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .btn-update {
+            background-color: #ccff00;
+            color: #121212;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+        }
+
+        .icon-btn {
+            background-color: #242424;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ccff00;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        /* Profile Card (Border Radius 16px Utuh) */
+        .profile-card {
+            background: 
+                linear-gradient(135deg, rgba(15, 5, 8, 0.78) 0%, rgba(8, 2, 4, 0.85) 100%),
+                url('https://assetsio.gnwcdn.com/ZZZ-review-header.jpg?width=1600&height=900&fit=crop&quality=100&format=png&enable=upscale&auto=webp');
+            background-size: cover;
+            background-position: center;
+            border-radius: 16px; /* Tetap melengkung utuh */
+            padding: 16px 16px 20px 16px;
+            position: relative;
+            z-index: 3;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+            overflow: hidden; /* Memotong konten anak yang offside */
+        }
+
+        .profile-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        /* Profile Left (Avatar & Nama) */
+        .avatar-section {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 6px;
+        }
+
+        .avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid #ffffff;
+            overflow: hidden;
+            background-color: #333;
+            flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-name {
+            font-size: 18px;
+            font-weight: 900;
+            color: #ffffff;
+            letter-spacing: -0.3px;
+            word-break: break-word;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.9);
+        }
+
+        /* Profile Badges Section */
+        .profile-badges-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 8px;
+        }
+
+        .server-il-row {
+            display: flex;
+            gap: 6px;
+        }
+
+        .badge-capsule {
+            background-color: rgba(18, 18, 18, 0.85);
+            backdrop-filter: blur(4px);
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 900;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+        }
+
+        .stat-icon-badges-row {
+            display: flex;
+            gap: 6px;
+            align-items: flex-end;
+        }
+
+        .stat-icon-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .stat-icon-card img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+            margin-bottom: -6px;
+            z-index: 2;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.6));
+        }
+
+        .stat-icon-box {
+            background-color: rgba(18, 18, 18, 0.85);
+            backdrop-filter: blur(4px);
+            width: 44px;
+            padding: 6px 0 3px 0;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 11px;
+            font-weight: 900;
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            z-index: 1;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+        }
+
+        .profile-tag {
+            display: inline-block;
+            background-color: rgba(89, 25, 41, 0.85);
+            backdrop-filter: blur(4px);
+            color: #ff8fa3;
+            font-size: 13px;
+            font-weight: 800;
+            padding: 6px 18px;
+            border-radius: 50px;
+            margin-top: 12px;
+            border: 1px solid rgba(255, 143, 163, 0.25);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        /* KOTAK 1: Low Class Warrior (Menempel Rapi dari Bawah Banner) */
+        .section-title-wrapper {
+            background-color: #242428;
+            border-radius: 0 0 16px 16px;
+            border: 0;
+            padding: 24px 16px 12px 16px;
+            position: relative;
+            z-index: 2;
+            margin-top: -16px; /* Menempel tepat tanpa merusak kurva banner */
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 900;
+            color: #ffffff;
+            margin: 0;
+            letter-spacing: -0.3px;
+        }
+
+        /* KOTAK 2: Stat Card Parent Container */
+        .stat-card {
+            background-color: #171719;
+            border-radius: 0 0 16px 16px;
+            border: 0;
+            padding: 18px 16px 12px 16px;
+            position: relative;
+            z-index: 1;
+            margin-top: -10px;
+            margin-bottom: 16px;
+        }
+
+        /* KOMPONEN STATISTIK */
+        .stat-main-container {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .stat-black-container {
+            background-color: #0d0d0e;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            padding: 4px 10px 4px 4px;
+            gap: 6px;
+            flex-shrink: 0;
+            z-index: 2;
+            height: 60px;
+        }
+
+        .sub-avatar {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .sub-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .stat-badge-icon {
+            width: 44px;
+            height: 44px;
+            background-color: #1a1a1a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            overflow: hidden;
+        }
+
+        .stat-badge-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .stat-info {
+            background-color: #1e874b;
+            flex: 1;
+            height: 60px;
+            border-top-right-radius: 14px;
+            border-bottom-right-radius: 14px;
+            border-top-left-radius: 0px;
+            border-bottom-left-radius: 0px;
+            margin-left: -30px;
+            padding: 6px 14px 6px 36px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            white-space: nowrap;
+            color: #ffffff;
+            z-index: 1;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.1;
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: 900;
+            color: #ffffff;
+            line-height: 1.15;
+            letter-spacing: -0.4px;
+        }
+
+        .stat-subvalue {
+            font-size: 13px;
+            color: #ffffff;
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        /* Leaderboard Toggle Button */
+        .leaderboard-btn {
+            width: 100%;
+            background-color: #1f1f22;
+            color: #ffffff;
+            border: 1px solid #2d2d32;
+            padding: 10px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            margin-bottom: 12px;
+        }
+
+        /* Filter Box */
+        .filter-box {
+            width: 100%;
+            background-color: #19191c;
+            color: #666666;
+            border: 1px solid #2a2a2e;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            font-weight: 500;
+        }
+
+        /* Table Outer Wrapper */
+        .table-container {
+            background-color: #1c1c1f;
+            border-radius: 12px;
+            border: 1px solid #2a2a2e;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Inner Table Content */
+        .table-content {
+            min-width: 580px;
+        }
+
+        .table-header {
+            display: grid;
+            grid-template-columns: 40px 220px 100px 1fr;
+            padding: 12px 14px;
+            font-size: 14px;
+            color: #aaaaaa;
+            border-bottom: 1px solid #2a2a2e;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .table-row {
+            display: grid;
+            grid-template-columns: 40px 220px 100px 1fr;
+            padding: 10px 14px;
+            align-items: center;
+            font-size: 15px;
+            border-bottom: 1px solid #242428;
+            white-space: nowrap;
+        }
+
+        .table-row:last-child {
+            border-bottom: none;
+        }
+
+        .table-row .row-number {
+            color: #aaaaaa;
+            font-weight: 500;
+        }
+
+        .player-cell {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            white-space: nowrap;
+        }
+
+        .player-mini-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #333;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .player-mini-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .level-badge {
+            background-color: #242428;
+            color: #cccccc;
+            font-size: 12px;
+            font-weight: 500;
+            padding: 3px 8px;
+            border-radius: 12px;
+            margin-right: 2px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .player-name {
+            color: #e5e5e5;
+            font-size: 14px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        /* Mindscape Badges */
+        .mindscape-badge {
+            width: 44px;
+            height: 26px;
+            border-radius: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .mindscape-0 {
+            background-color: #242428;
+            color: #ffffff;
+        }
+
+        .mindscape-1 {
+            background-color: #1e3a52;
+            color: #ffffff;
+        }
+
+        /* Crit Ratio Styling */
+        .crit-ratio-cell {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #e5e5e5;
+            font-size: 14px;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .crit-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .crit-icon {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        /* Pagination Controls */
+        .pagination-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 16px;
+            margin-bottom: 32px;
+        }
+
+        .per-page-select {
+            background-color: #19191c;
+            color: #888888;
+            border: 1px solid #2a2a2e;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .showing-text {
+            color: #888888;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        /* Footer Section */
+        .footer {
+            text-align: center;
+            padding: 24px 0 16px 0;
+            border-top: 1px solid #1f1f22;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .footer-powered {
+            font-size: 13px;
+            color: #888888;
+            font-weight: 600;
+        }
+
+        .footer-powered span {
+            color: #ccff00;
+            font-weight: 800;
+        }
+
+        .footer-subtitle {
+            font-size: 12px;
+            color: #555555;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo-container">
+            <div class="logo-icon">🌐</div>
+            <div class="logo-text">ZzzJaw</div>
+        </div>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+
+    <!-- Sub-header -->
+    <div class="sub-header">
+        <span class="last-updated">Last updated 3 days ago</span>
+        <div class="action-buttons">
+            <button class="btn-update">
+                Update 
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.65-5.65"/></svg>
+            </button>
+            <button class="icon-btn">⭐</button>
+            <button class="icon-btn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 2 22 22 22 12 2"/></svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- Profile Card -->
+    <div class="profile-card">
+        <div class="profile-top">
+            <!-- Sisi Kiri: Avatar & Nama -->
+            <div class="avatar-section">
+                <div class="avatar">
+                    <img src="https://enka.network/ui/zzz/IconInterKnotRole0062.png" alt="Avatar">
+                </div>
+                <div class="profile-name">PrinceD</div>
+            </div>
+
+            <!-- Sisi Kanan: Seluruh Badge Status -->
+            <div class="profile-badges-container">
+                <div class="server-il-row">
+                    <div class="badge-capsule">ASIA</div>
+                    <div class="badge-capsule">IL 60</div>
+                </div>
+                <div class="stat-icon-badges-row">
+                    <div class="stat-icon-card">
+                        <img src="https://enka.network/ui/zzz/Shiyu02.png" alt="Shiyu Defense">
+                        <div class="stat-icon-box">5</div>
+                    </div>
+                    <div class="stat-icon-card">
+                        <img src="https://enka.network/ui/zzz/Assault01.png" alt="Assault">
+                        <div class="stat-icon-box">8</div>
+                    </div>
+                    <div class="stat-icon-card">
+                        <img src="https://enka.network/ui/zzz/HardCoreBoss_Norano_02.png" alt="Hardcore">
+                        <div class="stat-icon-box">2506</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="profile-tag">Sertifikasi Starlight Knight</div>
+    </div>
+
+    <!-- KOTAK 1: Low Class Warrior -->
+    <div class="section-title-wrapper">
+        <div class="section-title">Low Class Warrior</div>
+    </div>
+    
+    <!-- KOTAK 2: Stat Card -->
+    <div class="stat-card">
+        <div class="stat-main-container">
+            <!-- Kapsul Hitam (Kiri) -->
+            <div class="stat-black-container">
+                <div class="sub-avatar">
+                    <img src="https://enka.network/ui/zzz/IconRoleCircle44.png" alt="Character">
+                </div>
+                <div class="stat-badge-icon">
+                    <img src="https://enka.network/ui/zzz/Weapon_S_1371.png" alt="W-Engine">
+                </div>
+            </div>
+            
+            <!-- Teks Informasi Statistik -->
+            <div class="stat-info">
+                <div class="stat-label">Solo Burst</div>
+                <div class="stat-value">Top 65.5%</div>
+                <div class="stat-subvalue">13204 / 20.2k</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaderboard Button -->
+    <button class="leaderboard-btn">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m18 15-6-6-6 6"/></svg>
+        Leaderboards
+    </button>
+
+    <!-- Filter -->
+    <div class="filter-box">
+        <span>Filter by...</span>
+        <span style="font-size:10px;">▼</span>
+    </div>
+
+    <!-- Outer Container (Scrollable) -->
+    <div class="table-container">
+        <!-- Inner Wrapper -->
+        <div class="table-content">
+            <div class="table-header">
+                <span>#</span>
+                <span>Name</span>
+                <span>Mindscape</span>
+                <span>Crit Ratio</span>
+            </div>
+
+            <!-- Row 1 -->
+            <div class="table-row">
+                <span class="row-number">1</span>
+                <div class="player-cell">
+                    <div class="player-mini-avatar">
+                        <img src="https://enka.network/ui/zzz/IconRoleCircle55.png" alt="Ye Shunguang">
+                    </div>
+                    <span class="level-badge">Lv. 60</span>
+                    <span class="player-name">Ye Shunguang</span>
+                </div>
+                <div class="mindscape-badge mindscape-0">0</div>
+                <div class="crit-ratio-cell">
+                    <div class="crit-item"><span class="crit-icon">⚙️</span> 50.6</div>
+                    <div class="crit-item"><span class="crit-icon">💥</span> 224.4</div>
+                </div>
+            </div>
+
+            <!-- Row 2 -->
+            <div class="table-row">
+                <span class="row-number">2</span>
+                <div class="player-cell">
+                    <div class="player-mini-avatar">
+                        <img src="https://enka.network/ui/zzz/IconRoleCircle44.png" alt="Yixuan">
+                    </div>
+                    <span class="level-badge">Lv. 60</span>
+                    <span class="player-name">Yixuan</span>
+                </div>
+                <div class="mindscape-badge mindscape-1">1</div>
+                <div class="crit-ratio-cell">
+                    <div class="crit-item"><span class="crit-icon">⚙️</span> 48.2</div>
+                    <div class="crit-item"><span class="crit-icon">💥</span> 176.4</div>
+                </div>
+            </div>
+
+            <!-- Row 3 -->
+            <div class="table-row">
+                <span class="row-number">3</span>
+                <div class="player-cell">
+                    <div class="player-mini-avatar">
+                        <img src="https://enka.network/ui/zzz/IconRoleCircle54.png" alt="Dialyn">
+                    </div>
+                    <span class="level-badge">Lv. 60</span>
+                    <span class="player-name">Dialyn</span>
+                </div>
+                <div class="mindscape-badge mindscape-0">0</div>
+                <div class="crit-ratio-cell">
+                    <div class="crit-item"><span class="crit-icon">⚙️</span> 85.0</div>
+                    <div class="crit-item"><span class="crit-icon">💥</span> 83.6</div>
+                </div>
+            </div>
+
+            <!-- Row 4 -->
+            <div class="table-row">
+                <span class="row-number">4</span>
+                <div class="player-cell">
+                    <div class="player-mini-avatar">
+                        <img src="https://enka.network/ui/zzz/IconRoleCircle65.png" alt="Norma">
+                    </div>
+                    <span class="level-badge">Lv. 60</span>
+                    <span class="player-name">Norma</span>
+                </div>
+                <div class="mindscape-badge mindscape-0">0</div>
+                <div class="crit-ratio-cell">
+                    <div class="crit-item"><span class="crit-icon">⚙️</span> 85.0</div>
+                    <div class="crit-item"><span class="crit-icon">💥</span> 83.6</div>
+                </div>
+            </div>
+
+            <!-- Row 5 -->
+            <div class="table-row">
+                <span class="row-number">5</span>
+                <div class="player-cell">
+                    <div class="player-mini-avatar">
+                        <img src="https://enka.network/ui/zzz/IconRoleCircle62.png" alt="Starlight - Billy">
+                    </div>
+                    <span class="level-badge">Lv. 60</span>
+                    <span class="player-name">Starlight - Billy</span>
+                </div>
+                <div class="mindscape-badge mindscape-1">1</div>
+                <div class="crit-ratio-cell">
+                    <div class="crit-item"><span class="crit-icon">⚙️</span> 43.4</div>
+                    <div class="crit-item"><span class="crit-icon">💥</span> 166.8</div>
+                </div>
+            </div>
+
+            <!-- Row 6 -->
+            <div class="table-row">
+                <span class="row-number">6</span>
+                <div class="player-cell">
+                    <div class="player-mini-avatar">
+                        <img src="https://enka.network/ui/zzz/IconRoleCircle50.png" alt="Lucia">
+                    </div>
+                    <span class="level-badge">Lv. 60</span>
+                    <span class="player-name">Lucia</span>
+                </div>
+                <div class="mindscape-badge mindscape-1">1</div>
+                <div class="crit-ratio-cell">
+                    <div class="crit-item"><span class="crit-icon">⚙️</span> 31.4</div>
+                    <div class="crit-item"><span class="crit-icon">💥</span> 74.0</div>
+                </div>
+            </div>
+
+            <!-- Row 7 -->
+            <div class="table-row">
+                <span class="row-number">7</span>
+                <div class="player-cell">
+                    <div class="player-mini-avatar">
+                        <img src="https://enka.network/ui/zzz/IconRoleCircle67.png" alt="Remielle">
+                    </div>
+                    <span class="level-badge">Lv. 60</span>
+                    <span class="player-name">Remielle</span>
+                </div>
+                <div class="mindscape-badge mindscape-0">0</div>
+                <div class="crit-ratio-cell">
+                    <div class="crit-item"><span class="crit-icon">⚙️</span> 7.4</div>
+                    <div class="crit-item"><span class="crit-icon">💥</span> 78.8</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Pagination Controls (Left & Right) -->
+    <div class="pagination-controls">
+        <div class="per-page-select">
+            <span>1/1</span>
+            <span style="font-size: 8px;">▲▼</span>
+        </div>
+        <span class="showing-text">Showing 1 of 1</span>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="footer-powered">Powered by <span>ZzzJaw</span></div>
+        <div class="footer-subtitle">Penampil data akun ZZZ</div>
+    </div>
+
+</body>
+</html>
